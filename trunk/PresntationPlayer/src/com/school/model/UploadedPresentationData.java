@@ -2,6 +2,7 @@ package com.school.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,7 +19,7 @@ public class UploadedPresentationData extends BaseEntity {
 	private String repositoryName;
 	@Column(name = "repository_path", nullable = false)
 	private String repositoryPath;
-	@Column(name = "user", nullable = false)
+	@ManyToOne(targetEntity=User.class)
 	private User user;
 
 	public String getTitle() {
@@ -59,6 +60,14 @@ public class UploadedPresentationData extends BaseEntity {
 
 	public void setRepositoryPath(String repositoryPath) {
 		this.repositoryPath = repositoryPath;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }
