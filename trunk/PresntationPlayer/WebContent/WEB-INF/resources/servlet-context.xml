@@ -22,6 +22,7 @@
 	<import resource="db/DataSource.xml" />
 	<import resource="db/HibernateSessionFactory.xml" />
 	<import resource="beans/command-bean-context.xml" />
+	<import resource="beans/beans-context.xml" />
 	
 	<bean
 		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
