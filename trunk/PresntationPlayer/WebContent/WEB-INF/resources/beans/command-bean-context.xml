@@ -10,8 +10,7 @@
 
 	<bean id="commandRunner" class="com.school.converter.impl.CommandRunnerImpl" />
 
-	<bean name="presentationConverterChain" class="org.apache.commons.chain.impl.ChainBase"
-		scope="prototype">
+	<bean name="presentationConverterChain" class="org.apache.commons.chain.impl.ChainBase"	scope="prototype">
 		<constructor-arg>
 			<util:list>
 				<ref bean="extractMetadata" />
