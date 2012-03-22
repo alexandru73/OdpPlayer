@@ -15,14 +15,16 @@
 		configure as beans -->
 	<!-- @Controller, @Service, @Configuration, etc. -->
 	<context:component-scan base-package="com.school.controller" />
+	<context:component-scan base-package="com.school.upload.queue" />
 
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<mvc:annotation-driven />
 
-	<import resource="db/DataSource.xml" />
-	<import resource="db/HibernateSessionFactory.xml" />
+	<import resource="config/DataSource.xml" />
+	<import resource="config/HibernateSessionFactory.xml" />
 	<import resource="beans/command-bean-context.xml" />
 	<import resource="beans/beans-context.xml" />
+	<import resource="config/activeMQ-config.xml" />
 	
 	<bean
 		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">

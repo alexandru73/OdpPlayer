@@ -3,10 +3,9 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
-	<bean
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location">
-			<value>WEB-INF/resources/db/db.properties</value>
+			<value>WEB-INF/resources/config/db.properties</value>
 		</property>
 	</bean>
 

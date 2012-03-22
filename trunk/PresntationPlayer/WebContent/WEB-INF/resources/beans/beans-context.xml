@@ -3,6 +3,13 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="configLoader" class="com.school.config.ConfigurationLoader" />
 	
-	<bean id="configLoader" class="com.school.config.ConfigurationLoader"></bean>
+	<bean id="queueListener" class="com.school.upload.queue.QueueListener">
+		<property name="converter" ref="presentationConverter"></property>
+	</bean>
+	<bean id="queueSender" class="com.school.upload.queue.QueueSender">
+		<constructor-arg type="org.springframework.jms.core.JmsTemplate" ref="jmsTemplate" />
+	</bean>
 </beans>
