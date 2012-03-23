@@ -1,4 +1,4 @@
-package com.school.upload.queue;
+package com.school.upload.job;
 
 import javax.jms.ExceptionListener;
 import javax.jms.JMSException;
@@ -6,7 +6,7 @@ import javax.jms.JMSException;
 import org.springframework.stereotype.Component;
 
 @Component
-public class JmsExceptionListener implements ExceptionListener {
+public class JobExceptionListener implements ExceptionListener {
 	
 	public void onException(final JMSException e) {
 		//TODO log this treat error
