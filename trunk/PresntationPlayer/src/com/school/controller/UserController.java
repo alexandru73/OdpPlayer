@@ -13,19 +13,17 @@ import com.school.upload.job.JobSenderImpl;
 
 @Controller
 public class UserController {
-	@Resource(name = "configLoader")
-	ConfigurationLoader resources;
-	@Resource(name="jobSenderImpl")
+	@Resource(name = "jobSenderImpl")
 	JobSenderImpl queue;
 
 	@RequestMapping(method = RequestMethod.GET, value = "/int", headers = "Accept=application/json")
 	public @ResponseBody
 	String getAllEmp() {
-		System.out.println("zuuz" + resources.getConfig().getString("local.repository.upload.path"));
+		System.out.println("zuuz" + ConfigurationLoader.getConfig().getString("local.repository.upload.path"));
 		for (long i = 2; i < 50; i++) {
 			queue.send(new Job(i));
 		}
-		
+
 		return "god";
 	}
 

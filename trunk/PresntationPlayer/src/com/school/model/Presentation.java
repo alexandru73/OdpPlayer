@@ -12,6 +12,16 @@ public class Presentation extends UploadedPresentationData {
 	private Integer noOfSlides;
 	@Column(name = "no_of_views", nullable = false)
 	private Long noOfViews;
+	@Column(name = "slide_duration", nullable = false)
+	private Long slideDuration;
+
+	public Long getSlideDuration() {
+		return slideDuration;
+	}
+
+	public void setSlideDuration(Long slideDuration) {
+		this.slideDuration = slideDuration;
+	}
 
 	public Integer getNoOfSlides() {
 		return noOfSlides;

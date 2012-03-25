@@ -3,13 +3,12 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
-	
-	<bean id="configLoader" class="com.school.config.ConfigurationLoader" />
-	<bean id="officeManager" class="com.school.converter.ooffice.OfficeManagerLoader" />
-	
-	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+
+
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location">
 			<value>WEB-INF/resources/config/config.properties</value>
 		</property>
-	</bean>	
+	</bean>
 </beans>

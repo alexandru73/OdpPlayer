@@ -6,9 +6,10 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.configuration.SystemConfiguration;
 
 public class ConfigurationLoader {
-	private CompositeConfiguration config = new CompositeConfiguration();
+	private static CompositeConfiguration config = null;
 
-	public ConfigurationLoader() {
+	private static void init() {
+		config = new CompositeConfiguration();
 		config.addConfiguration(new SystemConfiguration());
 		try {
 			for (int i = 0; i < PROPERTIES_FILES.length; i++) {
@@ -20,7 +21,10 @@ public class ConfigurationLoader {
 		}
 	}
 
-	public CompositeConfiguration getConfig() {
+	public static CompositeConfiguration getConfig() {
+		if (config == null) {
+			init();
+		}
 		return config;
 	}
 

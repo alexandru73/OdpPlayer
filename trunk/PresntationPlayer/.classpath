@@ -26,7 +26,11 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/fontbox-1.6.0.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jackson-all-1.9.0.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jempbox-1.6.0.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jodconverter-core-3.0-beta-4.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jodconverter-core-3.0-beta-4.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/media/6E10E2C710E2957D/Work/Framework/jodconverter-core-3.0-beta-4/jodconverter-core-3.0-beta-4-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/json-20090211.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/juh-3.2.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jurt-3.2.1.jar"/>
