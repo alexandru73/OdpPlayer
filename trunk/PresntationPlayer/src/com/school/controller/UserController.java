@@ -20,7 +20,7 @@ public class UserController {
 	public @ResponseBody
 	String getAllEmp() {
 		System.out.println("zuuz" + ConfigurationLoader.getConfig().getString("local.repository.upload.path"));
-		for (long i = 2; i < 50; i++) {
+		for (long i = 2; i < 10; i++) {
 			queue.send(new Job(i));
 		}
 

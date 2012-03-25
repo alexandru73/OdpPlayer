@@ -10,6 +10,7 @@ public class Convert2Pdf implements Command {
 	@Override
 	public boolean execute(Context context) throws Exception {
 		System.err.println("officeManager" + OfficeManagerLoader.officeManager);
+		Thread.sleep(6000);
 		return false;
 	}
 }
