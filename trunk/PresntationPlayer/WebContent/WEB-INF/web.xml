@@ -18,7 +18,7 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	<listener>
-	<listener-class>com.school.converter.ooffice.OfficeManagerLoader</listener-class>
+	<listener-class>com.school.service.ooffice.OfficeManagerLoader</listener-class>
 	</listener>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
