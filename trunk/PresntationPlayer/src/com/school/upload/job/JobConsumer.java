@@ -11,7 +11,6 @@ import org.apache.commons.chain.Context;
 import org.apache.commons.chain.impl.ContextBase;
 
 import com.school.converter.Converter;
-import com.school.converter.ConverterContext;
 
 public class JobConsumer implements MessageListener {
 	Converter converter;
@@ -34,7 +33,6 @@ public class JobConsumer implements MessageListener {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	private  Context getContextForUploadedFile(Job uplloadJob) {
 		Context context=new ContextBase();		
 		return context ;
