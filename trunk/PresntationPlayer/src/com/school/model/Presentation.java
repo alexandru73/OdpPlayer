@@ -10,8 +10,6 @@ public class Presentation extends UploadedPresentationData {
 
 	@Column(name = "no_of_slides", nullable = false)
 	private Integer noOfSlides;
-	@Column(name = "extension", nullable = false)
-	private String extension;
 	@Column(name = "no_of_views", nullable = false)
 	private Long noOfViews;
 
@@ -21,14 +19,6 @@ public class Presentation extends UploadedPresentationData {
 
 	public void setNoOfSlides(Integer noOfSlides) {
 		this.noOfSlides = noOfSlides;
-	}
-
-	public String getExtension() {
-		return extension;
-	}
-
-	public void setExtension(String extension) {
-		this.extension = extension;
 	}
 
 	public Long getNoOfViews() {

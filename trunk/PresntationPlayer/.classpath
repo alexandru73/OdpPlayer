@@ -65,5 +65,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-lang-2.6.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/activemq-all-5.4.3.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/xbean-spring-3.6.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v7.0"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
