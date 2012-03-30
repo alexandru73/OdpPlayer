@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
@@ -12,12 +11,12 @@
 
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<mvc:annotation-driven />
-	
+<!-- 
 	<import resource="beans/beans-context.xml" />
 	<import resource="beans/command-bean-context.xml" />
 	<import resource="config/HibernateSessionFactory.xml" />
 	<import resource="config/activeMQ-config.xml" />
-	
+ -->
 	<bean
 		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
 		<property name="messageConverters">
@@ -32,4 +31,11 @@
 		<property name="supportedMediaTypes" value="application/json" />
 		<property name="prefixJson" value="true" />
 	</bean>
+
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/pages/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
 </beans>
