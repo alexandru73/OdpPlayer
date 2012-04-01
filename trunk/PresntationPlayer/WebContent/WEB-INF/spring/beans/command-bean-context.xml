@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+
+	<bean id="presentationConverter" class="com.school.converter.impl.PresentationConverter"
+		scope="prototype">
+		<constructor-arg type="com.school.converter.CommandRunner" ref="commandRunner" />
+	</bean>
+
+	<bean id="commandRunner" class="com.school.converter.impl.CommandRunnerImpl" />
+
+	<bean name="presentationConverterChain" class="org.apache.commons.chain.impl.ChainBase" scope="prototype">
+		<constructor-arg>
+			<util:list>
+				<ref bean="extractMetadata" />
+				<ref bean="extractAudio" />
+				<ref bean="convert2Pdf" />
+				<ref bean="convertPdf2Svg" />
+				<ref bean="saveConversionData" />
+			</util:list>
+		</constructor-arg>
+	</bean>
+
+	<bean id="extractMetadata" class="com.school.converter.commands.ExtractMetadata" scope="prototype" />
+	<bean id="extractAudio" class="com.school.converter.commands.ExtractAudio" scope="prototype" />
+	<bean id="convert2Pdf" class="com.school.converter.commands.Convert2Pdf" scope="prototype" />
+	<bean id="convertPdf2Svg" class="com.school.converter.commands.ConvertPdf2Svg" scope="prototype" />
+	<bean id="saveConversionData" class="com.school.converter.commands.SaveConversionData" scope="prototype" />
+
+</beans>
