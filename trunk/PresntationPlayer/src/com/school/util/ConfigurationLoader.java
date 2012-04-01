@@ -28,5 +28,5 @@ public class ConfigurationLoader {
 		return config;
 	}
 
-	private static final String[] PROPERTIES_FILES = { "classpath:repo.properties" };
+	private static final String[] PROPERTIES_FILES = { "config/repo.properties" };
 }

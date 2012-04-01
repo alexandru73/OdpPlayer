@@ -5,13 +5,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><sp:message code="general.PageTitle" /></title>
-<base>
 <link type="text/css" href="${pageContext.request.contextPath}/resources/css?name=jquery-ui-1.8.18.custom.css" rel="stylesheet" />
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js?name=jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js?name=jquery-ui-1.8.18.custom.min.js"></script>
-<style>
-	.ui-progressbar-value { background-image: url(images/pbar-ani.gif); }
-</style>
 	<script>
 	$(function() {
 		$("#progressbar").progressbar({
@@ -48,5 +44,9 @@
 		</fieldset>
 		
 	</form>
+	<div id="playerImg" style="width:500px;height:500px">
+	<object type="image/svg+xml" style="border:none; width:100%; height:100%; background: white;" 
+		data="${pageContext.request.contextPath}/resources/repo/alex.svg"></object>
+		</div>
 </body>
 </html>

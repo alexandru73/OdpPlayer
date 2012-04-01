@@ -41,8 +41,5 @@ public class JobConsumer implements MessageListener {
 	public void setConverter(Converter converter) {
 		this.converter = converter;
 	}
-	
 
-	private static final int BASE_PORT = 8010;
-	private static AtomicInteger portNumber = new AtomicInteger(BASE_PORT);
 }
