@@ -7,7 +7,7 @@ import org.apache.commons.configuration.SystemConfiguration;
 
 public class ConfigurationLoader {
 	private static CompositeConfiguration config = null;
-
+	
 	private static void init() {
 		config = new CompositeConfiguration();
 		config.addConfiguration(new SystemConfiguration());

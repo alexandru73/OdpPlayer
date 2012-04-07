@@ -1,5 +1,10 @@
 package com.school.controller;
 
+import java.io.File;
+import java.io.IOException;
+
+import org.springframework.context.annotation.Scope;
+import org.springframework.core.io.support.PropertiesLoaderSupport;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -10,7 +15,8 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import com.school.util.ConfigurationLoader;
 
 @Controller
-@RequestMapping(value="/upload")
+@RequestMapping(value="/uploada")
+@Scope("")
 public class UserController {
 	// @Resource(name = "jobSenderImpl")
 	// JobSenderImpl queue;
@@ -37,9 +43,15 @@ public class UserController {
 	public @ResponseBody
 	String upload(@RequestParam("fileData") CommonsMultipartFile f) {
 	if (f == null) {
-	return "null";
+		return "fail";
 	}
-	return "not null " +f.getOriginalFilename();
+		try {
+			f.transferTo(new File(ConfigurationLoader.getConfig().getString("local.repository.upload.path")+"/asd"));
+		} catch (IllegalStateException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	return "success";
 	}
 
 }

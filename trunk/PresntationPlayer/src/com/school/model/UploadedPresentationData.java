@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.apache.commons.lang.StringUtils;
+
 @Entity
 @Table(name = "uploaded_presentation_data")
 public class UploadedPresentationData extends BaseEntity {
@@ -19,8 +21,16 @@ public class UploadedPresentationData extends BaseEntity {
 	private String repositoryName;
 	@Column(name = "repository_path", nullable = false)
 	private String repositoryPath;
-	@ManyToOne(targetEntity=User.class)
+	@ManyToOne(targetEntity = User.class)
 	private User user;
+
+	public boolean isValidData() {
+		boolean ok = true;
+		if (StringUtils.isBlank(title) || StringUtils.isBlank(description) || StringUtils.isBlank(cathegory)) {
+			ok = false;
+		}
+		return ok;
+	}
 
 	public String getTitle() {
 		return title;
@@ -68,6 +78,12 @@ public class UploadedPresentationData extends BaseEntity {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	@Override
+	public String toString() {
+		return "UploadedPresentationData [title=" + title + ", description=" + description + ", cathegory=" + cathegory
+				+ ", repositoryName=" + repositoryName + ", repositoryPath=" + repositoryPath + ", user=" + user + "]";
 	}
 
 }

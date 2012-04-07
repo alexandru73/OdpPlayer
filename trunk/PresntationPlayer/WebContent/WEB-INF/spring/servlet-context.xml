@@ -16,15 +16,15 @@
 	<import resource="config/HibernateSessionFactory.xml" />
 	<import resource="config/activeMQ-config.xml" />
 
-
+	
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location">
 			<value>WEB-INF/spring/config/config.properties</value>
 		</property>
 	</bean>
-
+	
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<property name="maxUploadSize" value="100000" />
+		<property name="maxUploadSize" value="100000000" />
 	</bean>
 
 	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">

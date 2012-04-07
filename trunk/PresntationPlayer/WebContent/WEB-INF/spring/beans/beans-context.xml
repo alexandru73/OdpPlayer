@@ -5,4 +5,8 @@
 
 	<bean id="resourceService" class="com.school.service.ResourceService" />
 
+	<bean id="baseDaoImpl" class="com.school.dao.impl.BaseDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
 </beans>
