@@ -2,8 +2,6 @@ package com.school.controller;
 
 import java.io.IOException;
 
-import javax.servlet.http.HttpServletRequest;
-
 import net.sf.jmimemagic.Magic;
 import net.sf.jmimemagic.MagicException;
 import net.sf.jmimemagic.MagicMatch;
@@ -19,7 +17,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.school.service.ResourceService;
@@ -31,21 +28,33 @@ public class ResourceController {
 	@javax.annotation.Resource(name = "resourceService")
 	ResourceService resService;
 
+	@RequestMapping(method = RequestMethod.GET, value = "/js/{folder}/{jsName:.+}")
+	public @ResponseBody
+	Resource getJsFileInSubfolder(@PathVariable("jsName") String jsName, @PathVariable("folder") String folder) {
+		return resService.getResource(RESOURCE_JS_FOLDER + "/" + folder + "/" + jsName);
+	}
+
 	@RequestMapping(method = RequestMethod.GET, value = "/js/{jsName:.+}")
 	public @ResponseBody
-	Resource getJsFile(@PathVariable("jsName") String jsName) {
+	Resource getJsFileNotInSubfolder(@PathVariable("jsName") String jsName) {
 		return resService.getResource(RESOURCE_JS_FOLDER + "/" + jsName);
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/css/{cssName:.+}")
+	@RequestMapping(method = RequestMethod.GET, value = "/css/local/{cssName:.+}")
 	public @ResponseBody
-	Resource getJsCss(@PathVariable("cssName") String cssName) {
-		return resService.getResource(RESOURCE_CSS_FOLDER + "/" + cssName);
+	Resource getJsCssNotInSubfolder(@PathVariable("cssName") String cssName) {
+		return resService.getResource(RESOURCE_CSS_LOCAL_FOLDER + "/" + cssName);
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "*/images/{imgName:.+}")
+	@RequestMapping(method = RequestMethod.GET, value = "/css/*/{cssName:.+}")
+	public @ResponseBody
+	Resource getJsCssInSubfolder(@PathVariable("cssName") String cssName) {
+		return resService.getResource(RESOURCE_CSS_THEME_FOLDER + "/" + cssName);
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/css/*/images/{imgName:.+}")
 	public ResponseEntity<Resource> getCssImageResource(@PathVariable("imgName") String imgName) {
-		Resource res = resService.getResource(RESOURCE_IMAGE_FOLDER + "/" + imgName );
+		Resource res = resService.getResource(RESOURCE_CSS_IMAGE_FOLDER + "/" + imgName);
 		HttpHeaders headers = new HttpHeaders();
 		MediaType mediaType;
 		try {
@@ -69,9 +78,10 @@ public class ResourceController {
 		return new ResponseEntity<>(res, headers, HttpStatus.OK);
 	}
 
-	private String RESOURCE_CSS_FOLDER = ConfigurationLoader.getConfig().getString("resources.default.theme.folder"),
-			RESOURCE_JS_FOLDER = ConfigurationLoader.getConfig().getString("resources.default.js.folder"),
-			RESOURCE_IMAGE_FOLDER = ConfigurationLoader.getConfig().getString("resources.default.images.folder"),
+	private String RESOURCE_CSS_LOCAL_FOLDER = ConfigurationLoader.getConfig().getString("resources.default.css.local.folder"),
+			RESOURCE_CSS_THEME_FOLDER = ConfigurationLoader.getConfig().getString("resources.default.css.theme.folder"), 
+			RESOURCE_JS_FOLDER = ConfigurationLoader.getConfig().getString("resources.default.js.folder"), 
+			RESOURCE_CSS_IMAGE_FOLDER = ConfigurationLoader.getConfig().getString("resources.default.css.images.folder"),
 			RESOURCE_REPO_FOLDER = ConfigurationLoader.getConfig().getString("local.repository.upload.path"),
-			SVG_MEDIA_TYPE = "image", SVG_MEDIA_SUBTYPE = "svg+xml", RESOURCE_SOURCE_DISK = "file:";
+			SVG_MEDIA_TYPE = "image", SVG_MEDIA_SUBTYPE = "svg+xml",RESOURCE_SOURCE_DISK = "file:";
 }

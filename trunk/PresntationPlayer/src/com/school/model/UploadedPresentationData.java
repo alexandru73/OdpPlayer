@@ -4,11 +4,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang.StringUtils;
 
 @Entity
 @Table(name = "uploaded_presentation_data")
+@XmlRootElement
 public class UploadedPresentationData extends BaseEntity {
 
 	@Column(name = "title", nullable = false)
@@ -23,6 +25,16 @@ public class UploadedPresentationData extends BaseEntity {
 	private String repositoryPath;
 	@ManyToOne(targetEntity = User.class)
 	private User user;
+
+	public UploadedPresentationData() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public UploadedPresentationData(String title, String description, String cathegory) {
+		this.title = title;
+		this.description = description;
+		this.cathegory = cathegory;
+	}
 
 	public boolean isValidData() {
 		boolean ok = true;

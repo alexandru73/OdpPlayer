@@ -2,9 +2,11 @@ package com.school.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "user")
+@XmlRootElement
 public class User extends BaseEntity {
 	
 	private String username;

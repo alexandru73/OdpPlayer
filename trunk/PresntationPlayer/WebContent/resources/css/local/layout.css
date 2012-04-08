@@ -1,0 +1,35 @@
+body {
+	margin-top: 0px;
+	background-color: white;
+}
+
+#htmlBody {
+	width: 1200px;
+	height: 768px;
+	background-color: gray;
+}
+
+#header {
+	min-height: 6.2%;
+	width: 100%;
+	margin-bottom: 0.2%;
+	background-color: orange
+}
+
+#mainPanel {
+	background-color: red;
+	width: 100%;
+	height: 90.9%;
+	margin-bottom: 0.1%;
+}
+
+#footer {
+	height: 2.5%;
+	width: 100%;
+	background-color: yellow;
+}
+
+.uiButton {
+	font-size: .7em !important;
+	margin-bottom: 5px
+}
