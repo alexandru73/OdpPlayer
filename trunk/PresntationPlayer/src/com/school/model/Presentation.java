@@ -15,6 +15,18 @@ public class Presentation extends UploadedPresentationData {
 	@Column(name = "slide_duration", nullable = false)
 	private Long slideDuration;
 
+	public Presentation(UploadedPresentationData data) {
+		this.title=data.getTitle();
+		this.description=data.getDescription();
+		this.originalExtension=data.getOriginalExtension();
+		this.cathegory=data.getCathegory();
+		this.repositoryName=data.getRepositoryName();
+		this.user=data.getUser();
+	}
+
+	public Presentation() {
+	}
+
 	public Long getSlideDuration() {
 		return slideDuration;
 	}

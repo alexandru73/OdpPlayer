@@ -14,17 +14,19 @@ import org.apache.commons.lang.StringUtils;
 public class UploadedPresentationData extends BaseEntity {
 
 	@Column(name = "title", nullable = false)
-	private String title;
+	protected String title;
 	@Column(name = "description", nullable = false)
-	private String description;
+	protected String description;
 	@Column(name = "cathegory", nullable = false)
-	private String cathegory;
+	protected String cathegory;
 	@Column(name = "repository_name", nullable = false)
-	private String repositoryName;
+	protected String repositoryName;
 	@Column(name = "repository_path", nullable = false)
-	private String repositoryPath;
+	protected String repositoryPath;
+	@Column(name = "original_extension", nullable = false)
+	protected String originalExtension;
 	@ManyToOne(targetEntity = User.class)
-	private User user;
+	protected User user;
 
 	public UploadedPresentationData() {
 		// TODO Auto-generated constructor stub
@@ -50,6 +52,14 @@ public class UploadedPresentationData extends BaseEntity {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getOriginalExtension() {
+		return originalExtension;
+	}
+
+	public void setOriginalExtension(String originalExtension) {
+		this.originalExtension = originalExtension;
 	}
 
 	public String getDescription() {

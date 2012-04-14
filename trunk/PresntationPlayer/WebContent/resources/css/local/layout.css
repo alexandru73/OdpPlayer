@@ -1,6 +1,22 @@
 body {
 	margin-top: 0px;
 	background-color: white;
+	font: 62.5% "Trebuchet MS", sans-serif;
+}
+
+.button-cs{
+	min-width: 70px;
+}
+
+.headers {
+	margin-top: 2em;
+}
+
+.paragraph-style {
+	font-size: 1.3em;
+	line-height: 1.5;
+	margin: 1em 0;
+	width: 50%;
 }
 
 #htmlBody {
@@ -27,9 +43,4 @@ body {
 	height: 2.5%;
 	width: 100%;
 	background-color: yellow;
-}
-
-.uiButton {
-	font-size: .7em !important;
-	margin-bottom: 5px
 }

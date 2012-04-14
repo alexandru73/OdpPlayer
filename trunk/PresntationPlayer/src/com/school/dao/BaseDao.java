@@ -13,4 +13,6 @@ public interface BaseDao {
 	public void delete(BaseEntity entity);
 
 	public void deleteAll(List<? extends BaseDao> entities);
+	
+	public <T extends BaseEntity> T getEntity(final Serializable id,final Class<T> klass);
 }

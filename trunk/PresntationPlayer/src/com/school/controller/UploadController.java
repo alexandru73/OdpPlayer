@@ -49,41 +49,8 @@ public class UploadController {
 	public String getPresentationPage() {
 		return "upload/uploadPage";
 	}
-	
-	@RequestMapping(method = RequestMethod.GET, value = "/test")
-	public String getPresentationPagea() {
-		return "test";
-	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/uploadEx", consumes = "application/json", produces = "application/json")
-	@ResponseBody
-	public Map<String, Object> getAllEmp2(@RequestBody UploadedPresentationData data) {
-		System.out.println(data.toString());
-		Map<String, Object> map = new TreeMap<>();
-		map.put("success", true);
-		return map;
-	}
-
-	@RequestMapping(method = RequestMethod.GET, value = "/uploadEx", produces = "application/json")
-	@ResponseBody
-	public Map<String, Object> getAllEmp22() {
-		Map<String, Object> map = new TreeMap<>();
-		map.put("success", true);
-		map.put("alex", new UploadedPresentationData("ads", "ASD", "dsf"));
-		return map;
-	}
-
-	@RequestMapping(method = RequestMethod.POST, value = "/uploadMex", consumes = "application/json", produces = "application/json")
-	@ResponseBody
-	public Map<String, Object> getAllEmp3(@RequestBody UploadedPresentationData data) {
-		System.out.println(data.toString());
-		Map<String, Object> map = new TreeMap<>();
-		map.put("success", false);
-		map.put("errorMessage", "sdfijnif");
-		return map;
-	}
-
-	@RequestMapping(method = RequestMethod.POST, value = "/uploadMeta", headers = "Accept=application/json")
+	@RequestMapping(method = RequestMethod.POST, value = "/uploadMeta", consumes = "application/json", produces = "application/json")
 	@ResponseBody
 	public Map<String, Object> saveUploadMetadata(HttpServletRequest request, @RequestBody UploadedPresentationData data) {
 		Map<String, Object> result = null;
@@ -112,7 +79,6 @@ public class UploadController {
 					result = JsonUtils.failureJson(errorMessage);
 				} else {
 					HttpSession session = req.getSession();
-					System.out.println(uploadedFile.getContentType());
 					uploadFileToRepo(uploadedFile, session);
 					String completeMessage = messages.getMessage("validation.upload.complete.message", null, null);
 					result = JsonUtils.successWithParameter(UPLOAD_COMPLETE, completeMessage);
@@ -128,7 +94,7 @@ public class UploadController {
 		return result;
 	}
 
-	@RequestMapping(value = "/completeUpload", method = RequestMethod.POST)
+	@RequestMapping(value = "/completeUpload", method = RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> completeUpload(HttpServletRequest req) {
 		Map<String, Object> result = null;
@@ -151,12 +117,13 @@ public class UploadController {
 			UploadedDataNotFoundException {
 		UploadedPresentationData data = (UploadedPresentationData) session.getAttribute(UPLOAD_METADATA);
 		if (data != null) {
-			String fileExtension = FilenameUtils.getExtension(uploadedFile.getName());
+			String fileExtension = FilenameUtils.getExtension(uploadedFile.getOriginalFilename());
 			if (isCorectFileExtension(fileExtension)) {
 				data.setRepositoryName(UUID.randomUUID().toString());
 				data.setRepositoryPath(REPO_UPLOAD_LOCATION);
 				data.setCreateadAt(new Date());
-				File file = new File(REPO_UPLOAD_LOCATION + "/" + data.getRepositoryName() + "." + fileExtension);
+				data.setOriginalExtension(fileExtension);
+				File file = new File(REPO_HOME+"/"+REPO_UPLOAD_LOCATION + "/" + data.getRepositoryName() + "." + fileExtension);
 				uploadedFile.transferTo(file);
 				session.setAttribute(UPLOAD_METADATA, data);
 			} else {
@@ -169,7 +136,7 @@ public class UploadController {
 
 	private boolean isCorectFileExtension(String fileExtension) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	private User getCurrentUser() {
@@ -198,5 +165,6 @@ public class UploadController {
 	}
 
 	private static final String REPO_UPLOAD_LOCATION = ConfigurationLoader.getConfig().getString(
-			"local.repository.upload.path"), UPLOAD_METADATA = "metadata", UPLOAD_COMPLETE = "complete";
+			"local.repository.upload.path"), REPO_HOME = ConfigurationLoader.getConfig().getString(
+			"local.repository.home.path"), UPLOAD_METADATA = "metadata", UPLOAD_COMPLETE = "complete";
 }

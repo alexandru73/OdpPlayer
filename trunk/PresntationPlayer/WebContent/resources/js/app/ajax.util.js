@@ -26,7 +26,6 @@ function ajaxJsonPost(url, objData, that, callbackSuccess,failureCallback) {
 	});
 };
 
-
 function ajaxJsonGet(url, objData, that, callbackSuccess) {
 	$.ajax({
 		url : url,

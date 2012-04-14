@@ -1,16 +1,19 @@
-function clickButton() {
+function submitMetaData() {
 	var callBack = function(response) {
 		alert("here");
 	};
-	var obj = new UploadMetadata("titlu", "descrp", "cath");
-	ajaxJsonPost("upload/uploadEx", obj, this, callBack);
+	var formMetadata=$('#metaForm').serializeObject();
+	ajaxJsonPost("upload/uploadMeta", formMetadata, this, callBack);
+	return false;
 };
 
 function ajaxUploadReady() {
 	var progressBar = $('#progressbar');
 	$('form').ajaxForm({
 		beforeSend : function() {
+			progressBar.progressbar("disabled",false);
 			progressBar.progressbar("value", 0);
+			
 		},
 		uploadProgress : function(event, position, total, percentComplete) {
 			progressBar.progressbar("value", percentComplete);
@@ -20,11 +23,16 @@ function ajaxUploadReady() {
 	});
 };
 
-function initProgressBar() {
+function initUploadStuff() {
 	$(function() {
 		$("#progressbar").progressbar({
-			value : 56
+			value : 0,
+			disabled : true
 		});
+		$("input:button,input:submit, button,#complete-link").button();
 	});
 };
-initProgressBar();
+initUploadStuff();
+
+_uacct = "UA-850242-2";
+urchinTracker();
