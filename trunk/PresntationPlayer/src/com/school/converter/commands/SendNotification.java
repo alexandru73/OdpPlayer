@@ -7,7 +7,7 @@ public class SendNotification implements Command{
 
 	@Override
 	public boolean execute(Context arg0) throws Exception {
-		System.out.println("extract audio");
+		System.out.println("trimit email");
 		return true;
 	}
 

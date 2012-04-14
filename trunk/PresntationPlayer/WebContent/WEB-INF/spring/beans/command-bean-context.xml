@@ -16,6 +16,7 @@
 			<util:list>
 				<ref bean="convert2Pdf" />
 				<ref bean="convertPdf2Svg" />
+				<ref bean="moveUploadedData"/>
 				<ref bean="extractMetadata" />
 				<ref bean="saveConversionData" />
 				<ref bean="sendNotification" />
@@ -25,9 +26,10 @@
 
 	<bean id="convert2Pdf" class="com.school.converter.commands.Convert2Pdf" scope="prototype" />
 	<bean id="convertPdf2Svg" class="com.school.converter.commands.ConvertPdf2Svg" scope="prototype" />
+	<bean id="moveUploadedData" class="com.school.converter.commands.MoveUploadedFile" scope="prototype" />
 	<bean id="extractMetadata" class="com.school.converter.commands.ExtractMetadata" scope="prototype" />
-	<bean id="saveConversionData" class="com.school.converter.commands.SaveConversionData" scope="prototype" />
+	<bean id="saveConversionData" class="com.school.converter.commands.SaveConversionData" scope="prototype">
+		<property name="baseDao" ref="baseDaoImpl"/>
+	</bean>
 	<bean id="sendNotification" class="com.school.converter.commands.SendNotification" scope="prototype" />
-
-
 </beans>

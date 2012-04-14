@@ -16,12 +16,14 @@ public class Presentation extends UploadedPresentationData {
 	private Long slideDuration;
 
 	public Presentation(UploadedPresentationData data) {
-		this.title=data.getTitle();
-		this.description=data.getDescription();
+		this.title = data.getTitle();
+		this.description = data.getDescription();
+		this.originalExtension = data.getOriginalExtension();
+		this.cathegory = data.getCathegory();
+		this.repositoryName = data.getRepositoryName();
+		this.user = data.getUser();
 		this.originalExtension=data.getOriginalExtension();
-		this.cathegory=data.getCathegory();
-		this.repositoryName=data.getRepositoryName();
-		this.user=data.getUser();
+		setCreateadAt(data.getCreateadAt());
 	}
 
 	public Presentation() {
