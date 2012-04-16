@@ -25,6 +25,8 @@ public class UploadedPresentationData extends BaseEntity {
 	protected String repositoryPath;
 	@Column(name = "original_extension", nullable = false)
 	protected String originalExtension;
+	@Column(name = "slide_duration", nullable = false)
+	protected Long slideDuration;
 	@ManyToOne(targetEntity = User.class)
 	protected User user;
 
@@ -44,6 +46,14 @@ public class UploadedPresentationData extends BaseEntity {
 			ok = false;
 		}
 		return ok;
+	}
+
+	public Long getSlideDuration() {
+		return slideDuration;
+	}
+
+	public void setSlideDuration(Long slideDuration) {
+		this.slideDuration = slideDuration;
 	}
 
 	public String getTitle() {

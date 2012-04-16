@@ -9,8 +9,9 @@ import org.springframework.context.ApplicationContextAware;
 import com.school.converter.CommandRunner;
 import com.school.exceptions.CommandFailedToExecuteExeption;
 import com.school.exceptions.CommandNotFoundException;
+import com.school.exceptions.CommandRollbackFailedException;
 
-public class CommandRunnerImpl implements CommandRunner, ApplicationContextAware {
+public class CommandRunnerImpl extends CommandRunner implements ApplicationContextAware {
 	private ApplicationContext appContext;
 
 	@Override
@@ -24,6 +25,20 @@ public class CommandRunnerImpl implements CommandRunner, ApplicationContextAware
 		} catch (Exception e) {
 			throw new CommandFailedToExecuteExeption(e);
 		}
+	}
+
+	@Override
+	protected void runRollback(String commandName, Context commandContext) throws CommandNotFoundException,
+			CommandRollbackFailedException {
+		try {
+			Command command = createCommandByName(commandName);
+			command.execute(commandContext);
+		} catch (BeansException e) {
+			throw new CommandNotFoundException(e);
+		} catch (Exception e) {
+			throw new CommandRollbackFailedException();
+		}
+
 	}
 
 	@Override

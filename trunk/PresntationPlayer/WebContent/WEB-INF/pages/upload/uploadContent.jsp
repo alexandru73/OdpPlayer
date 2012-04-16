@@ -13,6 +13,10 @@
 					<td><input id="description" name="description" type="text" /></td>
 				</tr>
 				<tr>
+					<td><label class="paragraph-style" for="slideDuration"><sp:message code="upload.form.slide.duration" /></label></td>
+					<td><input id="slideDuration" name="slideDuration" type="text" /></td>
+				</tr>
+				<tr>
 					<td><label class="paragraph-style" for="category"><sp:message code="upload.form.category" /></label></td>
 					<td><input id="cathegory" name="cathegory" type="text" /></td>
 				</tr>
