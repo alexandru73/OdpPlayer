@@ -1,8 +1,6 @@
 package com.school.converter.commands;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.InputStreamReader;
 
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
@@ -23,17 +21,15 @@ public class ConvertPdf2Svg implements Command {
 			System.err.println(commandLine);
 			Process svgConverterProcess = Runtime.getRuntime().exec(commandLine);
 			int exitCode = svgConverterProcess.waitFor();
-			if(exitCode!=0){
+			if (exitCode != 0) {
 				throw new SvgConversionFailedException();
 			}
-			System.out.println(exitCode);
 		} else {
 			throw new CommandFailedToExecuteExeption();
 		}
 		return false;
 	}
-	
-	
+
 	private String createCommandLine(Context context) throws CommandFailedToExecuteExeption {
 		UploadedPresentationData data = (UploadedPresentationData) context.get(ConverterContext.UPLOADED_DATA);
 		String imgFolderPath = createSvgImageFolder(context, data);
