@@ -34,7 +34,7 @@ public class SendNotification implements Command {
 		Object[] args = new Object[2];
 		args[0] = presentation.getTitle();
 		String subject = messages.getMessage("email.conversion.success.subject", args, null);
-		String emailAddress = getUserEmailAddress(presentation);
+		String emailAddress = presentation.getUser().getEmail();
 		args[1] = ConfigurationLoader.getConfig().getString("page.presentation.with.id.param.url")
 				+ presentation.getRepositoryName();
 		StringBuilder content = new StringBuilder(messages.getMessage("email.conversion.success.content", args, null));
@@ -43,11 +43,6 @@ public class SendNotification implements Command {
 		content.append(messages.getMessage("email.no.reply", args, null));
 		Email email = new Email(subject, emailAddress, content.toString());
 		return baseDao.save(email);
-	}
-
-	private String getUserEmailAddress(Presentation presentation) {
-		// TODO Auto-generated method stub
-		return "aaa";
 	}
 
 	public void setQueue(JobSenderImpl queue) {
@@ -62,6 +57,6 @@ public class SendNotification implements Command {
 		this.messages = messages;
 	}
 
-	private String NOTIFICATION_QUEUE = ConfigurationLoader.getConfig().getString("active.mq.queue.notification");
+	private final String NOTIFICATION_QUEUE = ConfigurationLoader.getConfig().getString("active.mq.queue.notification");
 
 }
