@@ -1,4 +1,4 @@
-package com.school.upload.job;
+package com.school.job;
 
 import javax.jms.ExceptionListener;
 import javax.jms.JMSException;

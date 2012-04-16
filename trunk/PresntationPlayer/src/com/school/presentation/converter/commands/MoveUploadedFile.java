@@ -1,4 +1,4 @@
-package com.school.converter.commands;
+package com.school.presentation.converter.commands;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,9 +8,9 @@ import org.apache.commons.chain.Context;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 
-import com.school.converter.impl.ConverterContext;
 import com.school.exceptions.CommandFailedToExecuteExeption;
 import com.school.model.UploadedPresentationData;
+import com.school.presentation.converter.impl.ConverterContext;
 import com.school.util.OtherUtils;
 
 public class MoveUploadedFile implements Command {

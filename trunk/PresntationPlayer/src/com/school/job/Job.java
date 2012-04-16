@@ -1,4 +1,4 @@
-package com.school.upload.job;
+package com.school.job;
 
 import java.io.Serializable;
 

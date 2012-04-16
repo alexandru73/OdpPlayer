@@ -1,4 +1,4 @@
-package com.school.upload.job;
+package com.school.job;
 
 import org.springframework.jms.core.JmsTemplate;
 
@@ -10,7 +10,7 @@ public class JobSenderImpl implements IJobSender {
 	}
 
 	@Override
-	public void send(final Job uploadJob) {
-		jmsTemplate.convertAndSend(uploadJob);
+	public void send(final Job job, String queueName) {
+		jmsTemplate.convertAndSend(queueName, job);
 	}
 }

@@ -1,4 +1,4 @@
-package com.school.converter.commands;
+package com.school.presentation.converter.commands;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,11 +12,11 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDDocumentOutline;
 import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDOutlineItem;
 
-import com.school.converter.impl.ConverterContext;
 import com.school.exceptions.CommandFailedToExecuteExeption;
 import com.school.model.Bookmark;
 import com.school.model.Presentation;
 import com.school.model.UploadedPresentationData;
+import com.school.presentation.converter.impl.ConverterContext;
 
 public class ExtractMetadata implements Command {
 

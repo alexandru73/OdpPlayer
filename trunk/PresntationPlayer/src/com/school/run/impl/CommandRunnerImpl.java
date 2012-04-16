@@ -1,4 +1,4 @@
-package com.school.converter.impl;
+package com.school.run.impl;
 
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
@@ -6,10 +6,10 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
-import com.school.converter.CommandRunner;
 import com.school.exceptions.CommandFailedToExecuteExeption;
 import com.school.exceptions.CommandNotFoundException;
 import com.school.exceptions.CommandRollbackFailedException;
+import com.school.run.CommandRunner;
 
 public class CommandRunnerImpl extends CommandRunner implements ApplicationContextAware {
 	private ApplicationContext appContext;

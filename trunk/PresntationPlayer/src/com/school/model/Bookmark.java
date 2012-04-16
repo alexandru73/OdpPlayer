@@ -13,6 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Bookmark extends BaseEntity {
 	@Column(name = "slide_no", nullable = false)
 	private int slideNo;
+	@Column(columnDefinition = "TEXT")
 	private String comment;
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Presentation presention;

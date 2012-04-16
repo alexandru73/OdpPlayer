@@ -1,13 +1,13 @@
-package com.school.converter.commands;
+package com.school.presentation.converter.commands;
 
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
 
-import com.school.converter.impl.ConverterContext;
 import com.school.dao.BaseDao;
 import com.school.exceptions.CommandFailedToExecuteExeption;
 import com.school.model.Presentation;
 import com.school.model.UploadedPresentationData;
+import com.school.presentation.converter.impl.ConverterContext;
 
 public class SaveConversionData implements Command {
 	private BaseDao baseDao;

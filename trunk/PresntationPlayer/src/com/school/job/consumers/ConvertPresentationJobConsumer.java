@@ -1,4 +1,4 @@
-package com.school.upload.job;
+package com.school.job.consumers;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -8,13 +8,14 @@ import javax.jms.ObjectMessage;
 import org.apache.commons.chain.Context;
 import org.apache.commons.chain.impl.ContextBase;
 
-import com.school.converter.Converter;
-import com.school.converter.impl.ConverterContext;
 import com.school.dao.BaseDao;
+import com.school.job.Job;
 import com.school.model.UploadedPresentationData;
+import com.school.presentation.converter.Converter;
+import com.school.presentation.converter.impl.ConverterContext;
 import com.school.util.ConfigurationLoader;
 
-public class JobConsumer implements MessageListener {
+public class ConvertPresentationJobConsumer implements MessageListener {
 	Converter converter;
 	BaseDao baseDao;
 

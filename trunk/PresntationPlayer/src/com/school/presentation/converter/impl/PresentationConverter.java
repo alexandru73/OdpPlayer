@@ -1,11 +1,11 @@
-package com.school.converter.impl;
+package com.school.presentation.converter.impl;
 
 import org.apache.commons.chain.Context;
 
-import com.school.converter.CommandRunner;
-import com.school.converter.Converter;
 import com.school.exceptions.CommandNotFoundException;
 import com.school.exceptions.CommandRollbackFailedException;
+import com.school.presentation.converter.Converter;
+import com.school.run.CommandRunner;
 
 public class PresentationConverter implements Converter {
 	CommandRunner commandRunner;

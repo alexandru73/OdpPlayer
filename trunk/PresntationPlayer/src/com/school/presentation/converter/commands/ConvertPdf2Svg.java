@@ -1,4 +1,4 @@
-package com.school.converter.commands;
+package com.school.presentation.converter.commands;
 
 import java.io.File;
 
@@ -6,10 +6,10 @@ import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
 import org.apache.commons.lang.StringUtils;
 
-import com.school.converter.impl.ConverterContext;
 import com.school.exceptions.CommandFailedToExecuteExeption;
 import com.school.exceptions.SvgConversionFailedException;
 import com.school.model.UploadedPresentationData;
+import com.school.presentation.converter.impl.ConverterContext;
 import com.school.util.OtherUtils;
 
 public class ConvertPdf2Svg implements Command {

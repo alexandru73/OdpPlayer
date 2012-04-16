@@ -4,17 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.UUID;
 
 import javax.annotation.Resource;
-import javax.persistence.Column;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.io.FilenameUtils;
-import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
@@ -27,10 +23,10 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.school.dao.BaseDao;
 import com.school.exceptions.UploadedDataNotFoundException;
+import com.school.job.Job;
+import com.school.job.JobSenderImpl;
 import com.school.model.UploadedPresentationData;
 import com.school.model.User;
-import com.school.upload.job.Job;
-import com.school.upload.job.JobSenderImpl;
 import com.school.util.ConfigurationLoader;
 import com.school.util.JsonUtils;
 
@@ -49,6 +45,7 @@ public class UploadController {
 	public String getPresentationPage() {
 		return "upload/uploadPage";
 	}
+
 
 	@RequestMapping(method = RequestMethod.POST, value = "/uploadMeta", consumes = "application/json", produces = "application/json")
 	@ResponseBody
@@ -103,7 +100,7 @@ public class UploadController {
 		if (data != null) {
 			Long id = baseDao.save(data);
 			Job job = new Job(id);
-			queue.send(job);
+			queue.send(job, UPLOAD_QUEUE);
 			result = JsonUtils.successJson();
 		} else {
 			String errorMessage = messages.getMessage("validation.upload.first.set.metadata", null, null);
@@ -164,7 +161,9 @@ public class UploadController {
 		this.baseDao = baseDao;
 	}
 
-	private static final String REPO_UPLOAD_LOCATION = ConfigurationLoader.getConfig().getString(
-			"local.repository.upload.path"), REPO_HOME = ConfigurationLoader.getConfig().getString(
-			"local.repository.home.path"), UPLOAD_METADATA = "metadata", UPLOAD_COMPLETE = "complete";
+	private static final String 
+	REPO_UPLOAD_LOCATION = ConfigurationLoader.getConfig().getString("local.repository.upload.path"), 
+	REPO_HOME = ConfigurationLoader.getConfig().getString("local.repository.home.path"),
+	UPLOAD_QUEUE = ConfigurationLoader.getConfig().getString("active.mq.queue.convert.presentation"),
+	UPLOAD_METADATA = "metadata", UPLOAD_COMPLETE = "complete";
 }

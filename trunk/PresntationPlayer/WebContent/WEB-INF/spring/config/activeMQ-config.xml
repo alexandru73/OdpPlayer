@@ -15,22 +15,33 @@ http://www.springframework.org/schema/jms http://www.springframework.org/schema/
 
 	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
 		<constructor-arg ref="connectionFactory" />
-		<property name="defaultDestinationName" value="${active.mq.queue.name}" />
+		<property name="defaultDestinationName" value="${active.mq.queue.convert.presentation}" />
 	</bean>
 
 	<jms:listener-container concurrency="5">
-		<jms:listener id="JobConsumer" destination="${active.mq.queue.name}" ref="jobConsumer" />
-
+		<jms:listener id="ConverterJobConsumer" destination="${active.mq.queue.convert.presentation}"
+			ref="convertPresentationJobConsumer" />
+		<jms:listener id="NotificationSender" destination="${active.mq.queue.notification}" ref="emailJobConsumer" />
+		<jms:listener id="DeleteJobConsumer" destination="${active.mq.queue.delete.presentation}"
+			ref="deletePresentationJobConsumer" />
 	</jms:listener-container>
 
-	<bean id="jobExceptionListener" class="com.school.upload.job.JobExceptionListener" />
+	<bean id="jobExceptionListener" class="com.school.job.JobExceptionListener" />
 
-	<bean id="jobConsumer" class="com.school.upload.job.JobConsumer">
+	<bean id="convertPresentationJobConsumer" class="com.school.job.consumers.ConvertPresentationJobConsumer">
 		<property name="converter" ref="presentationConverter" />
 		<property name="baseDao" ref="baseDaoImpl" />
 	</bean>
 
-	<bean id="jobSenderImpl" class="com.school.upload.job.JobSenderImpl">
+	<bean id="emailJobConsumer" class="com.school.job.consumers.ConvertPresentationJobConsumer">
+		<property name="baseDao" ref="baseDaoImpl" />
+	</bean>
+
+	<bean id="deletePresentationJobConsumer" class="com.school.job.consumers.DeletePresentationJobConsumer">
+		<property name="baseDao" ref="baseDaoImpl" />
+	</bean>
+
+	<bean id="jobSenderImpl" class="com.school.job.JobSenderImpl">
 		<constructor-arg type="org.springframework.jms.core.JmsTemplate" ref="jmsTemplate" />
 	</bean>
 
