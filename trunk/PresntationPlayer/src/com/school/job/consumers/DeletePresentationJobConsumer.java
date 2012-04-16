@@ -1,15 +1,14 @@
 package com.school.job.consumers;
 
-import javax.jms.Message;
-import javax.jms.MessageListener;
-
 import com.school.dao.BaseDao;
+import com.school.job.Job;
+import com.school.job.JobConsumer;
 
-public class DeletePresentationJobConsumer implements MessageListener {
+public class DeletePresentationJobConsumer extends JobConsumer {
 	BaseDao baseDao;
 
 	@Override
-	public void onMessage(Message arg0) {
+	public void execute(Job job) {
 		// TODO Auto-generated method stub
 
 	}

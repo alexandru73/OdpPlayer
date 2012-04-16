@@ -4,15 +4,12 @@ import java.io.File;
 
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
-import org.apache.commons.io.FileUtils;
 import org.artofsolving.jodconverter.OfficeDocumentConverter;
 
 import com.school.exceptions.CommandFailedToExecuteExeption;
-import com.school.model.Presentation;
 import com.school.model.UploadedPresentationData;
 import com.school.presentation.converter.impl.ConverterContext;
 import com.school.service.OfficeManagerService;
-import com.school.util.ConfigurationLoader;
 import com.school.util.OtherUtils;
 
 public class Convert2Pdf implements Command {

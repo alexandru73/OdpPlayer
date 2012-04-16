@@ -8,5 +8,8 @@
 	<bean id="baseDaoImpl" class="com.school.dao.impl.BaseDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
+	
+	<bean id="commandRunner" class="com.school.run.impl.CommandRunnerImpl" />
+	<!-- email settings -->
 
 </beans>

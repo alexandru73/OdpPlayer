@@ -19,7 +19,7 @@
 	
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location">
-			<value>WEB-INF/spring/config/config.properties</value>
+			<value>WEB-INF/classes/config/config.properties</value>
 		</property>
 	</bean>
 	

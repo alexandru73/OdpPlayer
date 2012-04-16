@@ -1,42 +1,29 @@
 package com.school.job.consumers;
 
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.MessageListener;
-import javax.jms.ObjectMessage;
-
 import org.apache.commons.chain.Context;
 import org.apache.commons.chain.impl.ContextBase;
 
 import com.school.dao.BaseDao;
 import com.school.job.Job;
+import com.school.job.JobConsumer;
 import com.school.model.UploadedPresentationData;
 import com.school.presentation.converter.Converter;
 import com.school.presentation.converter.impl.ConverterContext;
 import com.school.util.ConfigurationLoader;
 
-public class ConvertPresentationJobConsumer implements MessageListener {
+public class ConvertPresentationJobConsumer extends JobConsumer {
 	Converter converter;
 	BaseDao baseDao;
 
 	@Override
-	public void onMessage(final Message message) {
-		if (message instanceof ObjectMessage) {
-			ObjectMessage objMessage = (ObjectMessage) message;
-			try {
-
-				Job uplloadJob = (Job) objMessage.getObject();
-				Context converterContext = getContextForUploadedFile(uplloadJob);
-				converter.convert(converterContext);
-			} catch (final JMSException e) {
-				e.printStackTrace();
-			}
-		}
+	public void execute(Job job) {
+		Context converterContext = getContextForUploadedFile(job);
+		converter.convert(converterContext);
 	}
 
 	@SuppressWarnings("unchecked")
 	private Context getContextForUploadedFile(Job uploadJob) {
-		UploadedPresentationData uploadData = baseDao.getEntity(uploadJob.getUploadFileId(),
+		UploadedPresentationData uploadData = baseDao.getEntity(uploadJob.getjobId(),
 				UploadedPresentationData.class);
 		String convertedRepo = ConfigurationLoader.getConfig().getString("local.repository.repo.path");
 		String repoHome = ConfigurationLoader.getConfig().getString("local.repository.home.path");
@@ -54,4 +41,5 @@ public class ConvertPresentationJobConsumer implements MessageListener {
 	public void setBaseDao(BaseDao baseDao) {
 		this.baseDao = baseDao;
 	}
+
 }

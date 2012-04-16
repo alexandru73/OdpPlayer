@@ -31,10 +31,11 @@ public class UploadedPresentationData extends BaseEntity {
 	protected User user;
 
 	public UploadedPresentationData() {
-		// TODO Auto-generated constructor stub
+		super();
 	}
 
 	public UploadedPresentationData(String title, String description, String cathegory) {
+		super();
 		this.title = title;
 		this.description = description;
 		this.cathegory = cathegory;

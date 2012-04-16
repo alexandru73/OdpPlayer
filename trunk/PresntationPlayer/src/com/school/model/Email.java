@@ -14,6 +14,7 @@ public class Email extends BaseEntity {
 	private String content;
 
 	public Email() {
+		super();
 	}
 
 	public Email(String subject, String emailAddress, String content) {
@@ -45,6 +46,11 @@ public class Email extends BaseEntity {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	@Override
+	public String toString() {
+		return "Email [subject=" + subject + ", emailAddress=" + emailAddress + ", content=" + content + "]";
 	}
 
 }

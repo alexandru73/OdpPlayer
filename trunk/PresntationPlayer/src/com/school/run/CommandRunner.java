@@ -19,6 +19,7 @@ public abstract class CommandRunner {
 		try {
 			runCommand(commandName, commandContext);
 		} catch (CommandFailedToExecuteExeption e) {
+			e.printStackTrace();
 			runRollback(rollbackCommandName, commandContext);
 		}
 	}

@@ -22,7 +22,11 @@ public abstract class BaseEntity {
 	@Column(name = "created_at", nullable = false)
 	@Type(type = "timestamp")
 	private Date createadAt;
-
+	
+	public BaseEntity() {
+		createadAt=new Date();
+	}
+	
 	public Date getCreateadAt() {
 		return createadAt;
 	}

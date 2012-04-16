@@ -12,6 +12,9 @@ public class User extends BaseEntity {
 	private String username;
 	private String password;
 
+	public User() {
+		super();
+	}
 	public String getUsername() {
 		return username;
 	}

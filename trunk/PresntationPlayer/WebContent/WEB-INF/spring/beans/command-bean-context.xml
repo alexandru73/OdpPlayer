@@ -4,19 +4,20 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
 	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
+	<!-- Converter start -->
 	<bean id="presentationConverter" class="com.school.presentation.converter.impl.PresentationConverter"
 		scope="prototype">
-		<constructor-arg type="com.school.converter.CommandRunner" ref="commandRunner" />
+		<constructor-arg type="com.school.run.CommandRunner" ref="commandRunner" />
 	</bean>
-
+	
 	<bean id="commandRunner" class="com.school.run.impl.CommandRunnerImpl" />
-
+	
 	<bean name="presentationConverterChain" class="org.apache.commons.chain.impl.ChainBase" scope="prototype">
 		<constructor-arg>
 			<util:list>
 				<ref bean="convert2Pdf" />
 				<ref bean="convertPdf2Svg" />
-				<ref bean="moveUploadedData"/>
+				<ref bean="moveUploadedData" />
 				<ref bean="extractMetadata" />
 				<ref bean="saveConversionData" />
 				<ref bean="sendNotification" />
@@ -25,11 +26,30 @@
 	</bean>
 
 	<bean id="convert2Pdf" class="com.school.presentation.converter.commands.Convert2Pdf" scope="prototype" />
-	<bean id="convertPdf2Svg" class="com.school.presentation.converter.commands.ConvertPdf2Svg" scope="prototype" />
-	<bean id="moveUploadedData" class="com.school.presentation.converter.commands.MoveUploadedFile" scope="prototype" />
-	<bean id="extractMetadata" class="com.school.presentation.converter.commands.ExtractMetadata" scope="prototype" />
-	<bean id="saveConversionData" class="com.school.presentation.converter.commands.SaveConversionData" scope="prototype">
-		<property name="baseDao" ref="baseDaoImpl"/>
+	<bean id="convertPdf2Svg" class="com.school.presentation.converter.commands.ConvertPdf2Svg"
+		scope="prototype" />
+	<bean id="moveUploadedData" class="com.school.presentation.converter.commands.MoveUploadedFile"
+		scope="prototype" />
+	<bean id="extractMetadata" class="com.school.presentation.converter.commands.ExtractMetadata"
+		scope="prototype" />
+	<bean id="saveConversionData" class="com.school.presentation.converter.commands.SaveConversionData"
+		scope="prototype">
+		<property name="baseDao" ref="baseDaoImpl" />
 	</bean>
-	<bean id="sendNotification" class="com.school.presentation.converter.commands.SendNotification" scope="prototype" />
+	<bean id="sendNotification" class="com.school.presentation.converter.commands.SendNotification"
+		scope="prototype">
+		<property name="baseDao" ref="baseDaoImpl" />
+		<property name="queue" ref="jobSenderImpl" />
+		<property name="messages" ref="messageSource" />
+	</bean>
+
+	<!-- Converter rollback -->
+	<bean id="presentationConverterRollback" class="com.school.presentation.converter.commands.ConverterRollBackCommand"
+		scope="prototype">
+		<property name="baseDao" ref="baseDaoImpl" />
+	</bean>
+	<!-- Converter end -->
+
+
+
 </beans>

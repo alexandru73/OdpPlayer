@@ -1,19 +1,11 @@
 package com.school.model;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "presentation")
-@OnDelete(action = OnDeleteAction.CASCADE)
 public class Presentation extends UploadedPresentationData {
 
 	@Column(name = "no_of_slides", nullable = false)
@@ -21,8 +13,8 @@ public class Presentation extends UploadedPresentationData {
 	@Column(name = "no_of_views", nullable = false)
 	private Long noOfViews;
 
-	@OneToMany(targetEntity = Bookmark.class, cascade = CascadeType.REMOVE)
-	private List<Bookmark> bookmarks;
+	@Column(columnDefinition="TEXT")
+	private String bookmarks;
 
 	public Presentation(UploadedPresentationData data) {
 		this.title = data.getTitle();
@@ -40,11 +32,11 @@ public class Presentation extends UploadedPresentationData {
 	public Presentation() {
 	}
 
-	public List<Bookmark> getBookmarks() {
+	public String getBookmarks() {
 		return bookmarks;
 	}
 
-	public void setBookmarks(List<Bookmark> bookmarks) {
+	public void setBookmarks(String bookmarks) {
 		this.bookmarks = bookmarks;
 	}
 

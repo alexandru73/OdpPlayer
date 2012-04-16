@@ -28,5 +28,5 @@ public class ConfigurationLoader {
 		return config;
 	}
 
-	private static final String[] PROPERTIES_FILES = { "config/repo.properties","WEB-INF/spring/config/config.properties" };
+	private static final String[] PROPERTIES_FILES = { "config/config.properties"};
 }

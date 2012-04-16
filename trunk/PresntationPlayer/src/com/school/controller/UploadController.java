@@ -24,6 +24,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import com.school.dao.BaseDao;
 import com.school.exceptions.UploadedDataNotFoundException;
 import com.school.job.Job;
+import com.school.job.Job.JobType;
 import com.school.job.JobSenderImpl;
 import com.school.model.UploadedPresentationData;
 import com.school.model.User;
@@ -99,7 +100,7 @@ public class UploadController {
 		UploadedPresentationData data = (UploadedPresentationData) session.getAttribute(UPLOAD_METADATA);
 		if (data != null) {
 			Long id = baseDao.save(data);
-			Job job = new Job(id);
+			Job job = new Job(id,JobType.CONVERT);
 			queue.send(job, UPLOAD_QUEUE);
 			result = JsonUtils.successJson();
 		} else {
@@ -118,7 +119,6 @@ public class UploadController {
 			if (isCorectFileExtension(fileExtension)) {
 				data.setRepositoryName(UUID.randomUUID().toString());
 				data.setRepositoryPath(REPO_UPLOAD_LOCATION);
-				data.setCreateadAt(new Date());
 				data.setOriginalExtension(fileExtension);
 				File file = new File(REPO_HOME+"/"+REPO_UPLOAD_LOCATION + "/" + data.getRepositoryName() + "." + fileExtension);
 				uploadedFile.transferTo(file);

@@ -2,8 +2,6 @@ package com.school.presentation.converter.commands;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
@@ -13,7 +11,6 @@ import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDDocume
 import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDOutlineItem;
 
 import com.school.exceptions.CommandFailedToExecuteExeption;
-import com.school.model.Bookmark;
 import com.school.model.Presentation;
 import com.school.model.UploadedPresentationData;
 import com.school.presentation.converter.impl.ConverterContext;
@@ -44,27 +41,26 @@ public class ExtractMetadata implements Command {
 	private Presentation createPresentation(String convertedRepositoryPath, UploadedPresentationData data,
 			String pdfFilePath) throws IOException {
 		PDDocument doc = PDDocument.load(new File(pdfFilePath));
-		List<Bookmark> bookmarks = getBookmarks(doc);
-
+		String bookmarks = getBookmarks(doc);
 		Presentation presentation = new Presentation(data);
-		presentation.setBookmarks(bookmarks);
 		presentation.setRepositoryPath(convertedRepositoryPath);
 		presentation.setNoOfSlides(doc.getNumberOfPages());
 		presentation.setBookmarks(bookmarks);
+		doc.close();
 		return presentation;
 	}
 
-	private static List<Bookmark> getBookmarks(PDDocument doc) {
+	private static String getBookmarks(PDDocument doc) {
 		PDDocumentOutline root = doc.getDocumentCatalog().getDocumentOutline();
 		PDOutlineItem item = root.getFirstChild();
-		List<Bookmark> bookmarks = new ArrayList<>();
-		int pageNo = 1;
+		StringBuilder bookmarks = new StringBuilder();
 		while (item != null) {
-			Bookmark bookmark = new Bookmark(pageNo, item.getTitle());
-			bookmarks.add(bookmark);
-			pageNo++;
+			bookmarks.append(item.getTitle());
 			item = item.getNextSibling();
+			if (item != null) {
+				bookmarks.append(",");
+			}
 		}
-		return bookmarks;
+		return bookmarks.toString();
 	}
 }
