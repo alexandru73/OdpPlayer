@@ -36,3 +36,13 @@ function ajaxJsonGet(url, objData, that, callbackSuccess) {
 		success : callbackSuccess
 	});
 };
+
+function ajaxJsonDelete(url, callbackSuccess) {
+	$.ajax({
+		url : url,
+		type:'DELETE',
+		dataType : 'json',
+		contentType: "application/json; charset=utf-8",
+		success : callbackSuccess
+	});
+};

@@ -14,7 +14,9 @@ public class OfficeManagerService implements ServletContextListener {
 
 	@Override
 	public void contextDestroyed(ServletContextEvent arg0) {
-		officeManager.stop();
+		if (officeManager != null) {
+			officeManager.stop();
+		}
 	}
 
 	@Override

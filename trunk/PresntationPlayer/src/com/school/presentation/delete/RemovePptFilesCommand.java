@@ -18,7 +18,7 @@ public class RemovePptFilesCommand implements Command {
 	public boolean execute(Context context) throws Exception {
 		if (!context.containsKey(ConverterContext.DETAILED_PRESENTATION)
 				|| !context.containsKey(ConverterContext.REPO_HOME)
-				|| context.containsKey(ConverterContext.REPO_CONVERTED)) {
+				|| !context.containsKey(ConverterContext.REPO_CONVERTED)) {
 			throw new CommandFailedToExecuteExeption();
 		}
 		String repositoryHome = (String) context.get(ConverterContext.REPO_HOME);

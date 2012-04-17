@@ -2,7 +2,6 @@ package com.school.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 
@@ -24,7 +23,6 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import com.school.dao.BaseDao;
 import com.school.exceptions.UploadedDataNotFoundException;
 import com.school.job.Job;
-import com.school.job.Job.JobType;
 import com.school.job.JobSenderImpl;
 import com.school.model.Presentation;
 import com.school.model.User;
@@ -63,7 +61,7 @@ public class UploadController {
 		return result;
 	}
 
-	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
+	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
 	public Map<String, Object> uploadFile(HttpServletRequest req,
 			@RequestParam("fileData") CommonsMultipartFile uploadedFile) {
@@ -92,7 +90,7 @@ public class UploadController {
 		return result;
 	}
 
-	@RequestMapping(value = "/completeUpload", method = RequestMethod.GET)
+	@RequestMapping(value = "/completeUpload", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	public Map<String, Object> completeUpload(HttpServletRequest req) {
 		Map<String, Object> result = null;
@@ -100,7 +98,7 @@ public class UploadController {
 		Presentation data = (Presentation) session.getAttribute(UPLOAD_METADATA);
 		if (data != null) {
 			Long id = baseDao.save(data);
-			Job job = new Job(id,JobType.CONVERT);
+			Job job = new Job(id);
 			queue.send(job, UPLOAD_QUEUE);
 			result = JsonUtils.successJson();
 		} else {

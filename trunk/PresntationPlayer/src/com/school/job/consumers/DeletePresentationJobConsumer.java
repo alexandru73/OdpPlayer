@@ -48,5 +48,5 @@ public class DeletePresentationJobConsumer extends JobConsumer {
 		this.commandRunner = commandRunner;
 	}
 
-	private static final String DELETE_COMMAND = "", DELETE_ROLLBACK = "";
+	private static final String DELETE_COMMAND = "deletePptChain", DELETE_ROLLBACK = "deletePptRollback";
 }

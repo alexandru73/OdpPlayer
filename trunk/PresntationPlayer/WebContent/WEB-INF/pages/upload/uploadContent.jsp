@@ -34,6 +34,7 @@
 		<input id="submitBut" class="button-cs" type="submit" value="<sp:message code="upload.form.next"/>">
 	</form>
 	<a id="complete-link" href="upload/completeUpload"><sp:message code="upload.form.complete"/></a>
+	<a id="complete-link" href="javascript:deletePresentation()"><sp:message code="upload.form.delete"/></a>
 	<script type="text/javascript">
 		ajaxUploadReady();
 	</script>

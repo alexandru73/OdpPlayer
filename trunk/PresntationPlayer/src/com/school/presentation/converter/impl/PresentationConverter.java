@@ -20,7 +20,6 @@ public class PresentationConverter implements Converter {
 			commandRunner.executeCommand(CONVERT_PRESENTATION_COMMAND, CONVERT_PRESENTATION_ROLLBACK, converterContext);
 		} catch (CommandNotFoundException | CommandRollbackFailedException e) {
 			e.printStackTrace();
-
 		}
 		return false;
 	}

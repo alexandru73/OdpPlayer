@@ -44,11 +44,15 @@ public class BaseDaoImpl extends HibernateDaoSupport implements BaseDao {
 			@Override
 			public List<T> doInHibernate(Session session) throws HibernateException, SQLException {
 				Criteria criteria = session.createCriteria(klass);
-				for (int i = 0; i < params.length; i++) {
-					criteria.add(Restrictions.eq((String) params[i][0], params[i][1]));
+				if (params != null) {
+					for (int i = 0; i < params.length; i++) {
+						criteria.add(Restrictions.eq((String) params[i][0], params[i][1]));
+					}
 				}
-				for (int j = 0; j < fetch.length; j++) {
-					criteria.setFetchMode(fetch[j], FetchMode.JOIN);
+				if (fetch != null) {
+					for (int j = 0; j < fetch.length; j++) {
+						criteria.setFetchMode(fetch[j], FetchMode.JOIN);
+					}
 				}
 				return (List<T>) criteria.list();
 			}
