@@ -9,9 +9,9 @@
 		scope="prototype">
 		<constructor-arg type="com.school.run.CommandRunner" ref="commandRunner" />
 	</bean>
-	
+
 	<bean id="commandRunner" class="com.school.run.impl.CommandRunnerImpl" />
-	
+
 	<bean name="presentationConverterChain" class="org.apache.commons.chain.impl.ChainBase" scope="prototype">
 		<constructor-arg>
 			<util:list>
@@ -36,7 +36,7 @@
 		scope="prototype">
 		<property name="baseDao" ref="baseDaoImpl" />
 	</bean>
-	<bean id="sendNotification" class="com.school.presentation.converter.commands.SendNotification"
+	<bean id="sendNotification" class="com.school.presentation.converter.commands.SendNotificationSuccess"
 		scope="prototype">
 		<property name="baseDao" ref="baseDaoImpl" />
 		<property name="queue" ref="jobSenderImpl" />
@@ -47,6 +47,8 @@
 	<bean id="presentationConverterRollback" class="com.school.presentation.converter.commands.ConverterRollBackCommand"
 		scope="prototype">
 		<property name="baseDao" ref="baseDaoImpl" />
+		<property name="queue" ref="jobSenderImpl" />
+		<property name="messages" ref="messageSource" />
 	</bean>
 	<!-- Converter end -->
 

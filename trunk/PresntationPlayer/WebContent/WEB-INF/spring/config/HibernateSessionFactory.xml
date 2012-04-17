@@ -30,8 +30,8 @@
 		<property name="annotatedClasses">
 			<list>
 				<value>com.school.model.User</value>
+				<value>com.school.model.DetailedPresentation</value>
 				<value>com.school.model.Presentation</value>
-				<value>com.school.model.UploadedPresentationData</value>
 				<value>com.school.model.Email</value>
 			</list>
 		</property>

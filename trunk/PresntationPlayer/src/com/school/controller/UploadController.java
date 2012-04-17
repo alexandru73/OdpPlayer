@@ -26,7 +26,7 @@ import com.school.exceptions.UploadedDataNotFoundException;
 import com.school.job.Job;
 import com.school.job.Job.JobType;
 import com.school.job.JobSenderImpl;
-import com.school.model.UploadedPresentationData;
+import com.school.model.Presentation;
 import com.school.model.User;
 import com.school.util.ConfigurationLoader;
 import com.school.util.JsonUtils;
@@ -50,7 +50,7 @@ public class UploadController {
 
 	@RequestMapping(method = RequestMethod.POST, value = "/uploadMeta", consumes = "application/json", produces = "application/json")
 	@ResponseBody
-	public Map<String, Object> saveUploadMetadata(HttpServletRequest request, @RequestBody UploadedPresentationData data) {
+	public Map<String, Object> saveUploadMetadata(HttpServletRequest request, @RequestBody Presentation data) {
 		Map<String, Object> result = null;
 		if (data.isValidData()) {
 			data.setUser(getCurrentUser());
@@ -97,7 +97,7 @@ public class UploadController {
 	public Map<String, Object> completeUpload(HttpServletRequest req) {
 		Map<String, Object> result = null;
 		HttpSession session = req.getSession();
-		UploadedPresentationData data = (UploadedPresentationData) session.getAttribute(UPLOAD_METADATA);
+		Presentation data = (Presentation) session.getAttribute(UPLOAD_METADATA);
 		if (data != null) {
 			Long id = baseDao.save(data);
 			Job job = new Job(id,JobType.CONVERT);
@@ -113,7 +113,7 @@ public class UploadController {
 
 	private void uploadFileToRepo(CommonsMultipartFile uploadedFile, HttpSession session) throws IOException,
 			UploadedDataNotFoundException {
-		UploadedPresentationData data = (UploadedPresentationData) session.getAttribute(UPLOAD_METADATA);
+		Presentation data = (Presentation) session.getAttribute(UPLOAD_METADATA);
 		if (data != null) {
 			String fileExtension = FilenameUtils.getExtension(uploadedFile.getOriginalFilename());
 			if (isCorectFileExtension(fileExtension)) {

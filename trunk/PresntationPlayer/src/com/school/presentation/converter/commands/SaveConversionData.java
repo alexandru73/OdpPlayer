@@ -6,8 +6,8 @@ import org.apache.commons.chain.Context;
 import com.school.dao.BaseDao;
 import com.school.exceptions.CommandFailedToExecuteExeption;
 import com.school.job.JobSenderImpl;
+import com.school.model.DetailedPresentation;
 import com.school.model.Presentation;
-import com.school.model.UploadedPresentationData;
 import com.school.presentation.converter.impl.ConverterContext;
 
 public class SaveConversionData implements Command {
@@ -17,11 +17,11 @@ public class SaveConversionData implements Command {
 	@Override
 	public boolean execute(Context context) throws Exception {
 		System.out.println("save conversion data");
-		if (!context.containsKey(ConverterContext.PRESENTATION) || !context.containsKey(ConverterContext.UPLOADED_DATA)) {
+		if (!context.containsKey(ConverterContext.DETAILED_PRESENTATION) || !context.containsKey(ConverterContext.PRESENTATION)) {
 			throw new CommandFailedToExecuteExeption();
 		}
-		Presentation presentation = (Presentation) context.get(ConverterContext.PRESENTATION);
-		UploadedPresentationData uploadData = (UploadedPresentationData) context.get(ConverterContext.UPLOADED_DATA);
+		DetailedPresentation presentation = (DetailedPresentation) context.get(ConverterContext.DETAILED_PRESENTATION);
+		Presentation uploadData = (Presentation) context.get(ConverterContext.PRESENTATION);
 		if (presentation == null || uploadData == null) {
 			throw new CommandFailedToExecuteExeption();
 		}
@@ -29,7 +29,7 @@ public class SaveConversionData implements Command {
 		return false;
 	}
 
-	private void makeDbChanges(Presentation presentation, UploadedPresentationData uploadData) {
+	private void makeDbChanges(DetailedPresentation presentation, Presentation uploadData) {
 		Long id = baseDao.save(presentation);
 		presentation.setId(id);
 		baseDao.delete(uploadData);

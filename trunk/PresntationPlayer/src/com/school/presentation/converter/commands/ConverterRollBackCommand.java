@@ -12,30 +12,30 @@ import com.school.dao.BaseDao;
 import com.school.job.Job;
 import com.school.job.JobSenderImpl;
 import com.school.model.Email;
+import com.school.model.DetailedPresentation;
 import com.school.model.Presentation;
-import com.school.model.UploadedPresentationData;
+import com.school.presentation.AbstractSendNotification;
 import com.school.presentation.converter.impl.ConverterContext;
 import com.school.util.ConfigurationLoader;
 
-public class ConverterRollBackCommand implements Command {
-	BaseDao baseDao;
-	ResourceBundleMessageSource messages;
-	JobSenderImpl queue;
+public class ConverterRollBackCommand extends AbstractSendNotification {
 
 	@Override
 	public boolean execute(Context context) throws Exception {
 
-		if (context.containsKey(ConverterContext.UPLOADED_DATA)) {
-			UploadedPresentationData data = (UploadedPresentationData) context.get(ConverterContext.UPLOADED_DATA);
-			Job job = new Job(setupEmail(data));
+		if (context.containsKey(ConverterContext.PRESENTATION)) {
+			Presentation data = (Presentation) context.get(ConverterContext.PRESENTATION);
+			Email email = setupEmail(data);
+			Job job = new Job(email.getId());
 			queue.send(job, NOTIFICATION_QUEUE);
 			deleteFilesAndFolders(context, data);
 			if (data.getId() != null) {
 				baseDao.delete(data);
 			}
 		}
-		if (context.containsKey(ConverterContext.PRESENTATION)) {
-			Presentation presentation = (Presentation) context.get(ConverterContext.PRESENTATION);
+		if (context.containsKey(ConverterContext.DETAILED_PRESENTATION)) {
+			DetailedPresentation presentation = (DetailedPresentation) context
+					.get(ConverterContext.DETAILED_PRESENTATION);
 			deleteFilesAndFolders(context, presentation);
 			if (presentation.getId() != null) {
 				baseDao.delete(presentation);
@@ -44,7 +44,7 @@ public class ConverterRollBackCommand implements Command {
 		return true;
 	}
 
-	private void deleteFilesAndFolders(Context context, UploadedPresentationData data) throws IOException {
+	private void deleteFilesAndFolders(Context context, Presentation data) throws IOException {
 
 		String repositoryHome = (String) context.get(ConverterContext.REPO_HOME);
 		String uploadUrl = (String) context.get(ConverterContext.REPO_UPLOADED);
@@ -62,7 +62,7 @@ public class ConverterRollBackCommand implements Command {
 		}
 	}
 
-	private Long setupEmail(UploadedPresentationData data) {
+	protected Email setupEmail(Presentation data) {
 		Object[] args = new Object[2];
 		args[0] = data.getTitle();
 		String subject = messages.getMessage("email.conversion.failure.subject", args, null);
@@ -72,12 +72,7 @@ public class ConverterRollBackCommand implements Command {
 		args[0] = ConfigurationLoader.getConfig().getString("page.contact.url");
 		content.append(messages.getMessage("email.no.reply", args, null));
 		Email email = new Email(subject, emailAddress, content.toString());
-		return baseDao.save(email);
+		email.setId(baseDao.save(email));
+		return email;
 	}
-
-	public void setBaseDao(BaseDao baseDao) {
-		this.baseDao = baseDao;
-	}
-
-	private final String NOTIFICATION_QUEUE = ConfigurationLoader.getConfig().getString("active.mq.queue.notification");
 }

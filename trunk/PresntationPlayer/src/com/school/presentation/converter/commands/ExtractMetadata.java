@@ -11,8 +11,8 @@ import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDDocume
 import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDOutlineItem;
 
 import com.school.exceptions.CommandFailedToExecuteExeption;
+import com.school.model.DetailedPresentation;
 import com.school.model.Presentation;
-import com.school.model.UploadedPresentationData;
 import com.school.presentation.converter.impl.ConverterContext;
 
 public class ExtractMetadata implements Command {
@@ -20,15 +20,15 @@ public class ExtractMetadata implements Command {
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean execute(Context context) throws Exception {
-		if (context.containsKey(ConverterContext.UPLOADED_DATA)
+		if (context.containsKey(ConverterContext.PRESENTATION)
 				&& context.containsKey(ConverterContext.PDF_CONVERSION_URL)) {
 
 			String convertedRepositoryPath = (String) context.get(ConverterContext.REPO_CONVERTED);
 			String pdfFilePath = (String) context.get(ConverterContext.PDF_CONVERSION_URL);
-			UploadedPresentationData data = (UploadedPresentationData) context.get(ConverterContext.UPLOADED_DATA);
+			Presentation data = (Presentation) context.get(ConverterContext.PRESENTATION);
 			if (data != null && StringUtils.isNotEmpty(convertedRepositoryPath) && StringUtils.isNotEmpty(pdfFilePath)) {
-				Presentation presentation = createPresentation(convertedRepositoryPath, data, pdfFilePath);
-				context.put(ConverterContext.PRESENTATION, presentation);
+				DetailedPresentation presentation = createPresentation(convertedRepositoryPath, data, pdfFilePath);
+				context.put(ConverterContext.DETAILED_PRESENTATION, presentation);
 			} else {
 				throw new CommandFailedToExecuteExeption();
 			}
@@ -38,11 +38,11 @@ public class ExtractMetadata implements Command {
 		return false;
 	}
 
-	private Presentation createPresentation(String convertedRepositoryPath, UploadedPresentationData data,
+	private DetailedPresentation createPresentation(String convertedRepositoryPath, Presentation data,
 			String pdfFilePath) throws IOException {
 		PDDocument doc = PDDocument.load(new File(pdfFilePath));
 		String bookmarks = getBookmarks(doc);
-		Presentation presentation = new Presentation(data);
+		DetailedPresentation presentation = new DetailedPresentation(data);
 		presentation.setRepositoryPath(convertedRepositoryPath);
 		presentation.setNoOfSlides(doc.getNumberOfPages());
 		presentation.setBookmarks(bookmarks);

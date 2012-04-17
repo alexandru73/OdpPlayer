@@ -8,14 +8,14 @@ import org.apache.commons.lang.StringUtils;
 
 import com.school.exceptions.CommandFailedToExecuteExeption;
 import com.school.exceptions.SvgConversionFailedException;
-import com.school.model.UploadedPresentationData;
+import com.school.model.Presentation;
 import com.school.presentation.converter.impl.ConverterContext;
 import com.school.util.OtherUtils;
 
 public class ConvertPdf2Svg implements Command {
 	@Override
 	public boolean execute(Context context) throws Exception {
-		if (context.containsKey(ConverterContext.UPLOADED_DATA)
+		if (context.containsKey(ConverterContext.PRESENTATION)
 				&& context.containsKey(ConverterContext.PDF_CONVERSION_URL)) {
 			String commandLine = createCommandLine(context);
 			System.err.println(commandLine);
@@ -31,7 +31,7 @@ public class ConvertPdf2Svg implements Command {
 	}
 
 	private String createCommandLine(Context context) throws CommandFailedToExecuteExeption {
-		UploadedPresentationData data = (UploadedPresentationData) context.get(ConverterContext.UPLOADED_DATA);
+		Presentation data = (Presentation) context.get(ConverterContext.PRESENTATION);
 		String imgFolderPath = createSvgImageFolder(context, data);
 		String pdfFilePath = (String) context.get(ConverterContext.PDF_CONVERSION_URL);
 		if (data != null && StringUtils.isNotEmpty(pdfFilePath) && StringUtils.isNotEmpty(imgFolderPath)) {
@@ -43,7 +43,7 @@ public class ConvertPdf2Svg implements Command {
 		}
 	}
 
-	private String createSvgImageFolder(Context context, UploadedPresentationData data)
+	private String createSvgImageFolder(Context context, Presentation data)
 			throws CommandFailedToExecuteExeption {
 		String repoHome = (String) context.get(ConverterContext.REPO_HOME);
 		String convertedRepositoryPath = (String) context.get(ConverterContext.REPO_CONVERTED);

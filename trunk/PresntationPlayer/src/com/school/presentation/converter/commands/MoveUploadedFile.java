@@ -9,7 +9,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 
 import com.school.exceptions.CommandFailedToExecuteExeption;
-import com.school.model.UploadedPresentationData;
+import com.school.model.Presentation;
 import com.school.presentation.converter.impl.ConverterContext;
 import com.school.util.OtherUtils;
 
@@ -17,12 +17,12 @@ public class MoveUploadedFile implements Command {
 
 	@Override
 	public boolean execute(Context context) throws Exception {
-		if (context.containsKey(ConverterContext.UPLOADED_DATA)
+		if (context.containsKey(ConverterContext.PRESENTATION)
 				&& context.containsKey(ConverterContext.PDF_CONVERSION_URL)) {
 
 			String repoHome = (String) context.get(ConverterContext.REPO_HOME);
 			String convertedRepositoryPath = (String) context.get(ConverterContext.REPO_CONVERTED);
-			UploadedPresentationData data = (UploadedPresentationData) context.get(ConverterContext.UPLOADED_DATA);
+			Presentation data = (Presentation) context.get(ConverterContext.PRESENTATION);
 			if (data != null && StringUtils.isNotEmpty(repoHome) && StringUtils.isNotEmpty(convertedRepositoryPath)) {
 				moveUploadedFile(repoHome, convertedRepositoryPath, data);
 			} else {
@@ -34,7 +34,7 @@ public class MoveUploadedFile implements Command {
 		return false;
 	}
 
-	private void moveUploadedFile(String repoHome, String convertedRepositoryPath, UploadedPresentationData data)
+	private void moveUploadedFile(String repoHome, String convertedRepositoryPath, Presentation data)
 			throws CommandFailedToExecuteExeption {
 		try {
 			String fileName = OtherUtils.concatStringsAscending(data.getRepositoryName(), ".",
