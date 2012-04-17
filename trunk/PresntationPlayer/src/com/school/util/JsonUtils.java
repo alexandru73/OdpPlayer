@@ -7,7 +7,7 @@ import java.util.TreeMap;
 import org.apache.commons.lang.StringUtils;
 
 public class JsonUtils {
-
+	public static final String PARAM_MESSAGE="message";
 	public static Map<String, Object> successWithParams(Map<String, Object> params) {
 		return getJsonWithParams(params, STATUS_SUCCESS);
 	}

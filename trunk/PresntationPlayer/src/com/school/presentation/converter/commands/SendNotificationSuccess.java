@@ -1,14 +1,22 @@
 package com.school.presentation.converter.commands;
 
+import org.apache.commons.chain.Context;
+
+import com.school.exceptions.CommandFailedToExecuteExeption;
 import com.school.model.Email;
 import com.school.model.Presentation;
 import com.school.presentation.AbstractSendNotification;
+import com.school.presentation.converter.impl.ConverterContext;
 import com.school.util.ConfigurationLoader;
 
 public class SendNotificationSuccess extends AbstractSendNotification {
 
 	@Override
-	protected Email setupEmail(Presentation presentation) {
+	protected Email setupEmail(Context context) throws CommandFailedToExecuteExeption {
+		if (!context.containsKey(ConverterContext.PRESENTATION)) {
+			throw new CommandFailedToExecuteExeption();
+		}
+		Presentation presentation = (Presentation) context.get(ConverterContext.PRESENTATION);
 		Object[] args = new Object[2];
 		args[0] = presentation.getTitle();
 		String subject = messages.getMessage("email.conversion.success.subject", args, null);

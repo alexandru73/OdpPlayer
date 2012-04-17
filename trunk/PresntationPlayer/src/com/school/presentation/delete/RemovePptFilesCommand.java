@@ -7,21 +7,30 @@ import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
 import org.apache.commons.io.FileUtils;
 
+import com.school.exceptions.CommandFailedToExecuteExeption;
+import com.school.model.DetailedPresentation;
 import com.school.model.Presentation;
 import com.school.presentation.converter.impl.ConverterContext;
 
 public class RemovePptFilesCommand implements Command {
 
 	@Override
-	public boolean execute(Context arg0) throws Exception {
-		// TODO Auto-generated method stub
+	public boolean execute(Context context) throws Exception {
+		if (!context.containsKey(ConverterContext.DETAILED_PRESENTATION)
+				|| !context.containsKey(ConverterContext.REPO_HOME)
+				|| context.containsKey(ConverterContext.REPO_CONVERTED)) {
+			throw new CommandFailedToExecuteExeption();
+		}
+		String repositoryHome = (String) context.get(ConverterContext.REPO_HOME);
+		String convertedRepositoryPath = (String) context.get(ConverterContext.REPO_CONVERTED);
+		DetailedPresentation presentation = (DetailedPresentation) context.get(ConverterContext.DETAILED_PRESENTATION);
+		deleteFilesAndFolders(repositoryHome, convertedRepositoryPath, presentation);
 		return false;
 	}
 
-	private void deleteFilesAndFolders(Context context, Presentation data) throws IOException {
-		String repositoryHome = (String) context.get(ConverterContext.REPO_HOME);
-		String convertedRepositoryPath = (String) context.get(ConverterContext.REPO_CONVERTED);
-		String fileUrl = repositoryHome + "/" + convertedRepositoryPath + "/" + data.getRepositoryName();
+	private void deleteFilesAndFolders(String repositoryHome, String convertedRepositoryPath, Presentation presentation)
+			throws IOException {
+		String fileUrl = repositoryHome + "/" + convertedRepositoryPath + "/" + presentation.getRepositoryName();
 		File dir = new File(fileUrl);
 		if (dir.exists() && dir.isDirectory()) {
 			FileUtils.cleanDirectory(dir);

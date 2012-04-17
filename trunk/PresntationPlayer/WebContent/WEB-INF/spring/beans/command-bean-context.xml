@@ -52,6 +52,33 @@
 	</bean>
 	<!-- Converter end -->
 
+	<!-- Delete presentation start -->
+	<bean name="deletePptChain" class="org.apache.commons.chain.impl.ChainBase" scope="prototype">
+		<constructor-arg>
+			<util:list>
+				<ref bean="removePptFiles" />
+				<ref bean="deletePptFromDb" />
+				<ref bean="deletePptSuccessNotification" />
+			</util:list>
+		</constructor-arg>
+	</bean>
 
-
+	<bean id="removePptFiles" class="com.school.presentation.delete.RemovePptFilesCommand" scope="prototype" />
+	<bean id="deletePptFromDb" class="com.school.presentation.delete.DeleteFromDbCommand" scope="prototype">
+		<property name="baseDao" ref="baseDaoImpl" />
+	</bean>
+	<bean id="deletePptSuccessNotification" class="com.school.presentation.delete.SendNotificationSuccessCommand"
+		scope="prototype">
+		<property name="baseDao" ref="baseDaoImpl" />
+		<property name="queue" ref="jobSenderImpl" />
+		<property name="messages" ref="messageSource" />
+	</bean>
+	<!-- delete rollback -->
+	<bean id="deletePptRollback" class="com.school.presentation.delete.DeleteRollbackCommand"
+		scope="prototype">
+		<property name="baseDao" ref="baseDaoImpl" />
+		<property name="queue" ref="jobSenderImpl" />
+		<property name="messages" ref="messageSource" />
+	</bean>
+	<!-- Delete presentation end -->
 </beans>

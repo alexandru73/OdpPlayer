@@ -25,7 +25,7 @@ public class ConverterRollBackCommand extends AbstractSendNotification {
 
 		if (context.containsKey(ConverterContext.PRESENTATION)) {
 			Presentation data = (Presentation) context.get(ConverterContext.PRESENTATION);
-			Email email = setupEmail(data);
+			Email email = setupEmail(context);
 			Job job = new Job(email.getId());
 			queue.send(job, NOTIFICATION_QUEUE);
 			deleteFilesAndFolders(context, data);
@@ -62,7 +62,8 @@ public class ConverterRollBackCommand extends AbstractSendNotification {
 		}
 	}
 
-	protected Email setupEmail(Presentation data) {
+	protected Email setupEmail(Context context) {
+		Presentation data = (Presentation) context.get(ConverterContext.PRESENTATION);
 		Object[] args = new Object[2];
 		args[0] = data.getTitle();
 		String subject = messages.getMessage("email.conversion.failure.subject", args, null);
