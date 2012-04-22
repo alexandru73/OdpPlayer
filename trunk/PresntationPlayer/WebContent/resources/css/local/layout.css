@@ -152,3 +152,8 @@ select.text-input:focus,textarea.text-input:focus,input.text-input:focus,input.u
 	background-color: grey;
 	color:  #919090;
 }
+
+.message-div-hidden{
+	display: none;
+	padding-top: 15px;
+}	

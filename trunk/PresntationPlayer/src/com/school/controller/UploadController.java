@@ -2,6 +2,7 @@ package com.school.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.school.dao.BaseDao;
+import com.school.exceptions.IncorectFileException;
 import com.school.exceptions.UploadedDataNotFoundException;
 import com.school.job.Job;
 import com.school.job.JobSenderImpl;
@@ -80,6 +82,9 @@ public class UploadController extends AbstractController {
 			} catch (IllegalStateException | IOException e) {
 				String errorMessage = messages.getMessage("validation.upload.failed", null, null);
 				result = JsonUtils.failureJson(errorMessage);
+			} catch (IncorectFileException e) {
+				String errorMessage = messages.getMessage("validation.upload.incorect.file.extension", null, null);
+				result = JsonUtils.failureJson(errorMessage+acceptedExtensions.toString());
 			}
 		}
 		return result;
@@ -102,7 +107,8 @@ public class UploadController extends AbstractController {
 			Long id = baseDao.save(data);
 			Job job = new Job(id);
 			queue.send(job, UPLOAD_QUEUE);
-			result = JsonUtils.successJson();
+			result = JsonUtils.successWithParameter(JsonUtils.PARAM_MESSAGE,
+					messages.getMessage("upload.success", null, null));
 		} else {
 			String errorMessage = messages.getMessage("validation.upload.first.set.metadata", null, null);
 			result = JsonUtils.failureJson(errorMessage);
@@ -112,7 +118,7 @@ public class UploadController extends AbstractController {
 	}
 
 	private void uploadFileToRepo(CommonsMultipartFile uploadedFile, HttpSession session) throws IOException,
-			UploadedDataNotFoundException {
+			UploadedDataNotFoundException, IncorectFileException {
 		Presentation data = (Presentation) session.getAttribute(UPLOAD_METADATA);
 		if (data != null) {
 			String fileExtension = FilenameUtils.getExtension(uploadedFile.getOriginalFilename());
@@ -125,7 +131,7 @@ public class UploadController extends AbstractController {
 				uploadedFile.transferTo(file);
 				session.setAttribute(UPLOAD_METADATA, data);
 			} else {
-
+				throw new IncorectFileException();
 			}
 		} else {
 			throw new UploadedDataNotFoundException();
@@ -133,8 +139,7 @@ public class UploadController extends AbstractController {
 	}
 
 	private boolean isCorectFileExtension(String fileExtension) {
-		// TODO Auto-generated method stub
-		return true;
+		return Arrays.asList(acceptedExtensions).contains(fileExtension);
 	}
 
 	public void setMessages(ResourceBundleMessageSource messages) {
@@ -162,4 +167,5 @@ public class UploadController extends AbstractController {
 			"local.repository.home.path"), UPLOAD_QUEUE = ConfigurationLoader.getConfig().getString(
 			"active.mq.queue.convert.presentation"), UPLOAD_METADATA = "metadata", UPLOAD_COMPLETE = "complete",
 			CATHEGORIES = "cathegories";
+	private static final String[] acceptedExtensions = { "ppt", "odp", "pptx" };
 }

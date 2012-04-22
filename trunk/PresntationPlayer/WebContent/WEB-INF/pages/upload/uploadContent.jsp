@@ -1,5 +1,7 @@
 <%@taglib prefix="sp" uri="http://www.springframework.org/tags"%>
 <h2 class="center-align "><sp:message code="title.upload.presentation"/></h2>
+<div  id="step0-div" class="form-content mainPage form-panel message-div-hidden">
+</div>
 <div  id="step1-div" class="form-content mainPage form-panel">
 	<h3><sp:message  code="upload.form.step1"/></h3>
 	<form id="metaForm" >
@@ -65,6 +67,8 @@
 			</tr>
 		</table>
 	</form>
+</div>
+<div id="dialog-message">
 </div>
 <script type="text/javascript">
 	ajaxUploadReady();

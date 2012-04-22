@@ -1,5 +1,7 @@
 <%@taglib prefix="sp" uri="http://www.springframework.org/tags"%>
 <h2 class="center-align "><sp:message code="menu.register"/></h2>
+<div  id="step0-div" class="form-content mainPage form-panel message-div-hidden">
+</div>
 <div  id="register-div" class="form-content mainPage form-panel">
 	<h3><sp:message code="title.register.form"/></h3>
 	<form id="register" >

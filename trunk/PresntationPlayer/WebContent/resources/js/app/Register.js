@@ -25,6 +25,7 @@ Register.prototype = {
 		$('#registerSubmit').click(function() {
 			that.validateUsername();
 			var okToSubmit = LiveValidation.massValidate(validators);
+			console.log(that.usernameValid);
 			if (okToSubmit && that.usernameValid) {
 				that.submitForm();
 			}
@@ -57,7 +58,7 @@ Register.prototype = {
 	},
 	
 	onUsernameCheckComplete : function(response,that) {
-		this.usernameValid=response.success;
+		that.usernameValid=response.success;
 		var msg=response.errorMessage;
 		var userN=$('#username');
 		if (response.success==true) {
@@ -68,9 +69,17 @@ Register.prototype = {
 
 	onSubmitComplete : function(response) {
 		var id="result-register";
-		var element=$('#register-div');
+		var element=$('#step0-div');
 		if(response.success==true){
 			$('#register').clearForm();
+			$('input , textarea').removeClass('LV_valid_field');
+			$('.LV_valid').remove();
+			$('body').animate({scrollTop: $('body').position().top}, 'fast');
+			element.show(500);
+			element.empty();
+		    setTimeout(function() {
+		    	element.hide(700);
+		    }, 5000);
 			appendSuccessMessageDivTo(element, response, id);
 		}else{
 			appendFailureMessageDivTo(element, response, id);
