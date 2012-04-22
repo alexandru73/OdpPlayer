@@ -89,6 +89,7 @@ body {
 .form-panel {
 	background: #D6D6D6;
 	padding-left: 30px;
+	padding-right: 30px;
 	padding-bottom: 15px;
 }
 
@@ -130,7 +131,8 @@ select.text-input:focus,textarea.text-input:focus,input.text-input:focus,input.u
 	-moz-top-right-radius: 0px;
 	-moz-bottom-right-radius: 0px;
 	padding-top: 3px;
-	border-right: none
+	border-right: none;
+	margin-left:2px;
 }
 
 .ui-combo-but-re {

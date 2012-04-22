@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.springframework.context.annotation.Scope;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,8 @@ import com.school.util.OtherUtils;
 public class UserController {
 	@Resource(name = "baseDaoImpl")
 	BaseDao baseDao;
+	@Resource(name = "messageSource")
+	ResourceBundleMessageSource messages;
 
 	@RequestMapping(method = RequestMethod.GET, value = "/int", headers = "Accept=application/json")
 	public @ResponseBody
@@ -37,16 +40,16 @@ public class UserController {
 
 		return "god";
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET, value = "/checkUsername", produces = "application/json")
 	@ResponseBody
 	public Map<String, Object> checkUsername(@RequestParam String username) {
-		Map<String, Object> result = JsonUtils.failureJson();
-		if(username!=null){
-			Object[][] params={{"username",username}};
-			List<User>userList=baseDao.getEntitiesWithConditions(User.class, params, null);
-			if(userList.isEmpty()){
-				result=JsonUtils.successJson();
+		Map<String, Object> result = JsonUtils.failureJson(messages.getMessage("register.username.exists", null,null));
+		if (username != null) {
+			Object[][] params = { { "username", username } };
+			List<User> userList = baseDao.getEntitiesWithConditions(User.class, params, null);
+			if (userList.isEmpty()) {
+				result = JsonUtils.successJson();
 			}
 		}
 		return result;
@@ -66,15 +69,20 @@ public class UserController {
 				auth.setUser(user);
 				baseDao.save(auth);
 			}
-			result = JsonUtils.successJson();
+			result = JsonUtils.successWithParameter(JsonUtils.PARAM_MESSAGE,
+					messages.getMessage("register.success", null, null));
 		} else {
-			result = JsonUtils.failureJson();
+			result = JsonUtils.failureJson(messages.getMessage("register.failure", null, null));
 		}
 		return result;
 	}
 
 	public void setBaseDao(BaseDao baseDao) {
 		this.baseDao = baseDao;
+	}
+
+	public void setMessages(ResourceBundleMessageSource messages) {
+		this.messages = messages;
 	}
 
 }

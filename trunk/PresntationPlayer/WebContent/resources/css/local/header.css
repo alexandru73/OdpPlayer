@@ -39,6 +39,7 @@
 	float: right;
 	position: relative;
 	background-color: #172322;
+	border-top:none;
 }
 
 #menu-info {

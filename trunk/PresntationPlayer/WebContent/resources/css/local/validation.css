@@ -1,9 +1,24 @@
 .LV_valid {
     color:#00CC00;
+    padding:5px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	border: 1px solid #8CCE3B;
+	background: #F1FBE5 ;
+	margin-left:5px;
+	font-size:15px;
 }
 	
 .LV_invalid {
     color:#CC0000;
+   -moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	padding:5px;
+	border: 1px solid #F1AC88;
+	background: #F6ECD5;
+	margin-left:5px;
 }
     
 .LV_valid_field,

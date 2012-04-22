@@ -65,11 +65,10 @@ function getCathegories() {
 
 
 
-var okMessage="OK";
+var okMessage="✓";
 var mandatory="This field is mandatory";
-
+var status=false;
 function initMetaForm(){
-
 	var validators=new Array(); 
 	var title=new LiveValidation( "title", { validMessage: okMessage , wait: 500 } )
 	.add( Validate.Presence, {failureMessage : mandatory } )
@@ -82,15 +81,34 @@ function initMetaForm(){
 	var duration=new LiveValidation( "slideDuration", { validMessage: okMessage , wait: 500 } )
 	.add( Validate.Presence, {failureMessage : mandatory } )
 	.add(Validate.Numericality, { maximum: 1000 , onlyInteger: true });
-	validators.push(duration);
+	validators.push(duration);	
+	
+	$('#comboInput').blur(function() {
+		validateCombo();
+	});
 	
 	$('#metaSubmit').click(function() {
+		validateCombo();
 		var okToSubmit = LiveValidation.massValidate(validators);
-		if (okToSubmit) {
+		if (okToSubmit==true && status==true) {
 			submitMetaData();
 		}
 	});
 	
+}
+
+function validateCombo(){
+	var element = $('#combobox');
+	var combo = element.val();
+	if (combo != null && combo!="") {
+		status = true;
+		appendUsernameMessage(okMessage, true, "comboSpan",
+				$("#comboInput"), element.parent());
+	} else {
+		status = false;
+		appendUsernameMessage(mandatory, false, "comboSpan",
+				$("#comboInput"), element.parent());
+	}
 }
 function initUploadForm(){
 	new LiveValidation( "fileData", { validMessage: okMessage , wait: 500 } )

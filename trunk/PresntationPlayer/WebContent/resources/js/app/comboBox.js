@@ -5,7 +5,7 @@
 					select = this.element.hide(),
 					selected = select.children( ":selected" ),
 					value = selected.val() ? selected.text() : "";
-				var input = this.input = $( "<input id='alex'>" )
+				var input = this.input = $( "<input id='comboInput'>" )
 					.insertAfter( select )
 					.val( value )
 					.autocomplete({

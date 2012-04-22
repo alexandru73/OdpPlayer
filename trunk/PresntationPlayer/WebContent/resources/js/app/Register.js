@@ -5,9 +5,10 @@ $(document).ready(function() {
 
 function Register() {
 	this.validators = new Array();
-	this.okMessage = 'OK';
+	this.okMessage="✓";
 	this.mandatoryMessage = 'This field is mandatory';
 	this.usernameValid=false;
+	this.usrSpan="usrSpan";
 };
 
 Register.prototype = {
@@ -22,6 +23,7 @@ Register.prototype = {
 		var validators = this.validators;
 		var that = this;
 		$('#registerSubmit').click(function() {
+			that.validateUsername();
 			var okToSubmit = LiveValidation.massValidate(validators);
 			if (okToSubmit && that.usernameValid) {
 				that.submitForm();
@@ -33,32 +35,46 @@ Register.prototype = {
 		var that = this;
 		$('#username').blur(
 				function() {
-					var username=$('#username').val();
-					if (username != null && username != '') {
-						if (username.length > 2) {
-							var url = "user/checkUsername?username="
-									+ $('#username').val();
-							ajaxJsonWithParamGet(url,that ,that.onUsernameCheckComplete);
-						} else {
-							var message="The username must contain more than 2 characters !";
-							that.appendUsernameMessage(message,false );
-						}
-					}else{
-						that.appendUsernameMessage(that.mandatoryMessage,false );
-					}	
+					that.validateUsername();
 				});
 	},
-
+	
+	validateUsername:function(){
+		var userN=$('#username');
+		var username=userN.val();
+		if (username != null && username != '') {
+			if (username.length > 2) {
+				var url = "user/checkUsername?username="
+						+ $('#username').val();
+				ajaxJsonWithParamGet(url,this ,this.onUsernameCheckComplete);
+			} else {
+				var message="The username must contain more than 2 characters !";
+				appendUsernameMessage(message,false,this.usrSpan,userN,userN.parent());
+			}
+		}else{
+			appendUsernameMessage(this.mandatoryMessage,false,this.usrSpan,userN,userN.parent());
+		}	
+	},
+	
 	onUsernameCheckComplete : function(response,that) {
-		if (response.success) {
-			that.appendUsernameMessage("OK",true);
-		} else {
-			that.appendUsernameMessage("The username already exists !",false);
-		}
+		this.usernameValid=response.success;
+		var msg=response.errorMessage;
+		var userN=$('#username');
+		if (response.success==true) {
+			msg=that.okMessage;
+		} 
+		appendUsernameMessage(msg,response.success,that.usrSpan,userN,userN.parent());
 	},
 
 	onSubmitComplete : function(response) {
-		alert('success ' + response.success);
+		var id="result-register";
+		var element=$('#register-div');
+		if(response.success==true){
+			$('#register').clearForm();
+			appendSuccessMessageDivTo(element, response, id);
+		}else{
+			appendFailureMessageDivTo(element, response, id);
+		}		
 	},
 
 	getFormData : function() {
@@ -74,21 +90,6 @@ Register.prototype = {
 	submitForm : function() {
 		var data = this.getFormData();
 		ajaxJsonPost("user/register", data, this, this.onSubmitComplete);
-	},
-
-	appendUsernameMessage : function(message, status) {
-		$('#usrSpan').remove();
-		var klass = "LV_invalid";
-		this.usernameValid=status;
-		$('#username').addClass("LV_invalid_field");
-		if (status) {
-			klass = "LV_valid";
-			$('#username').removeClass("LV_invalid_field");
-			$('#username').addClass("LV_valid_field");
-		}
-		var spanz = "<span id='usrSpan'>" + message + "</span>";
-		$('#username').parent().append(spanz);
-		$('#usrSpan').addClass(klass);
 	},
 
 	initValidators : function() {

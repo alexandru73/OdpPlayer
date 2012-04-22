@@ -5,3 +5,4 @@
 <script type="text/javascript" src="resources/js/app/ajax.util.js"></script>
 <script type="text/javascript" src="resources/js/app/comboBox.js"></script>
 <script type="text/javascript" src="resources/js/app/uploadPresentation.js"></script>
+<script type="text/javascript" src="resources/js/app/Utils.js"></script>
