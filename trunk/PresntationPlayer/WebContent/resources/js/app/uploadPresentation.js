@@ -110,6 +110,7 @@ function validateCombo(){
 				$("#comboInput"), element.parent());
 	}
 }
+
 function initUploadForm(){
 	new LiveValidation( "fileData", { validMessage: okMessage , wait: 500 } )
 	.add( Validate.Presence, {failureMessage : mandatory } );
