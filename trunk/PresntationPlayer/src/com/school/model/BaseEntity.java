@@ -1,5 +1,6 @@
 package com.school.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -14,7 +15,7 @@ import org.hibernate.annotations.Type;
 
 @Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
-public abstract class BaseEntity {
+public abstract class BaseEntity implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)

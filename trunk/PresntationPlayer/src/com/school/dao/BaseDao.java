@@ -20,4 +20,6 @@ public interface BaseDao {
 
 	public <T extends BaseEntity> List<T> getEntitiesWithConditions(final Class<T> klass, final Object[][] params,
 			final String[] fetch);
+
+	public <T extends BaseEntity> List<T> getAllEntities(final Class<T> klass);
 }

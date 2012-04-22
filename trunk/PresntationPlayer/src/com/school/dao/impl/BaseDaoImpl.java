@@ -37,6 +37,17 @@ public class BaseDaoImpl extends HibernateDaoSupport implements BaseDao {
 		getHibernateTemplate().deleteAll(entities);
 	}
 
+	public <T extends BaseEntity> List<T> getAllEntities(final Class<T> klass) {
+		return getHibernateTemplate().execute(new HibernateCallback<List<T>>() {
+			@SuppressWarnings("unchecked")
+			@Override
+			public List<T> doInHibernate(Session session) throws HibernateException, SQLException {
+				Criteria criteria = session.createCriteria(klass);
+				return criteria.list();
+			}
+		});
+	}
+
 	public <T extends BaseEntity> List<T> getEntitiesWithConditions(final Class<T> klass, final Object[][] params,
 			final String[] fetch) {
 		return getHibernateTemplate().execute(new HibernateCallback<List<T>>() {

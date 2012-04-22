@@ -2,6 +2,7 @@ package com.school.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -24,27 +25,21 @@ import com.school.dao.BaseDao;
 import com.school.exceptions.UploadedDataNotFoundException;
 import com.school.job.Job;
 import com.school.job.JobSenderImpl;
+import com.school.model.Cathegory;
 import com.school.model.Presentation;
-import com.school.model.User;
 import com.school.util.ConfigurationLoader;
 import com.school.util.JsonUtils;
 
 @Controller
 @RequestMapping(value = "/upload")
 @Scope(value = "request")
-public class UploadController {
+public class UploadController extends AbstractController {
 	@Resource(name = "messageSource")
 	ResourceBundleMessageSource messages;
 	@Resource(name = "jobSenderImpl")
 	JobSenderImpl queue;
 	@Resource(name = "baseDaoImpl")
 	BaseDao baseDao;
-
-	@RequestMapping(method = RequestMethod.GET, value = "/upload")
-	public String getPresentationPage() {
-		return "upload/uploadPage";
-	}
-
 
 	@RequestMapping(method = RequestMethod.POST, value = "/uploadMeta", consumes = "application/json", produces = "application/json")
 	@ResponseBody
@@ -90,6 +85,13 @@ public class UploadController {
 		return result;
 	}
 
+	@RequestMapping(value = "/cathegories", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody
+	public Map<String, Object> getCathegories() {
+		List<Cathegory> cathegories = baseDao.getAllEntities(Cathegory.class);
+		return JsonUtils.successWithParameter(CATHEGORIES, cathegories);
+	}
+
 	@RequestMapping(value = "/completeUpload", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	public Map<String, Object> completeUpload(HttpServletRequest req) {
@@ -118,7 +120,8 @@ public class UploadController {
 				data.setRepositoryName(UUID.randomUUID().toString());
 				data.setRepositoryPath(REPO_UPLOAD_LOCATION);
 				data.setOriginalExtension(fileExtension);
-				File file = new File(REPO_HOME+"/"+REPO_UPLOAD_LOCATION + "/" + data.getRepositoryName() + "." + fileExtension);
+				File file = new File(REPO_HOME + "/" + REPO_UPLOAD_LOCATION + "/" + data.getRepositoryName() + "."
+						+ fileExtension);
 				uploadedFile.transferTo(file);
 				session.setAttribute(UPLOAD_METADATA, data);
 			} else {
@@ -132,11 +135,6 @@ public class UploadController {
 	private boolean isCorectFileExtension(String fileExtension) {
 		// TODO Auto-generated method stub
 		return true;
-	}
-
-	private User getCurrentUser() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	public void setMessages(ResourceBundleMessageSource messages) {
@@ -159,9 +157,9 @@ public class UploadController {
 		this.baseDao = baseDao;
 	}
 
-	private static final String 
-	REPO_UPLOAD_LOCATION = ConfigurationLoader.getConfig().getString("local.repository.upload.path"), 
-	REPO_HOME = ConfigurationLoader.getConfig().getString("local.repository.home.path"),
-	UPLOAD_QUEUE = ConfigurationLoader.getConfig().getString("active.mq.queue.convert.presentation"),
-	UPLOAD_METADATA = "metadata", UPLOAD_COMPLETE = "complete";
+	private static final String REPO_UPLOAD_LOCATION = ConfigurationLoader.getConfig().getString(
+			"local.repository.upload.path"), REPO_HOME = ConfigurationLoader.getConfig().getString(
+			"local.repository.home.path"), UPLOAD_QUEUE = ConfigurationLoader.getConfig().getString(
+			"active.mq.queue.convert.presentation"), UPLOAD_METADATA = "metadata", UPLOAD_COMPLETE = "complete",
+			CATHEGORIES = "cathegories";
 }

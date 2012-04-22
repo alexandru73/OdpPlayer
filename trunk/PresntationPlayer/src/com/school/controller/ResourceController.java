@@ -41,9 +41,16 @@ public class ResourceController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/css/local/{cssName:.+}")
-	public @ResponseBody
-	Resource getJsCssNotInSubfolder(@PathVariable("cssName") String cssName) {
+	@ResponseBody
+	public Resource getCssNotInSubfolder(@PathVariable("cssName") String cssName) {
 		return resService.getResource(RESOURCE_CSS_LOCAL_FOLDER + "/" + cssName);
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/css/local/img/{imgName:.+}")
+	@ResponseBody
+	public ResponseEntity<Resource> getLocalCssImgSubfolder(@PathVariable("imgName") String imgName) {
+		Resource res = resService.getResource(RESOURCE_CSS_LOCAL_IMG_FOLDER + "/" + imgName);
+		return setImageResponseMediaType(res);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/css/*/{cssName:.+}")
@@ -55,6 +62,10 @@ public class ResourceController {
 	@RequestMapping(method = RequestMethod.GET, value = "/css/*/images/{imgName:.+}")
 	public ResponseEntity<Resource> getCssImageResource(@PathVariable("imgName") String imgName) {
 		Resource res = resService.getResource(RESOURCE_CSS_IMAGE_FOLDER + "/" + imgName);
+		return setImageResponseMediaType(res);
+	}
+
+	private ResponseEntity<Resource> setImageResponseMediaType(Resource res) {
 		HttpHeaders headers = new HttpHeaders();
 		MediaType mediaType;
 		try {
@@ -78,10 +89,12 @@ public class ResourceController {
 		return new ResponseEntity<>(res, headers, HttpStatus.OK);
 	}
 
-	private String RESOURCE_CSS_LOCAL_FOLDER = ConfigurationLoader.getConfig().getString("resources.default.css.local.folder"),
-			RESOURCE_CSS_THEME_FOLDER = ConfigurationLoader.getConfig().getString("resources.default.css.theme.folder"), 
-			RESOURCE_JS_FOLDER = ConfigurationLoader.getConfig().getString("resources.default.js.folder"), 
-			RESOURCE_CSS_IMAGE_FOLDER = ConfigurationLoader.getConfig().getString("resources.default.css.images.folder"),
-			RESOURCE_REPO_FOLDER = ConfigurationLoader.getConfig().getString("local.repository.upload.path"),
-			SVG_MEDIA_TYPE = "image", SVG_MEDIA_SUBTYPE = "svg+xml",RESOURCE_SOURCE_DISK = "file:";
+	private final String RESOURCE_CSS_LOCAL_FOLDER = ConfigurationLoader.getConfig().getString(
+			"resources.default.css.local.folder"), RESOURCE_CSS_THEME_FOLDER = ConfigurationLoader.getConfig()
+			.getString("resources.default.css.theme.folder"), RESOURCE_JS_FOLDER = ConfigurationLoader.getConfig()
+			.getString("resources.default.js.folder"), RESOURCE_CSS_IMAGE_FOLDER = ConfigurationLoader.getConfig()
+			.getString("resources.default.css.images.folder"), RESOURCE_REPO_FOLDER = ConfigurationLoader.getConfig()
+			.getString("local.repository.upload.path"), RESOURCE_CSS_LOCAL_IMG_FOLDER = ConfigurationLoader.getConfig()
+			.getString("resources.default.css.local.image.folder"), SVG_MEDIA_TYPE = "image",
+			SVG_MEDIA_SUBTYPE = "svg+xml", RESOURCE_SOURCE_DISK = "file:";
 }

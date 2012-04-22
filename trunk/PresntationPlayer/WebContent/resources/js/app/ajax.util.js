@@ -15,7 +15,7 @@ $.fn.serializeObject = function()
     return o;
 };
 
-function ajaxJsonPost(url, objData, that, callbackSuccess,failureCallback) {
+function ajaxJsonPost(url, objData, that, callbackSuccess) {
 	$.ajax({
 		url : url,
 		type:'POST',
@@ -26,14 +26,25 @@ function ajaxJsonPost(url, objData, that, callbackSuccess,failureCallback) {
 	});
 };
 
-function ajaxJsonGet(url, objData, that, callbackSuccess) {
+function ajaxJsonGet(url,callbackSuccess) {
 	$.ajax({
 		url : url,
 		type:'GET',
 		dataType : 'json',
 		contentType: "application/json; charset=utf-8",
-		data : JSON.stringify(objData),
 		success : callbackSuccess
+	});
+};
+
+function ajaxJsonWithParamGet(url,that,callbackSuccess) {
+	$.ajax({
+		url : url,
+		type:'GET',
+		dataType : 'json',
+		contentType: "application/json; charset=utf-8",
+		success :function(response){ 
+			callbackSuccess(response,that);
+		}
 	});
 };
 

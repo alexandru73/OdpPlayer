@@ -10,19 +10,18 @@
 
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<mvc:annotation-driven />
-
 	<import resource="beans/beans-context.xml" />
 	<import resource="beans/command-bean-context.xml" />
 	<import resource="config/HibernateSessionFactory.xml" />
 	<import resource="config/activeMQ-config.xml" />
 
-	
+
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location">
 			<value>WEB-INF/classes/config/config.properties</value>
 		</property>
 	</bean>
-	
+
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="maxUploadSize" value="100000000" />
 	</bean>

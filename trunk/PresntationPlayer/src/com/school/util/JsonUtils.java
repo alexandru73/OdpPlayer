@@ -24,7 +24,7 @@ public class JsonUtils {
 		return getJson(STATUS_FAILURE, errorMessage);
 	}
 
-	public static <T extends Serializable> Map<String, Object> successWithParameter(String paramName, T paramValue) {
+	public static <T extends Object> Map<String, Object> successWithParameter(String paramName, T paramValue) {
 		Map<String, Object> map = new TreeMap<>();
 		map.put(paramName, paramValue);
 		return getJsonWithParams(map, STATUS_SUCCESS);
