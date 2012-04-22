@@ -1,0 +1,27 @@
+.LV_valid {
+    color:#00CC00;
+}
+	
+.LV_invalid {
+    color:#CC0000;
+}
+    
+.LV_valid_field,
+input.LV_valid_field:hover, 
+input.LV_valid_field:active,
+textarea.LV_valid_field:hover, 
+textarea.LV_valid_field:active {
+    -webkit-box-shadow: 0px 0px 5px #00CC00;
+	-moz-box-shadow: 0px 0px 5px #00CC00;
+	box-shadow: 0px 0px 5px #00CC00;
+}
+    
+.LV_invalid_field, 
+input.LV_invalid_field:hover, 
+input.LV_invalid_field:active,
+textarea.LV_invalid_field:hover, 
+textarea.LV_invalid_field:active {
+	-webkit-box-shadow: 0px 0px 5px #CC0000;
+	-moz-box-shadow: 0px 0px 5px #CC0000;
+	box-shadow: 0px 0px 5px #CC0000;
+}
