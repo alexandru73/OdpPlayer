@@ -8,6 +8,7 @@ import net.sf.jmimemagic.MagicMatch;
 import net.sf.jmimemagic.MagicMatchNotFoundException;
 import net.sf.jmimemagic.MagicParseException;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -80,13 +81,20 @@ public class ResourceController {
 		return new ResponseEntity<>(res, headers, HttpStatus.OK);
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/repo/{imgName:.+}")
-	public ResponseEntity<Resource> getSvgFromRepo(@PathVariable("imgName") String imgName) {
-		Resource res = resService.getResource(RESOURCE_SOURCE_DISK + RESOURCE_REPO_FOLDER + "/" + imgName);
+	@RequestMapping(method = RequestMethod.GET, value = "/repo/svg/{nameInRepo:.+}/{imgNo}")
+	public ResponseEntity<Resource> getSvgFromRepo(@PathVariable("nameInRepo") String nameInRepo,@PathVariable("imgNo")String slideNo) {
+		Resource res = resService.getResource(RESOURCE_SOURCE_DISK + RESOURCE_REPO_FOLDER + "/" + nameInRepo+"/svg-folder/"+nameInRepo+slideNo);
 		HttpHeaders headers = new HttpHeaders();
 		MediaType mediaType = new MediaType(SVG_MEDIA_TYPE, SVG_MEDIA_SUBTYPE);
 		headers.setContentType(mediaType);
 		return new ResponseEntity<>(res, headers, HttpStatus.OK);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/repo/ext/{nameInRepo:.+}")
+	public ResponseEntity<Resource> getExternalPresentation(@PathVariable("nameInRepo") String nameInRepo) {
+		String[] presentationName =nameInRepo.split("\\.");
+		Resource  res = resService.getResource(RESOURCE_SOURCE_DISK + RESOURCE_REPO_FOLDER + "/"+presentationName[0]+"/"+nameInRepo);		
+		return setImageResponseMediaType(res);
 	}
 
 	private final String RESOURCE_CSS_LOCAL_FOLDER = ConfigurationLoader.getConfig().getString(
@@ -94,7 +102,7 @@ public class ResourceController {
 			.getString("resources.default.css.theme.folder"), RESOURCE_JS_FOLDER = ConfigurationLoader.getConfig()
 			.getString("resources.default.js.folder"), RESOURCE_CSS_IMAGE_FOLDER = ConfigurationLoader.getConfig()
 			.getString("resources.default.css.images.folder"), RESOURCE_REPO_FOLDER = ConfigurationLoader.getConfig()
-			.getString("local.repository.upload.path"), RESOURCE_CSS_LOCAL_IMG_FOLDER = ConfigurationLoader.getConfig()
+			.getString("local.full.repo.path"), RESOURCE_CSS_LOCAL_IMG_FOLDER = ConfigurationLoader.getConfig()
 			.getString("resources.default.css.local.image.folder"), SVG_MEDIA_TYPE = "image",
 			SVG_MEDIA_SUBTYPE = "svg+xml", RESOURCE_SOURCE_DISK = "file:";
 }

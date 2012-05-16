@@ -142,7 +142,10 @@ public class User extends BaseEntity implements UserDetails {
 	}
 
 	public void setPassword(String password) {
-		this.password = OtherUtils.hashPassword(password);
+		if (password != null) {
+			password = OtherUtils.hashPassword(password);
+		}
+		this.password = password;
 	}
 
 	public boolean isValidData() {

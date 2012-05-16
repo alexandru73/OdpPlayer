@@ -28,4 +28,9 @@ public class NavigationController {
 	public String getRegistrationPage() {
 		return "register/registerPage";
 	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/presentation")
+	public String getPlayerPage() {
+		return "player/playerPage";
+	}
 }

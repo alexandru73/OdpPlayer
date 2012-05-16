@@ -2,11 +2,13 @@ package com.school.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang.StringUtils;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name = "uploaded_presentation_data")
@@ -27,7 +29,7 @@ public class Presentation extends BaseEntity {
 	protected String originalExtension;
 	@Column(name = "slide_duration", nullable = false)
 	protected Long slideDuration;
-	@ManyToOne(targetEntity = User.class)
+	@ManyToOne(fetch = FetchType.EAGER)
 	protected User user;
 
 	public Presentation() {

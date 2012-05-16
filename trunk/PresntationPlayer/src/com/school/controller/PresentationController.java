@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.school.dao.BaseDao;
@@ -44,6 +45,28 @@ public class PresentationController {
 			queue.send(new Job(presentation.getId()), DELETE_QUEUE);
 			String successMessage = messages.getMessage("operation.success.wait.for.confirmation", null, null);
 			result = JsonUtils.successWithParameter(JsonUtils.PARAM_MESSAGE, successMessage);
+		} else {
+			String failureMessage = messages.getMessage("presentation.does.not.exist", null, null);
+			result = JsonUtils.failureJson(failureMessage);
+		}
+		return result;
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/watch", produces = "application/json")
+	@ResponseBody
+	public Map<String, Object> watchPresentation(@RequestParam String p) {
+		Map<String, Object> result = null;
+		Object[][] conditions = { { "repositoryName", p } };
+		List<DetailedPresentation> presentationList = baseDao.getEntitiesWithConditions(DetailedPresentation.class,
+				conditions, null);
+		if (CollectionUtils.isNotEmpty(presentationList)) {
+			DetailedPresentation presentation = presentationList.get(0);
+			Long  noViews=presentation.getNoOfViews();
+			presentation.setNoOfViews(++noViews);
+			baseDao.update(presentation);
+			presentation.getUser().setAuthorities(null);
+			presentation.getUser().setPassword(null);
+			result = JsonUtils.successWithParameter(JsonUtils.PARAM_PRESENTATION, presentation);
 		} else {
 			String failureMessage = messages.getMessage("presentation.does.not.exist", null, null);
 			result = JsonUtils.failureJson(failureMessage);

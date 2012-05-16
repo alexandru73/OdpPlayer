@@ -1,0 +1,164 @@
+.transparent-background {
+	background: rgba(0, 0, 0, 0.4);
+}
+
+#player {
+	width: 690px;
+	height: 515px;
+	margin-bottom: 5px;
+	position: absolute;
+	left: 100px;
+}
+
+#playerImg {
+	width: 100%;
+	height: 485px;
+	padding: 3px;
+}
+
+#svg-player {
+	border: none;
+	width: 100%;
+	height: 100%;
+	background: white;
+	height: 100%;
+}
+
+#toolbar {
+	width: 100%;
+	height: 30px;
+	text-align: left;
+	padding: 0 3px 5px 3px;
+	position: relative;
+}
+
+.controls {
+	position: absolute;
+	left: 10px;
+	top: 0;
+}
+
+.controls-slide {
+	width: 200px;
+	height: 20px;
+	text-align: center;
+	margin-right: 15px;
+	position: absolute;
+	left: 250px;
+	top: 0;
+}
+
+.time-slides {
+	position: absolute;
+	right: 10px;
+	top: 0;
+	width: 225px;
+}
+
+#slider-range-min {
+	width: 130px;
+	margin-top: 8px;
+	float: right;
+}
+
+.time-left {
+	margin: 5px 5px;
+	float: left;
+}
+
+#ctrl-slide-input {
+	width: 22px;
+	height: 20px;
+	border: none;
+	margin-top: 2px;
+	text-align: center;
+	padding: 2px
+}
+
+#tabs {
+	width: 250px;
+	height: 520px;
+	position: absolute;
+	left: 820px;
+}
+
+.inner-tabs {
+	overflow: auto;
+	height: 455px;
+}
+
+.black-backg {
+	background-color: black;
+}
+
+.alfa-white {
+	background-color: rgba(255, 255, 255, 0.4);
+}
+
+.player-details {
+	width: 975px;
+	margin-top: 550px;
+	margin-left: 100px;
+	position: relative;
+	margin-bottom: 10px;
+}
+
+.owner-views {
+	float: left;
+	width: 693px;
+	text-align: left;
+}
+
+.small-detail {
+	width: 320px;
+	height: 20px;
+	padding: 3px
+}
+
+.left-pointer {
+	float: left;
+	text-align: left;
+}
+
+.right-pointer {
+	float: right;
+	text-align: right;
+}
+
+.d-description {
+	width: 690px;
+	text-align: left;
+	margin-top: 5px;
+	clear: both;
+	padding: 3px
+}
+
+.download-link {
+	width: 240px;
+	height: 20px;
+	padding: 3px 5px 0px 8px;
+}
+
+.outline-link {
+	text-align: left;
+	width: 100%;
+	padding: 3px 0px 0px 0px;
+	margin: 3px 0px 0px 0px;
+	color: white;
+	border: solid 1px grey;
+	background-color: rgba(255, 255, 255, 0.15);
+	min-height: 14px;
+}
+
+.outline-link-selected {
+	border: solid 1px green;
+	background-color: rgba(0, 255, 0, 0.15);
+}
+
+.outline-link:hover {
+	cursor: pointer;
+}
+
+.table-col {
+	vertical-align: initial;
+}

@@ -2,9 +2,9 @@ var successMessageTemplate = "<div id='repl_id' class='repl_classes  ui-corner-a
 		+ "<p><span class='ui-icon repl_icon' style='float: left; margin-right: .3em;''></span>"
 		+ "<strong>repl_status</strong>repl_message</p></div>";
 
-var dialogTemplate = "<p>" +
-		"<span class='ui-icon ui-icon-circle-check' style='float:left; margin:0 7px 50px 0;'></span> " +
-		"repl_message </p>";
+var dialogTemplate = "<p>"
+		+ "<span class='ui-icon ui-icon-circle-check' style='float:left; margin:0 7px 50px 0;'></span> "
+		+ "repl_message </p>";
 
 function appendMessage(element, message, id, status, icon, klasses) {
 	var str = successMessageTemplate.replace("repl_id", id).replace(
@@ -50,12 +50,30 @@ function removeDisabledClass(componentID) {
 	$(h3).css("color", "black");
 };
 
-function addDialogToBody(dialogId,title,message){
-	$('#'+dialogId).empty();
-	$('#'+dialogId).attr("title",title);
-	var str = dialogTemplate.replace(
-			"repl_title", title).replace(
+function addDialogToBody(dialogId, title, message) {
+	$('#' + dialogId).empty();
+	$('#' + dialogId).attr("title", title);
+	var str = dialogTemplate.replace("repl_title", title).replace(
 			"repl_message", message);
-	$('#'+dialogId).append(str);
-		
+	$('#' + dialogId).append(str);
+
 };
+
+function getUrlParam(name) {
+	name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+	var regexS = "[\\?&]" + name + "=([^&#]*)";
+	var regex = new RegExp(regexS);
+	var results = regex.exec(window.location.href);
+	if (results == null)
+		return "";
+	else
+		return results[1];
+}
+
+function isInt(value) {
+	if ((parseFloat(value) == parseInt(value)) && !isNaN(value)) {
+		return true;
+	} else {
+		return false;
+	}
+}
