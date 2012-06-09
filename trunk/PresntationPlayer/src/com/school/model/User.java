@@ -34,7 +34,7 @@ public class User extends BaseEntity implements UserDetails {
 	@Column(columnDefinition = "tinyint")
 	private boolean active = true;
 
-	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	private List<UserAuthority> authorities;
 
 	public User() {

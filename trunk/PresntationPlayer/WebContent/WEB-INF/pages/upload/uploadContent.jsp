@@ -21,7 +21,7 @@
 			</tr>
 			<tr>
 				<td><label for="category"><sp:message code="upload.form.category" /></label></td>
-				<td><select  id="combobox" name="cathegory"  ><option></option></select>
+				<td><select  id="combobox" name="cathegory" class="text-input margin-5" style="height: 34px;width: 313px;"></select>
 			</tr>
 			<tr>
 				<td><input id="metaSubmit" type="button" class="button-cs" 

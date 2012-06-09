@@ -17,6 +17,7 @@
 			<util:list>
 				<ref bean="convert2Pdf" />
 				<ref bean="convertPdf2Svg" />
+				<ref bean="extractThumbnails" />
 				<ref bean="moveUploadedData" />
 				<ref bean="extractMetadata" />
 				<ref bean="saveConversionData" />
@@ -27,6 +28,8 @@
 
 	<bean id="convert2Pdf" class="com.school.presentation.converter.commands.Convert2Pdf" scope="prototype" />
 	<bean id="convertPdf2Svg" class="com.school.presentation.converter.commands.ConvertPdf2Svg"
+		scope="prototype" />
+	<bean id="extractThumbnails" class="com.school.presentation.converter.commands.ExtractThumbnaisFromPdf"
 		scope="prototype" />
 	<bean id="moveUploadedData" class="com.school.presentation.converter.commands.MoveUploadedFile"
 		scope="prototype" />

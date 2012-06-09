@@ -8,6 +8,10 @@ import org.apache.commons.lang.StringUtils;
 public class JsonUtils {
 	public static final String PARAM_MESSAGE="message";
 	public static final String PARAM_PRESENTATION="presentation";
+	public static final String PARAM_PP_LIST="ppList";
+	public static final String PARAM_PAGE_NO="pageNo";
+	public static final String PARAM_HAS_RESULTS="hasResults";
+	public static final String SUCCESS = "success", ERROR_MESSAGE = "errorMessage";
 	public static Map<String, Object> successWithParams(Map<String, Object> params) {
 		return getJsonWithParams(params, STATUS_SUCCESS);
 	}
@@ -48,6 +52,6 @@ public class JsonUtils {
 		return params;
 	}
 
-	public static final String SUCCESS = "success", ERROR_MESSAGE = "errorMessage";
+	
 	private static final boolean STATUS_FAILURE = false, STATUS_SUCCESS = true;
 }

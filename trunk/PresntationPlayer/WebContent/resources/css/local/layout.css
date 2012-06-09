@@ -124,7 +124,7 @@ select.text-input:focus,textarea.text-input:focus,input.text-input:focus,input.u
 }
 
 .ui-combo-input {
-	color:black;
+	color: black;
 	height: 25px;
 	border-top-right-radius: 0px;
 	border-bottom-right-radius: 0px;
@@ -132,11 +132,11 @@ select.text-input:focus,textarea.text-input:focus,input.text-input:focus,input.u
 	-moz-bottom-right-radius: 0px;
 	padding-top: 3px;
 	border-right: none;
-	margin-left:2px;
+	margin-left: 2px;
 }
 
 .ui-combo-but-re {
-	margin-top:10px;
+	margin-top: 10px;
 	height: 35px;
 	border-left: none;
 	-webkit-border-radius: 6px;
@@ -148,18 +148,18 @@ select.text-input:focus,textarea.text-input:focus,input.text-input:focus,input.u
 	-moz-bottom-left-radius: 0px;
 }
 
-.step-panel{
+.step-panel {
 	background-color: grey;
-	color:  #919090;
+	color: #919090;
 }
 
-.message-div-hidden{
+.message-div-hidden {
 	display: none;
 	padding-top: 15px;
 }
 
 .ui-round-bottom-corners {
-    border:1px solid black;
+	border: 1px solid black;
 	-webkit-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
 	-moz-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
 	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
@@ -167,4 +167,74 @@ select.text-input:focus,textarea.text-input:focus,input.text-input:focus,input.u
 	border-bottom-left-radius: 20px;
 	-moz-bottom-left-radius: 20px;
 	-moz-bottom-right-radius: 20px;
+}
+
+.clear-y {
+	clear: both;
+}
+
+.search-result {
+	width: 47%;
+	height: 150px;
+	padding: 8px;
+	float: left;
+	margin-left: 10px;
+}
+
+.search-result:hover {
+	background-color: #EFEFEF;
+	cursor: pointer;
+	-webkit-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+	-moz-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+}
+
+.search-detail {
+	width: 60%;
+	height: 150px;
+	float: left;
+	padding: 5px
+}
+
+.show-fixed-content {
+	word-wrap: break-word;
+	overflow: hidden;
+	margin: 0px;
+}
+
+.padding-s3 {
+	padding: 3px;
+}
+
+i {
+	color: #06297A;
+}
+
+.fl-right {
+	float: right;
+}
+
+.fl-left {
+	float: left;
+}
+
+.padd-top-10 {
+	padding-top: 10px;
+}
+
+.page-nav {
+	height: 30px;
+	width: 250px;
+}
+
+.text-a-left {
+	text-align: left;
+}
+
+.text-a-right {
+	text-align: right;
+}
+
+.hidden-st {
+	display: none;
 }

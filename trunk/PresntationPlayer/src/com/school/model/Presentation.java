@@ -8,7 +8,6 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang.StringUtils;
-import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name = "uploaded_presentation_data")
@@ -19,8 +18,8 @@ public class Presentation extends BaseEntity {
 	protected String title;
 	@Column(name = "description", nullable = false)
 	protected String description;
-	@Column(name = "cathegory", nullable = false)
-	protected String cathegory;
+	@ManyToOne(fetch=FetchType.EAGER)
+	protected Cathegory cathegory;
 	@Column(name = "repository_name", nullable = false, unique = true)
 	protected String repositoryName;
 	@Column(name = "repository_path", nullable = false)
@@ -36,16 +35,16 @@ public class Presentation extends BaseEntity {
 		super();
 	}
 
-	public Presentation(String title, String description, String cathegory) {
+	public Presentation(String title, String description,Long slideDuration) {
 		super();
 		this.title = title;
 		this.description = description;
-		this.cathegory = cathegory;
+		this.slideDuration = slideDuration;
 	}
 
 	public boolean isValidData() {
 		boolean ok = true;
-		if (StringUtils.isBlank(title) || StringUtils.isBlank(description) || StringUtils.isBlank(cathegory)) {
+		if (StringUtils.isBlank(title) || StringUtils.isBlank(description)) {
 			ok = false;
 		}
 		return ok;
@@ -83,11 +82,11 @@ public class Presentation extends BaseEntity {
 		this.description = description;
 	}
 
-	public String getCathegory() {
+	public Cathegory getCathegory() {
 		return cathegory;
 	}
 
-	public void setCathegory(String cathegory) {
+	public void setCathegory(Cathegory cathegory) {
 		this.cathegory = cathegory;
 	}
 

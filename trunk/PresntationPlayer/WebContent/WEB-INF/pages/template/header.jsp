@@ -4,17 +4,15 @@
 	<img src="resources/css/local/img/logo.png" style="width: 120px; height: 45px;" alt="">
 </div>
 <div id="menu-container" style="margin-top: 10px;">
-	<form>
-		<input type="text" class="text-input" > <input type="button" class="search-but"
+		<input id="search-input-pp" type="text" class="text-input" > <input type="button" id="search-in-pp" class="search-but"
 			value="Search"
 		>
-	</form>
 </div>
 <div id="menu-user-actions" class="round-bottom-corners">
 	<div id="menu-info" class="menu-style-div">
 		<sec:authorize access="isAuthenticated()">
 			<ul id="menua" class="menu">
-				<li>Welcome :<br> <a href="">${sessionScope.name}</a>
+				<li>Welcome :<br>${sessionScope.name}
 					<ul id="account" class="round-bottom-corners" style="border-top: none">
 						<li><a href="upload"><sp:message code="menu.upload"/></a></li>
 						<li><a href="changePassword"><sp:message code="menu.change.password"/></a></li>

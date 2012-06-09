@@ -11,10 +11,13 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +27,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.school.dao.BaseDao;
 import com.school.exceptions.IncorectFileException;
+import com.school.exceptions.PresentationException;
 import com.school.exceptions.UploadedDataNotFoundException;
 import com.school.job.Job;
 import com.school.job.JobSenderImpl;
@@ -43,19 +47,37 @@ public class UploadController extends AbstractController {
 	@Resource(name = "baseDaoImpl")
 	BaseDao baseDao;
 
-	@RequestMapping(method = RequestMethod.POST, value = "/uploadMeta", consumes = "application/json", produces = "application/json")
+	@RequestMapping(method = RequestMethod.POST, value = "/uploadMeta", produces = "application/json")
 	@ResponseBody
-	public Map<String, Object> saveUploadMetadata(HttpServletRequest request, @RequestBody Presentation data) {
+	public Map<String, Object> saveUploadMetadata(HttpServletRequest request,
+			@RequestBody PresentationMetaDTO presentationData) {
 		Map<String, Object> result = null;
-		if (data.isValidData()) {
-			data.setUser(getCurrentUser());
-			HttpSession session = request.getSession();
-			session.setAttribute(UPLOAD_METADATA, data);
-			result = JsonUtils.successJson();
-		} else {
+		Presentation data = new Presentation(presentationData.getTitle(), presentationData.getDescription(),
+				presentationData.getSlideDuration());
+		try {
+			if (data.isValidData()) {
+				Cathegory cat = getCathegoryByName(presentationData.getCathegory());
+				data.setUser(getCurrentUser());
+				data.setCathegory(cat);
+				HttpSession session = request.getSession();
+				session.setAttribute(UPLOAD_METADATA, data);
+				result = JsonUtils.successJson();
+			} else {
+				result = JsonUtils.failureJson(messages.getMessage("validation.upload.data.is.incorect", null, null));
+			}
+		} catch (PresentationException e) {
 			result = JsonUtils.failureJson(messages.getMessage("validation.upload.data.is.incorect", null, null));
 		}
 		return result;
+	}
+
+	private Cathegory getCathegoryByName(Long catId) throws PresentationException {
+		Object[][] param = { { "name", catId } };
+		Cathegory cathegory = baseDao.getEntity(catId, Cathegory.class);
+		if (cathegory == null) {
+			throw new PresentationException();
+		}
+		return cathegory;
 	}
 
 	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST, produces = "application/json")
@@ -84,17 +106,19 @@ public class UploadController extends AbstractController {
 				result = JsonUtils.failureJson(errorMessage);
 			} catch (IncorectFileException e) {
 				String errorMessage = messages.getMessage("validation.upload.incorect.file.extension", null, null);
-				result = JsonUtils.failureJson(errorMessage+acceptedExtensions.toString());
+				String acceptedEx = getExtensions(acceptedExtensions);
+				result = JsonUtils.failureJson(errorMessage + acceptedEx);
 			}
 		}
 		return result;
 	}
 
-	@RequestMapping(value = "/cathegories", method = RequestMethod.GET, produces = "application/json")
-	@ResponseBody
-	public Map<String, Object> getCathegories() {
-		List<Cathegory> cathegories = baseDao.getAllEntities(Cathegory.class);
-		return JsonUtils.successWithParameter(CATHEGORIES, cathegories);
+	private String getExtensions(String[] acceptedExtensions) {
+		StringBuilder extensions = new StringBuilder();
+		for (int i = 0; i < acceptedExtensions.length; i++) {
+			extensions.append(acceptedExtensions[i] + ",");
+		}
+		return extensions.toString();
 	}
 
 	@RequestMapping(value = "/completeUpload", method = RequestMethod.GET, produces = "application/json")
@@ -123,11 +147,11 @@ public class UploadController extends AbstractController {
 		if (data != null) {
 			String fileExtension = FilenameUtils.getExtension(uploadedFile.getOriginalFilename());
 			if (isCorectFileExtension(fileExtension)) {
+				checkPreviousUploads(data);
 				data.setRepositoryName(UUID.randomUUID().toString());
 				data.setRepositoryPath(REPO_UPLOAD_LOCATION);
 				data.setOriginalExtension(fileExtension);
-				File file = new File(REPO_HOME + "/" + REPO_UPLOAD_LOCATION + "/" + data.getRepositoryName() + "."
-						+ fileExtension);
+				File file = createFile(data, fileExtension);
 				uploadedFile.transferTo(file);
 				session.setAttribute(UPLOAD_METADATA, data);
 			} else {
@@ -136,6 +160,17 @@ public class UploadController extends AbstractController {
 		} else {
 			throw new UploadedDataNotFoundException();
 		}
+	}
+
+	private File createFile(Presentation data, String fileExtension) {
+		File file = new File(REPO_HOME + "/" + REPO_UPLOAD_LOCATION + "/" + data.getRepositoryName() + "."
+				+ fileExtension);
+		return file;
+	}
+
+	private void checkPreviousUploads(Presentation data) {
+		File file = createFile(data, data.getOriginalExtension());
+		FileUtils.deleteQuietly(file);
 	}
 
 	private boolean isCorectFileExtension(String fileExtension) {
@@ -165,7 +200,6 @@ public class UploadController extends AbstractController {
 	private static final String REPO_UPLOAD_LOCATION = ConfigurationLoader.getConfig().getString(
 			"local.repository.upload.path"), REPO_HOME = ConfigurationLoader.getConfig().getString(
 			"local.repository.home.path"), UPLOAD_QUEUE = ConfigurationLoader.getConfig().getString(
-			"active.mq.queue.convert.presentation"), UPLOAD_METADATA = "metadata", UPLOAD_COMPLETE = "complete",
-			CATHEGORIES = "cathegories";
+			"active.mq.queue.convert.presentation"), UPLOAD_METADATA = "metadata", UPLOAD_COMPLETE = "complete";
 	private static final String[] acceptedExtensions = { "ppt", "odp", "pptx" };
 }

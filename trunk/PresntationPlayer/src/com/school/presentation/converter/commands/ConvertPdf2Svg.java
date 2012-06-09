@@ -18,7 +18,6 @@ public class ConvertPdf2Svg implements Command {
 		if (context.containsKey(ConverterContext.PRESENTATION)
 				&& context.containsKey(ConverterContext.PDF_CONVERSION_URL)) {
 			String commandLine = createCommandLine(context);
-			System.err.println(commandLine);
 			Process svgConverterProcess = Runtime.getRuntime().exec(commandLine);
 			int exitCode = svgConverterProcess.waitFor();
 			if (exitCode != 0) {

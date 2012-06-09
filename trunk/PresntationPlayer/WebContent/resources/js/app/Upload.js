@@ -3,8 +3,8 @@ $(function() {
 		value : 0,
 		disabled : true
 	});
+	
 	$("input:button,input:submit,#complete-link").button();
-	$("#combobox").combobox(1);
 	$( "#dialog-message" ).dialog({
 		modal: true,
 		autoOpen: false,
@@ -66,29 +66,12 @@ function Upload() {
 Upload.prototype = {
 
 	init : function() {
-		this.getCathegories();
+		getCathegories();
 		this.initMetaForm();
 		this.initUI();
 		this.initUploadForm();
 		this.initCompleteForm();
 		this.completeUploadInit();
-	},
-
-	getCathegories : function() {
-		var callblack = function(response) {
-			if (response.success == true) {
-				$('#combobox').append('<option></option>');
-				$.each(response.cathegories, function(key, value) {
-					$('#combobox').append($('<option>', {
-						value : key
-					}).text(value.name));
-				});
-			}else{
-				addDialogToBody("dialog-message", dialogTitle, response.errorMessage);
-				$('#dialog-message').open();
-			}
-		};
-		ajaxJsonGet("upload/cathegories", callblack);
 	},
 	
 	removeButtonFocus:function(){
@@ -163,7 +146,7 @@ Upload.prototype = {
 				removeDisabledClass('#step2-div');
 			}else{
 				addDialogToBody("dialog-message", dialogTitle, response.errorMessage);
-				$('#dialog-message').open();
+				$('#dialog-message').dialog('open');
 			}
 		};
 		var formMetadata = $('#metaForm').serializeObject();

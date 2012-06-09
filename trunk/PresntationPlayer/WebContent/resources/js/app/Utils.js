@@ -77,3 +77,19 @@ function isInt(value) {
 		return false;
 	}
 }
+
+function getCathegories() {
+	var callblack = function(response) {
+		if (response.success == true) { 
+			$.each(response.cathegories, function(key, value) {
+				$('#combobox').append($('<option>', {
+					value : value.id
+				}).text(value.name));
+			});
+		}else{
+			addDialogToBody("dialog-message", dialogTitle, response.errorMessage);
+			$('#dialog-message').open();
+		}
+	};
+	ajaxJsonGet("presentation/cathegories", callblack);
+}

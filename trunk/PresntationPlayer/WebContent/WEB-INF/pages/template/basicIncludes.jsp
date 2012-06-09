@@ -4,11 +4,26 @@
 <script type="text/javascript" src="resources/js/lib/jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="resources/js/lib/jquery-ui-1.8.18.custom.min.js"></script>
 <script type="text/javascript">
-$(function() {
-	jQuery("input:submit,input:button").button();
-});
-$(document).ready(function() {
-
+	function searchInDB() {
+		var paramVal = $("#search-input-pp").val();
+		if (paramVal != null && paramVal!=" " && paramVal!=" " && paramVal!="  ") {
+			window.location = "search?search-query=" + paramVal;
+		}
+	}
 	
-});
+	$(function() {
+		jQuery("input:submit,input:button,button ").button();
+	});
+	$(document).ready(function() {
+		$("#search-in-pp").click(function() {
+			searchInDB();
+		});
+
+		$("#search-input-pp").keypress(function(event) {
+			if (event.which == 13) {
+				searchInDB();
+			}
+		});
+
+	});
 </script>

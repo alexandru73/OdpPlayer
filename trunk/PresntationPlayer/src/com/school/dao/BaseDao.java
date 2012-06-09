@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.school.model.BaseEntity;
+import com.school.model.DetailedPresentation;
+import com.school.model.User;
 
 public interface BaseDao {
 	public Long save(BaseEntity entity);
@@ -22,4 +24,9 @@ public interface BaseDao {
 			final String[] fetch);
 
 	public <T extends BaseEntity> List<T> getAllEntities(final Class<T> klass);
+
+	public List<DetailedPresentation> getPaginatedElements(Integer page, User currentUser, String searchq,
+			Long cathegory, int perPage);
+
+	public Long countDetailedPresentations(User currentUser, String searchq, Long cathegory);
 }

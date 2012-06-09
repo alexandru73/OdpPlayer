@@ -82,18 +82,32 @@ public class ResourceController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/repo/svg/{nameInRepo:.+}/{imgNo}")
-	public ResponseEntity<Resource> getSvgFromRepo(@PathVariable("nameInRepo") String nameInRepo,@PathVariable("imgNo")String slideNo) {
-		Resource res = resService.getResource(RESOURCE_SOURCE_DISK + RESOURCE_REPO_FOLDER + "/" + nameInRepo+"/svg-folder/"+nameInRepo+slideNo);
+	public ResponseEntity<Resource> getSvgFromRepo(@PathVariable("nameInRepo") String nameInRepo,
+			@PathVariable("imgNo") String slideNo) {
+		Resource res = resService.getResource(RESOURCE_SOURCE_DISK + RESOURCE_REPO_FOLDER + "/" + nameInRepo
+				+ "/svg-folder/" + nameInRepo + slideNo);
 		HttpHeaders headers = new HttpHeaders();
-		MediaType mediaType = new MediaType(SVG_MEDIA_TYPE, SVG_MEDIA_SUBTYPE);
+		MediaType mediaType = new MediaType(IMG_MEDIA_TYPE, MEDIA_SUBTYPE_SVG);
 		headers.setContentType(mediaType);
 		return new ResponseEntity<>(res, headers, HttpStatus.OK);
 	}
-	
+
+	@RequestMapping(method = RequestMethod.GET, value = "/repo/thumbnail/{nameInRepo:.+}/{imgNo}")
+	public ResponseEntity<Resource> getThumbnailFromRepo(@PathVariable("nameInRepo") String nameInRepo,
+			@PathVariable("imgNo") String slideNo) {
+		Resource res = resService.getResource(RESOURCE_SOURCE_DISK + RESOURCE_REPO_FOLDER + "/" + nameInRepo
+				+ "/thumbnails/" + nameInRepo + slideNo);
+		HttpHeaders headers = new HttpHeaders();
+		MediaType mediaType = new MediaType(IMG_MEDIA_TYPE, MEDIA_SUBTYPE_PNG);
+		headers.setContentType(mediaType);
+		return new ResponseEntity<>(res, headers, HttpStatus.OK);
+	}
+
 	@RequestMapping(method = RequestMethod.GET, value = "/repo/ext/{nameInRepo:.+}")
 	public ResponseEntity<Resource> getExternalPresentation(@PathVariable("nameInRepo") String nameInRepo) {
-		String[] presentationName =nameInRepo.split("\\.");
-		Resource  res = resService.getResource(RESOURCE_SOURCE_DISK + RESOURCE_REPO_FOLDER + "/"+presentationName[0]+"/"+nameInRepo);		
+		String[] presentationName = nameInRepo.split("\\.");
+		Resource res = resService.getResource(RESOURCE_SOURCE_DISK + RESOURCE_REPO_FOLDER + "/" + presentationName[0]
+				+ "/" + nameInRepo);
 		return setImageResponseMediaType(res);
 	}
 
@@ -103,6 +117,8 @@ public class ResourceController {
 			.getString("resources.default.js.folder"), RESOURCE_CSS_IMAGE_FOLDER = ConfigurationLoader.getConfig()
 			.getString("resources.default.css.images.folder"), RESOURCE_REPO_FOLDER = ConfigurationLoader.getConfig()
 			.getString("local.full.repo.path"), RESOURCE_CSS_LOCAL_IMG_FOLDER = ConfigurationLoader.getConfig()
-			.getString("resources.default.css.local.image.folder"), SVG_MEDIA_TYPE = "image",
-			SVG_MEDIA_SUBTYPE = "svg+xml", RESOURCE_SOURCE_DISK = "file:";
+			.getString("resources.default.css.local.image.folder");
+
+	private static final String IMG_MEDIA_TYPE = "image", MEDIA_SUBTYPE_SVG = "svg+xml", MEDIA_SUBTYPE_PNG = "png",
+						 RESOURCE_SOURCE_DISK = "file:";
 }

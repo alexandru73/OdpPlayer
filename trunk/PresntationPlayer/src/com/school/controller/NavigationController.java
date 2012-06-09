@@ -19,7 +19,7 @@ public class NavigationController {
 		return "login/loginPage";
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/")
+	@RequestMapping(method = RequestMethod.GET, value = "/search")
 	public String getIndexPage() {
 		return "index/indexPage";
 	}
