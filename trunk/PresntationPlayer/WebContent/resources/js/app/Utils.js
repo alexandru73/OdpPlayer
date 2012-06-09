@@ -36,6 +36,15 @@ function appendUsernameMessage(message, status, id, field, appendTo) {
 	appendTo.append(spanz.replace("usrSpan", id).replace("repl_class", klass));
 };
 
+function hasWhiteSpace(se) {
+	reWhiteSpace = new RegExp(/\s/g);
+	// Check for white space
+	if (reWhiteSpace.test(se)) {
+		return true;
+	}
+	return false;
+}
+
 function addDisabledClass(componentID) {
 	$(componentID).addClass("step-panel");
 	var h3 = componentID + " h3";
@@ -80,14 +89,15 @@ function isInt(value) {
 
 function getCathegories() {
 	var callblack = function(response) {
-		if (response.success == true) { 
+		if (response.success == true) {
 			$.each(response.cathegories, function(key, value) {
 				$('#combobox').append($('<option>', {
 					value : value.id
 				}).text(value.name));
 			});
-		}else{
-			addDialogToBody("dialog-message", dialogTitle, response.errorMessage);
+		} else {
+			addDialogToBody("dialog-message", dialogTitle,
+					response.errorMessage);
 			$('#dialog-message').open();
 		}
 	};

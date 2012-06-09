@@ -115,6 +115,7 @@ public class PresentationController extends AbstractController {
 				}
 				result = JsonUtils.successWithParameter(JsonUtils.PARAM_PP_LIST, searchResult);
 				result.put(JsonUtils.PARAM_PAGE_NO, page);
+				result.put(JsonUtils.PARAM_TOTAL_PAGES,(remaining != 0) ? (noPages + 1) : noPages);
 			} else {
 				result = JsonUtils.failureJson();
 				result.put(JsonUtils.PARAM_PAGE_NO, page);

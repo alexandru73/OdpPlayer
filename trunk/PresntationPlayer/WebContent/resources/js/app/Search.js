@@ -47,7 +47,9 @@ Search.prototype = {
 				$(".search-result").remove();
 				$("#search-input-pp").val(sq);
 				$("#go-to-page").removeClass("hidden-st");
+				$("#next-prev").removeClass("hidden-st");
 				$("#page-no").val(that.currentPage);
+				$('#of').html(response.totalPages);
 				that.populateWithResults(response.ppList,response.pageNo);
 			} else {
 				that.checkNext(response.pageNo);
@@ -58,6 +60,7 @@ Search.prototype = {
 					$("#errorMes").html(response.errorMessage);
 					$("#errorMes").removeClass("hidden-st");
 					$("#go-to-page").addClass("hidden-st");
+					$("#next-prev").addClass("hidden-st");
 				}
 			}
 		};
@@ -75,7 +78,7 @@ Search.prototype = {
 	},
 
 	populateWithResults : function(ppList,pageNo) {
-		this.checkNext(pageNo);
+		this.checkNext(pageNo,ppList.length);
 		this.checkPrev();
 		for ( var int = 0; int < ppList.length; int++) {
 			var templ = this.replaceShearch(ppList[int]);
@@ -113,8 +116,8 @@ Search.prototype = {
 		}
 	},
 	
-	checkNext:function(pageNo){
-		if (pageNo!=this.currentPage) {
+	checkNext:function(pageNo,length){
+		if (pageNo!=this.currentPage || length<this.slidesPerPage ) {
 			this.currentPage=pageNo;
 			$("#page-no").val(pageNo);
 			$("#next-page").addClass("hidden-st");

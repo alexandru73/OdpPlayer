@@ -5,10 +5,10 @@ $(document).ready(function() {
 
 function Register() {
 	this.validators = new Array();
-	this.okMessage="✓";
+	this.okMessage = "✓";
 	this.mandatoryMessage = 'This field is mandatory';
-	this.usernameValid=false;
-	this.usrSpan="usrSpan";
+	this.usernameValid = false;
+	this.usrSpan = "usrSpan";
 };
 
 Register.prototype = {
@@ -34,56 +34,66 @@ Register.prototype = {
 
 	checkUsernameInit : function() {
 		var that = this;
-		$('#username').blur(
-				function() {
-					that.validateUsername();
-				});
+		$('#username').blur(function() {
+			that.validateUsername();
+		});
 	},
-	
-	validateUsername:function(){
-		var userN=$('#username');
-		var username=userN.val();
+
+	validateUsername : function() {
+		var userN = $('#username');
+		var username = userN.val();
 		if (username != null && username != '') {
 			if (username.length > 2) {
-				var url = "user/checkUsername?username="
-						+ $('#username').val();
-				ajaxJsonWithParamGet(url,this ,this.onUsernameCheckComplete);
+				if (hasWhiteSpace(username)) {
+					var message = "The username must not contain white spaces !";
+					appendUsernameMessage(message, false, this.usrSpan,
+							userN, userN.parent());	
+				} else {
+					var url = "user/checkUsername?username=" + username;
+					ajaxJsonWithParamGet(url, this,
+							this.onUsernameCheckComplete);
+				}
 			} else {
-				var message="The username must contain more than 2 characters !";
-				appendUsernameMessage(message,false,this.usrSpan,userN,userN.parent());
+				var message = "The username must contain more than 2 characters !";
+				appendUsernameMessage(message, false, this.usrSpan, userN,
+						userN.parent());
 			}
-		}else{
-			appendUsernameMessage(this.mandatoryMessage,false,this.usrSpan,userN,userN.parent());
-		}	
+		} else {
+			appendUsernameMessage(this.mandatoryMessage, false, this.usrSpan,
+					userN, userN.parent());
+		}
 	},
-	
-	onUsernameCheckComplete : function(response,that) {
-		that.usernameValid=response.success;
-		var msg=response.errorMessage;
-		var userN=$('#username');
-		if (response.success==true) {
-			msg=that.okMessage;
-		} 
-		appendUsernameMessage(msg,response.success,that.usrSpan,userN,userN.parent());
+
+	onUsernameCheckComplete : function(response, that) {
+		that.usernameValid = response.success;
+		var msg = response.errorMessage;
+		var userN = $('#username');
+		if (response.success == true) {
+			msg = that.okMessage;
+		}
+		appendUsernameMessage(msg, response.success, that.usrSpan, userN, userN
+				.parent());
 	},
 
 	onSubmitComplete : function(response) {
-		var id="result-register";
-		var element=$('#step0-div');
-		if(response.success==true){
+		var id = "result-register";
+		var element = $('#step0-div');
+		if (response.success == true) {
 			$('#register').clearForm();
 			$('input , textarea').removeClass('LV_valid_field');
 			$('.LV_valid').remove();
-			$('body').animate({scrollTop: $('body').position().top}, 'fast');
+			$('body').animate({
+				scrollTop : $('body').position().top
+			}, 'fast');
 			element.show(500);
 			element.empty();
-		    setTimeout(function() {
-		    	element.hide(700);
-		    }, 5000);
+			setTimeout(function() {
+				element.hide(700);
+			}, 5000);
 			appendSuccessMessageDivTo(element, response, id);
-		}else{
+		} else {
 			appendFailureMessageDivTo(element, response, id);
-		}		
+		}
 	},
 
 	getFormData : function() {

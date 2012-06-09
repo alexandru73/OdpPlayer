@@ -39,9 +39,9 @@
 			<td><input id="fileData"name="fileData" type="file"	></td>
 		</tr>
 		<tr>
-			<td/>
-			<td><div id="progressbar" style="height: 20px; width: 155px"></div></td>
-		</tr>
+			<td>Progress:</td>
+			<td><div id="progressbar" style="height: 20px; width: 155px;" class="fl-left"></div><span id="percent" class="fl-left padding-s3">0%</span></td>
+		</tr> 
 		<tr>
 			<td><input id="previousStep1" class="button-cs" type="button"
 				value="<sp:message code="upload.form.previous"/>"></td>

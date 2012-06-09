@@ -38,6 +38,7 @@ function ajaxUploadReady() {
 		
 		uploadProgress : function(event, position, total, percentComplete) {
 			progressBar.progressbar("value", percentComplete);
+			$("#percent").html(percentComplete+" %");
 		},
 		complete : function(response) {
 			var resp=JSON.parse(response.responseText);
@@ -159,6 +160,7 @@ Upload.prototype = {
 	initUploadForm : function(){
 		new LiveValidation( "fileData", { validMessage: this.okMessage , wait: 500 } )
 			.add( Validate.Presence, {failureMessage : this.mandatory } );	
+		var that =this;
 		$("#previousStep1").click(function(){
 			$("#fileUploadForm :input").attr("disabled", true);
 			$("#metaForm :input").attr("disabled", false);
@@ -175,6 +177,7 @@ Upload.prototype = {
 		var agreeToLicence=new LiveValidation( "agreeToLicence", { validMessage: this.okMessage , wait: 500 } )
 			.add( Validate.Acceptance );
 		this.agreeToLicenceValidator.push(agreeToLicence);
+		var that =this;
 		$("#previousStep2").click(function(){
 			$("#fileUploadForm :input").attr("disabled", false);
 			$("#completeUpload :input").attr("disabled", true);

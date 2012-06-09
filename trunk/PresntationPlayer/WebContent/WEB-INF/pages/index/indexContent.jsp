@@ -35,9 +35,11 @@
 				<span>Go to page :</span> 
 				<input id="page-no" style="padding: 4px; width: 30px; text-align: center; height: 15px; border: none;"
 					class="ui-corner-all">
+				 of 
+				<span id="of"></span> 
 				<button id="go">GO</button>
 			</div>
-			<div id="next-prev" class="fl-right padd-top-10 page-nav text-a-right ">
+			<div id="next-prev" class="fl-right padd-top-10 page-nav text-a-right hidden-st ">
 				<button id="prev-page" class="button-cs">Previous Page</button>
 				<button id="next-page" class="button-cs">Next Page</button>
 			</div>

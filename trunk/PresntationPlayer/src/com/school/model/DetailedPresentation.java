@@ -12,6 +12,7 @@ public class DetailedPresentation extends Presentation {
 	private Integer noOfSlides;
 	@Column(name = "no_of_views", nullable = false)
 	private Long noOfViews;
+	@Column(name = "is_to_be_deleted", nullable = false)
 	private boolean isToBeDeleted;
 
 	@Column(columnDefinition="TEXT")
