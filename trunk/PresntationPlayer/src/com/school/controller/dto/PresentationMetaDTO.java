@@ -1,4 +1,4 @@
-package com.school.controller;
+package com.school.controller.dto;
 
 import javax.xml.bind.annotation.XmlRootElement;
 

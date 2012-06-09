@@ -7,8 +7,10 @@ import com.school.model.User;
 
 public abstract class AbstractController {
 	public User getCurrentUser() {
-		User currentUser = (User) ((SecurityContext) SecurityContextHolder.getContext()).getAuthentication()
-				.getPrincipal();
-		return currentUser;
+		Object currentUser = ((SecurityContext) SecurityContextHolder.getContext()).getAuthentication().getPrincipal();
+		if (currentUser instanceof User) {
+			return (User)currentUser;
+		}
+		return null;
 	}
 }

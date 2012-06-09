@@ -1,32 +1,40 @@
 function Search() {
-	this.searchTemplate = '<div id=result class="search-result ui-corner-all" onclick="goToPresentation(\'#ppt_name\')">\
-				<img alt="Not Found" src="resources/repo/thumbnail/#pp_id/1.png" style="width:200px;height:150px;float:left">\
-				<div id="result-detail" class="search-detail">\
+	this.searchTemplate = '<div id=result class="search-result ui-corner-all" >\
+				<img id="imgS" alt="Not Found" src="resources/repo/thumbnail/#ppt_name/1.png" style="width:200px;height:150px;float:left" onclick="goToPresentation(\'#ppt_name\')">\
+				<div id="result-detail" class="search-detail" onclick="goToPresentation(\'#ppt_name\')">\
 					<p id="title" style="height:20px;" class="show-fixed-content"><b>#title</b></p>\
 					<p class="show-fixed-content padding-s3"><i>Uploaded by: </i>&nbsp; #upBy </p>\
 					<p class="show-fixed-content padding-s3"><i>Date added : </i>&nbsp; #upDate</p>\
 					<p class="show-fixed-content padding-s3"><i>Views : </i>&nbsp; #views</p>\
-					<p class="show-fixed-content padding-s3 " style="height:42px"><i>Description :</i>&nbsp; #descrpition </p>\
+					<p class="show-fixed-content padding-s3"><i>Cathegory: </i>&nbsp; #cath</p>\
+					<p class="show-fixed-content padding-s3 " style="height:22px;"><i>Description :</i>&nbsp; #descrpition </p>\
 				</div>\
+				#deleteHere\
 			</div>';
 	this.currentPage = 1;
-	this.min = false;
+	this.mine= false;
+	this.slidesPerPage=10;
 }
 
 Search.prototype = {
-	replaceShearch : function(presentation) {
+	replaceShearch : function(result) {
 		var response = "";
-		if (presentation != null && presentation != ""
-				&& presentation != "undefined") {
-			var formatedDate = $.format.date(presentation.createadAt,
-					"dd/MM/yyyy");
-			response = this.searchTemplate.replace("#pp_id",presentation.repositoryName)
-						.replace("#title",presentation.title)
-						.replace("#upBy", presentation.user.name)
+		if (result != null && result != ""
+				&& result != "undefined") {
+			var formatedDate = $.format.date(result.presentation.createadAt,"dd/MM/yyyy");
+			response = this.searchTemplate.replace(/#ppt_name/g,result.presentation.repositoryName)
+						.replace("#title",result.presentation.title)
+						.replace("#upBy", result.presentation.user.name)
 						.replace("#upDate", formatedDate)
-						.replace("#views", presentation.noOfViews)
-						.replace("#descrpition", presentation.description)
-						.replace("#ppt_name",presentation.repositoryName);
+						.replace("#views", result.presentation.noOfViews)
+						.replace("#descrpition", result.presentation.description)
+						.replace("#cath", result.presentation.cathegory.name);
+			if(result.belongsToCurrentUser){
+				var del='<button style="float:right;width:20px;height:20px;"  id="deletePresentation" onclick="deletePresentation("'+result.presentation.repositoryName+'")">Delete presentation</button>';
+				response=response.replace("#deleteHere", del);
+			}else{
+				response=response.replace("#deleteHere", "");
+			}
 		}
 		return response;
 	},
@@ -58,9 +66,11 @@ Search.prototype = {
 		if(catId==-1){
 			catId="";
 		}
+		this.slidesPerPage=$("#resultsPerPage").val();
+		this.mine=$("#myPresentations").is(':checked');
 		var url = "presentation/search?searchQuery=" + sq + "&cathegory="
-				+ catId + "&min=" + this.min + "&page="
-				+ this.currentPage;
+				+ catId + "&mine=" + this.mine + "&page="
+				+ this.currentPage+"&slidesPerPage=" + this.slidesPerPage;
 		ajaxJsonWithParamGet(url, this, callback);
 	},
 
@@ -71,6 +81,12 @@ Search.prototype = {
 			var templ = this.replaceShearch(ppList[int]);
 			$("#results").append(templ);
 		}
+		$( "#deletePresentation" ).button({
+		    icons: {
+		        primary: "ui-icon-trash"
+		    },
+		    text: false
+		});
 	},
 
 	getResetParam : function(paramName) {
@@ -86,7 +102,7 @@ Search.prototype = {
 			this.currentPage = page;
 			this.search();
 		}
-		$("#page-no").val(this.currentPage)
+		$("#page-no").val(this.currentPage);
 	},
 
 	checkPrev : function() {
@@ -127,6 +143,14 @@ function goToPresentation(location){
 
 function initUiIndex(){
 	$("#combobox").change(function() {
+		docSh.search();
+	});
+	
+	$("#resultsPerPage").change(function() {
+
+		docSh.search();
+	});
+	$("#myPresentations").change(function() {
 		docSh.search();
 	});
 }
