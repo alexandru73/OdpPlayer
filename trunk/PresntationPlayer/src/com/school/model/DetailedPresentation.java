@@ -12,6 +12,7 @@ public class DetailedPresentation extends Presentation {
 	private Integer noOfSlides;
 	@Column(name = "no_of_views", nullable = false)
 	private Long noOfViews;
+	private boolean isToBeDeleted;
 
 	@Column(columnDefinition="TEXT")
 	private String bookmarks;
@@ -54,6 +55,14 @@ public class DetailedPresentation extends Presentation {
 
 	public void setNoOfViews(Long noOfViews) {
 		this.noOfViews = noOfViews;
+	}
+
+	public boolean isToBeDeleted() {
+		return isToBeDeleted;
+	}
+
+	public void setToBeDeleted(boolean isToBeDeleted) {
+		this.isToBeDeleted = isToBeDeleted;
 	}
 
 }

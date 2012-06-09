@@ -1,5 +1,5 @@
 function Search() {
-	this.searchTemplate = '<div id=result class="search-result ui-corner-all" >\
+	this.searchTemplate = '<div id="#ppt_name" class="search-result ui-corner-all" >\
 				<img id="imgS" alt="Not Found" src="resources/repo/thumbnail/#ppt_name/1.png" style="width:200px;height:150px;float:left" onclick="goToPresentation(\'#ppt_name\')">\
 				<div id="result-detail" class="search-detail" onclick="goToPresentation(\'#ppt_name\')">\
 					<p id="title" style="height:20px;" class="show-fixed-content"><b>#title</b></p>\
@@ -30,7 +30,7 @@ Search.prototype = {
 						.replace("#descrpition", result.presentation.description)
 						.replace("#cath", result.presentation.cathegory.name);
 			if(result.belongsToCurrentUser){
-				var del='<button style="float:right;width:20px;height:20px;"  id="deletePresentation" onclick="deletePresentation("'+result.presentation.repositoryName+'")">Delete presentation</button>';
+				var del='<button class="delete-presentation" style="width:20px;" id="deletePresentation" onclick="deletePresentation(\''+result.presentation.repositoryName+'\')">Delete presentation</button>';
 				response=response.replace("#deleteHere", del);
 			}else{
 				response=response.replace("#deleteHere", "");
@@ -81,7 +81,7 @@ Search.prototype = {
 			var templ = this.replaceShearch(ppList[int]);
 			$("#results").append(templ);
 		}
-		$( "#deletePresentation" ).button({
+		$( ".delete-presentation:button" ).button({
 		    icons: {
 		        primary: "ui-icon-trash"
 		    },

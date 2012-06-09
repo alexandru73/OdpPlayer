@@ -1,4 +1,7 @@
 <%@taglib prefix="sp" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<div  id="step0-div" class="form-content mainPage form-panel message-div-hidden">
+</div>
 <div>
 	<div id="cathegories" style="margin-right:10px;margin-top:10px;float:right">
 		<span><b>Filter by cathegories : </b></span>
@@ -14,10 +17,12 @@
 			<option>30</option> 
 		</select>
 	</div>
-	<div style="margin:16px 20px 0px 0px;float:right;">
-		<span><b>My presentations only : </b></span>
-		<input id="myPresentations" type="checkbox">
-	</div>
+	<sec:authorize access="isAuthenticated()">
+		<div style="margin: 16px 20px 0px 0px; float: right;">
+			<span><b>My presentations only : </b></span>
+		    <input id="myPresentations" type="checkbox">
+		</div>
+	</sec:authorize>
 	<div id="cathegories" style="clear:both"></div>
 	<div class="form-content mainPage form-panel">
 		<div id="pag-controls">

@@ -47,9 +47,12 @@ public class PresentationController extends AbstractController {
 				conditions, null);
 		if (CollectionUtils.isNotEmpty(presentationList)) {
 			DetailedPresentation presentation = presentationList.get(0);
+			presentation.setToBeDeleted(true);
+			baseDao.update(presentation);
 			queue.send(new Job(presentation.getId()), DELETE_QUEUE);
 			String successMessage = messages.getMessage("operation.success.wait.for.confirmation", null, null);
 			result = JsonUtils.successWithParameter(JsonUtils.PARAM_MESSAGE, successMessage);
+			result.put(JsonUtils.PARAM_UNIQUE_NAME,name);
 		} else {
 			String failureMessage = messages.getMessage("presentation.does.not.exist", null, null);
 			result = JsonUtils.failureJson(failureMessage);

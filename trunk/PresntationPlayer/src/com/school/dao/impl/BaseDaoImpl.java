@@ -104,6 +104,7 @@ public class BaseDaoImpl extends HibernateDaoSupport implements BaseDao {
 	private Criteria createCriteriaForSearch(User currentUser, String searchq, Long cathegory) {
 		Session session=getSession();
 		Criteria crit=session.createCriteria(DetailedPresentation.class);
+		crit.add(Restrictions.eq("isToBeDeleted", false));
 		if(currentUser!=null){
 			crit.add(Restrictions.eq("user", currentUser));
 			crit.setFetchMode("user", FetchMode.JOIN);

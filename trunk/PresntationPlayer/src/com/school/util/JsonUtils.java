@@ -11,6 +11,7 @@ public class JsonUtils {
 	public static final String PARAM_PP_LIST="ppList";
 	public static final String PARAM_PAGE_NO="pageNo";
 	public static final String PARAM_HAS_RESULTS="hasResults";
+	public static final String PARAM_UNIQUE_NAME="uniqueName";
 	public static final String SUCCESS = "success", ERROR_MESSAGE = "errorMessage";
 	public static Map<String, Object> successWithParams(Map<String, Object> params) {
 		return getJsonWithParams(params, STATUS_SUCCESS);
