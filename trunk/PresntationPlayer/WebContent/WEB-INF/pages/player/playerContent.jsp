@@ -2,7 +2,7 @@
 <div id="playerSupport" style="text-align: center;display: block" >
 	<h2><span id="pageTitle"></span></h2>
 	<div class="separator-h2"></div>
-	<div id="player" class="fl-left">
+	<div id="player" class="fl-left player-margin-left">
 		<div id="playerImg"	class="transparent-background ui-corner-top" >
 			<object id="svg-player" type="image/svg+xml" >
 			</object> 

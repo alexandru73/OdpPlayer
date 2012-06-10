@@ -163,6 +163,7 @@ Player.prototype = {
 			$("#fullscreen").button("option", options);
 			this.isFullscreen = false;
 			$('button').removeClass('ui-state-hover');
+			$('#player').addClass('player-margin-left');
 		}
 
 	},
@@ -176,6 +177,7 @@ Player.prototype = {
 		this.setPresetationPosition(width, screen.height, left, 0, "white");
 		$('#player').addClass("black-backg");
 		$('#player').removeClass("fl-left");
+		$('#player').removeClass('player-margin-left');
 		$('#toolbar').addClass("alfa-white");
 	},
 
