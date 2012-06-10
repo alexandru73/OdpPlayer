@@ -1,12 +1,13 @@
 <%@taglib prefix="sp" uri="http://www.springframework.org/tags"%>
 <h2 class="center-align "><sp:message code="menu.register"/></h2>
+<div class="separator-h2"></div>
 <div  id="step0-div" class="form-content mainPage form-panel message-div-hidden">
 </div>
-<div  id="register-div" class="form-content mainPage form-panel">
-	<h3><sp:message code="title.register.form"/></h3>
+<div  id="register-div" class="form-content grey-border form-panel ui-corner-all ">
+	<h3 ><sp:message code="title.register.form"/></h3>
 	<form id="register" >
 		<table>
-			<tr>
+			<tr> 
 				<td><label for="username"><sp:message code="user.username" /></label></td>
 				<td><input id="username" name="username" class="text-input margin-5" type="text" /></td>
 			</tr>

@@ -1,8 +1,9 @@
 <%@taglib prefix="sp" uri="http://www.springframework.org/tags"%>
 <h2 class="center-align "><sp:message code="title.upload.presentation"/></h2>
+<div class="separator-h2"></div>
 <div  id="step0-div" class="form-content mainPage form-panel message-div-hidden">
 </div>
-<div  id="step1-div" class="form-content mainPage form-panel">
+<div  id="step1-div" class="form-content grey-border ui-corner-all  form-panel">
 	<h3><sp:message  code="upload.form.step1"/></h3>
 	<form id="metaForm" >
 		<table>
@@ -30,7 +31,7 @@
 		</table>
 	</form>
 </div>
-<div id="step2-div" class="form-content mainPage form-panel">
+<div id="step2-div" class="form-content grey-border ui-corner-all  form-panel">
 	<h3><sp:message code="upload.form.step2"/></h3>
 	<form id="fileUploadForm" method="POST" enctype="multipart/form-data" action="upload/uploadFile">
 	<table>
@@ -42,32 +43,18 @@
 			<td>Progress:</td>
 			<td><div id="progressbar" style="height: 20px; width: 155px;" class="fl-left"></div><span id="percent" class="fl-left padding-s3">0%</span></td>
 		</tr> 
-		<tr>
-			<td><input id="previousStep1" class="button-cs" type="button"
-				value="<sp:message code="upload.form.previous"/>"></td>
-		 	<td><input id="submitUpload"  class="button-cs" type="submit"
-				value="<sp:message code="upload.form.next"/>"></td>
-		</tr>
 	</table>
+		<div style="margin:10px 10px 10px 0px">
+			<label for="agreeToLicence"><sp:message code="upload.form.agree.to.licence" /></label>
+			<input id="agreeToLicence" name="agreeToLicence" type="checkbox" />
+		</div>
+		<div style="margin:10px 10px 10px 0px">
+			<input id="previousStep1" class="button-cs" type="button" value="<sp:message code="upload.form.previous"/>">
+		 	<input id="submitUpload"  class="button-cs" type="submit" value="<sp:message code="upload.form.complete"/>">
+		</div>
 	</form>
 </div>
-<div id="step3-div" class="form-content mainPage form-panel">
-	<h3><sp:message code="upload.form.step3"/></h3>
-	<form id="completeUpload">
-		<table>
-			<tr>
-				<td><label for="agreeToLicence"><sp:message code="upload.form.agree.to.licence" /></label></td>
-				<td><input id="agreeToLicence" name="agreeToLicence" type="checkbox" /></td>
-			</tr>
-			<tr>
-				<td><input id="previousStep2" class="button-cs" type="button"
-				value="<sp:message code="upload.form.previous"/>">
-			 	<input id="completeSubmit" class="button-cs" type="button"
-						value="<sp:message code="upload.form.complete"/>"></td>
-			</tr>
-		</table>
-	</form>
-</div>
+
 <div id="dialog-message">
 </div>
 <script type="text/javascript">

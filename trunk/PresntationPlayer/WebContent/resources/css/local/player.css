@@ -6,10 +6,10 @@
 	width: 690px;
 	height: 515px;
 	margin-bottom: 5px;
-	position: absolute;
-	left: 100px;
+	padding-left:0px;
+	margin-left:47px;
 }
-
+ 
 #playerImg {
 	width: 100%;
 	height: 485px;
@@ -30,35 +30,34 @@
 	text-align: left;
 	padding: 0 3px 5px 3px;
 	position: relative;
-}
+} 
 
 .controls {
-	position: absolute;
-	left: 10px;
-	top: 0;
+	float: left;
+	margin-left: 5px;
 }
 
 .controls-slide {
 	width: 200px;
-	height: 20px;
+	height: 25px;
 	text-align: center;
-	margin-right: 15px;
-	position: absolute;
-	left: 250px;
-	top: 0;
+	float:left;
 }
 
 .time-slides {
-	position: absolute;
-	right: 10px;
-	top: 0;
-	width: 225px;
+	float: right;
+	width: 85px;
 }
 
 #slider-range-min {
 	width: 130px;
 	margin-top: 8px;
+	margin-right:10px;
 	float: right;
+}
+
+#slider-range-min:hover{
+	cursor: pointer;
 }
 
 .time-left {
@@ -78,8 +77,8 @@
 #tabs {
 	width: 250px;
 	height: 520px;
-	position: absolute;
-	left: 820px;
+	float:left;
+	margin-left:20px;
 }
 
 .inner-tabs {
@@ -96,11 +95,10 @@
 }
 
 .player-details {
-	width: 975px;
-	margin-top: 550px;
-	margin-left: 100px;
-	position: relative;
-	margin-bottom: 10px;
+	width: 969px;
+	padding:10px 0px 15px 10px;
+	margin-left:37px;
+	float:left;
 }
 
 .owner-views {

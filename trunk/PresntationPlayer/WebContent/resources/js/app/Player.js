@@ -26,14 +26,20 @@ Player.prototype = {
 			if (response.success) {
 				that.presentation = response.presentation;
 				$("#total-slides").html(that.presentation.noOfSlides);
-				$("#slider-range-min").slider( "option" ,"max",that.presentation.noOfSlides);
+				$("#slider-range-min").slider("option", "max",
+						that.presentation.noOfSlides);
 				that.initUI();
 				that.updateValues();
 				that.initTime();
+			}else{
+				var parent=$("#playerSupport").parent();
+				$("#playerSupport").remove();
+				parent.prepend("<h2 style='text-align:center'>The presentation that you are looking for is no longer available !</h2>");
 			}
 		};
 		var repoName = getUrlParam("p");
-		ajaxJsonWithParamGet("presentation/watch?p=" + repoName, this, onLoadPresentationComplete);
+		ajaxJsonWithParamGet("presentation/watch?p=" + repoName, this,
+				onLoadPresentationComplete);
 		this.play();
 	},
 
@@ -58,7 +64,7 @@ Player.prototype = {
 	},
 
 	onTick : function(periods) {
-		$('#time-left').text("-"+periods[5] + ':' + periods[6]);
+		$('#time-left').text("-" + periods[5] + ':' + periods[6]);
 	},
 
 	timeExpired : function() {
@@ -145,12 +151,15 @@ Player.prototype = {
 	},
 
 	onExitFullscreenEvent : function() {
-		if (window.fullScreenApi.supportsFullScreen && !window.fullScreenApi.isFullScreen()) {
+		if (window.fullScreenApi.supportsFullScreen
+				&& !window.fullScreenApi.isFullScreen()) {
+			$('#player').addClass("fl-left");
 			this.setPresetationPosition(690, 515, 100, 3, "black");
 			$('#player').removeClass("black-backg");
 			$('#toolbar').removeClass("alfa-white");
-			var options = player.createToggleClickOptions(false, "Switch to FullScreen",
-					"ui-icon-arrow-4-diag", "Switch to window view", "ui-icon-newwin");
+			var options = player.createToggleClickOptions(false,
+					"Switch to FullScreen", "ui-icon-arrow-4-diag",
+					"Switch to window view", "ui-icon-newwin");
 			$("#fullscreen").button("option", options);
 			this.isFullscreen = false;
 			$('button').removeClass('ui-state-hover');
@@ -166,6 +175,7 @@ Player.prototype = {
 		var left = Math.abs(width - screen.width) / 2;
 		this.setPresetationPosition(width, screen.height, left, 0, "white");
 		$('#player').addClass("black-backg");
+		$('#player').removeClass("fl-left");
 		$('#toolbar').addClass("alfa-white");
 	},
 
@@ -181,7 +191,8 @@ Player.prototype = {
 
 	inputSlideNoReceived : function() {
 		var val = $("#ctrl-slide-input").val();
-		if (isInt(val) && val <= this.presentation.noOfSlides && val > 0 && this.currentSlide != val) {
+		if (isInt(val) && val <= this.presentation.noOfSlides && val > 0
+				&& this.currentSlide != val) {
 			this.currentSlide = val;
 			this.updateValues();
 		} else {
@@ -190,21 +201,21 @@ Player.prototype = {
 	},
 
 	updateValues : function() {
-		$("#slider-range-min").slider( "option" ,"value",this.currentSlide);
+		$("#slider-range-min").slider("option", "value", this.currentSlide);
 		$("#ctrl-slide-input").val(this.currentSlide);
 		this.changeSlide(this.currentSlide);
 		this.initTime();
-		 
+
 	},
-	
-	setCurrentSlide:function(slideNo){
-		this.currentSlide=slideNo;
+
+	setCurrentSlide : function(slideNo) {
+		this.currentSlide = slideNo;
 	},
-	
+
 	changeSlide : function(currentSlide) {
 		$('#playerImg').empty();
-		var url = this.repoPath + "svg/" + this.presentation.repositoryName + "/" + currentSlide
-				+ this.svgExt;
+		var url = this.repoPath + "svg/" + this.presentation.repositoryName
+				+ "/" + currentSlide + this.svgExt;
 		var object = this.template.replace("&content", url);
 		$('#playerImg').prepend(object);
 		$('.outline-link-selected').removeClass('outline-link-selected');
@@ -226,38 +237,42 @@ Player.prototype = {
 
 	changeFromOutSide : function(slideNo) {
 		this.currentSlide = slideNo;
-		$("#ctrl-slide-input").val(this.currentSlide);
-		this.changeSlide(slideNo);
+		this.updateValues();
 	},
 
 	initUI : function() {
 		// set presentation meta
 		$("#pageTitle").html(this.presentation.title);
 		$("#d-uploadedBy").html(this.presentation.user.name);
-		var formatedDate = $.format.date(this.presentation.createadAt, "dd/MM/yyyy");
+		var formatedDate = $.format.date(this.presentation.createadAt,
+				"dd/MM/yyyy");
 		$("#d-dateOfUpload").html(formatedDate);
 		$("#d-noViews").html(this.presentation.noOfViews);
-		$("#d-cathegory").html(this.presentation.cathegory);
+		$("#d-cathegory").html(this.presentation.cathegory.name);
 		$("#d-description").html(this.presentation.description);
 		// create download links
 		var dLink = this.repoPath + "ext/" + this.presentation.repositoryName;
 		var origFile = this.downloadTemplate.replace("#link",
-				dLink + "." + this.presentation.originalExtension).replace("#linkLabel", "Original File")
-				.replace("#comment", "&nbsp;(." + this.presentation.originalExtension + ")");
-		var pdfFile = this.downloadTemplate.replace("#link", dLink + ".pdf").replace("#linkLabel",
-				"File as pdf").replace("#comment", "");
+				dLink + "." + this.presentation.originalExtension).replace(
+				"#linkLabel", "Original File").replace("#comment",
+				"&nbsp;(." + this.presentation.originalExtension + ")");
+		var pdfFile = this.downloadTemplate.replace("#link", dLink + ".pdf")
+				.replace("#linkLabel", "File as pdf").replace("#comment", "");
 		$("#d-download").append(origFile).append(pdfFile);
 		// create outline
 		var bookmarks = this.presentation.bookmarks.split(",");
 		for ( var int = 0; int < bookmarks.length; int++) {
 			var index = int + 1;
-			var cont = this.outlineTemplate.replace("#no", index + ".").replace("#idNo", index).replace(
-					"#content", bookmarks[int]).replace("#slide", index);
+			var cont = this.outlineTemplate.replace("#no", index + ".")
+					.replace("#idNo", index)
+					.replace("#content", bookmarks[int]).replace("#slide",
+							index);
 			$("#tabs-outline").append(cont);
 		}
 	},
 
-	createToggleClickOptions : function(bolToggle, normalLabel, normalIcon, toggleLabel, toggleIcon) {
+	createToggleClickOptions : function(bolToggle, normalLabel, normalIcon,
+			toggleLabel, toggleIcon) {
 		var options;
 		if (bolToggle) {
 			options = {

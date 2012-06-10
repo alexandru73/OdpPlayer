@@ -13,13 +13,13 @@
 		<div id="header">
 			<template:get name="header" />
 		</div>
-		<div style="widht:100%;height:2px;background-color: grey;">
-		</div>
+		<div class="separator-bl "></div>
 		<div id="mainPanel" class="mainPage">
-			<template:get name="content" />
+			<div style="padding:20px">
+				<template:get name="content" />
+			</div>
 		</div>
-		<div style="widht:100%;height:2px;background-color: grey;">
-		</div>
+		<div class="separator-bl "></div> 
 		<div id="footer">
 			<template:get name="footer" />
 		</div>

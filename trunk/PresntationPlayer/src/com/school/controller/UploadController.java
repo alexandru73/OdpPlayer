@@ -70,7 +70,6 @@ public class UploadController extends AbstractController {
 	}
 
 	private Cathegory getCathegoryByName(Long catId) throws PresentationException {
-		Object[][] param = { { "name", catId } };
 		Cathegory cathegory = baseDao.getEntity(catId, Cathegory.class);
 		if (cathegory == null) {
 			throw new PresentationException();
@@ -92,9 +91,18 @@ public class UploadController extends AbstractController {
 					result = JsonUtils.failureJson(errorMessage);
 				} else {
 					HttpSession session = req.getSession();
-					uploadFileToRepo(uploadedFile, session);
-					String completeMessage = messages.getMessage("validation.upload.complete.message", null, null);
-					result = JsonUtils.successWithParameter(UPLOAD_COMPLETE, completeMessage);
+					Presentation data = uploadFileToRepo(uploadedFile, session);
+					if (data != null) {
+						Long id = baseDao.save(data);
+						Job job = new Job(id);
+						queue.send(job, UPLOAD_QUEUE);
+						result = JsonUtils.successWithParameter(JsonUtils.PARAM_MESSAGE,
+								messages.getMessage("upload.success", null, null));
+					} else {
+						String errorMessage = messages.getMessage("validation.upload.first.set.metadata", null, null);
+						result = JsonUtils.failureJson(errorMessage);
+					}
+					session.removeAttribute(UPLOAD_METADATA);
 				}
 			} catch (UploadedDataNotFoundException e) {
 				String errorMessage = messages.getMessage("validation.upload.first.set.metadata", null, null);
@@ -119,27 +127,7 @@ public class UploadController extends AbstractController {
 		return extensions.toString();
 	}
 
-	@RequestMapping(value = "/completeUpload", method = RequestMethod.GET, produces = "application/json")
-	@ResponseBody
-	public Map<String, Object> completeUpload(HttpServletRequest req) {
-		Map<String, Object> result = null;
-		HttpSession session = req.getSession();
-		Presentation data = (Presentation) session.getAttribute(UPLOAD_METADATA);
-		if (data != null) {
-			Long id = baseDao.save(data);
-			Job job = new Job(id);
-			queue.send(job, UPLOAD_QUEUE);
-			result = JsonUtils.successWithParameter(JsonUtils.PARAM_MESSAGE,
-					messages.getMessage("upload.success", null, null));
-		} else {
-			String errorMessage = messages.getMessage("validation.upload.first.set.metadata", null, null);
-			result = JsonUtils.failureJson(errorMessage);
-		}
-		session.removeAttribute(UPLOAD_METADATA);
-		return result;
-	}
-
-	private void uploadFileToRepo(CommonsMultipartFile uploadedFile, HttpSession session) throws IOException,
+	private Presentation uploadFileToRepo(CommonsMultipartFile uploadedFile, HttpSession session) throws IOException,
 			UploadedDataNotFoundException, IncorectFileException {
 		Presentation data = (Presentation) session.getAttribute(UPLOAD_METADATA);
 		if (data != null) {
@@ -151,7 +139,7 @@ public class UploadController extends AbstractController {
 				data.setOriginalExtension(fileExtension);
 				File file = createFile(data, fileExtension);
 				uploadedFile.transferTo(file);
-				session.setAttribute(UPLOAD_METADATA, data);
+				return data;
 			} else {
 				throw new IncorectFileException();
 			}

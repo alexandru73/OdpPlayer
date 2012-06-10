@@ -1,34 +1,36 @@
 <%@taglib prefix="sp" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-<div  id="step0-div" class="form-content mainPage form-panel message-div-hidden">
-</div>
-<div>
-	<div id="cathegories" style="margin-right:10px;margin-top:10px;float:right">
-		<span><b>Filter by cathegories : </b></span>
-		<select  id="combobox" name="cathegory" class="text-input margin-5" style="height: 34px;width: 250px;"  >
-			<option value="-1">All</option>
-		</select>
+	<div  id="step0-div" class="form-content mainPage form-panel message-div-hidden">
 	</div>
-	<div style="margin:10px 20px 0px 10px;float:right">
-		<span><b>Results per page: </b></span>
-		<select  id="resultsPerPage" name="resultsPerPage" class="text-input margin-5" style="height: 34px;width: 50px;"  >
-			<option>10</option>
-			<option>20</option>
-			<option>30</option> 
-		</select>
-	</div>
-	<sec:authorize access="isAuthenticated()">
-		<div style="margin: 16px 20px 0px 0px; float: right;">
-			<span><b>My presentations only : </b></span>
-		    <input id="myPresentations" type="checkbox">
+	<h2 style="text-align: center;">Latest presentations</h2> 
+	<div class="separator-h2"></div>
+	<div id="filters" style="margin:4px;">
+		<div id="cathegories" style="margin:0px 5px;" class="fl-right">
+			<span><b>Filter by cathegories : </b></span>
+			<select  id="combobox" name="cathegory" class="text-input margin-5" style="height: 34px;width: 250px;"  >
+				<option value="-1">All</option>
+			</select>
 		</div>
-	</sec:authorize>
-	<div id="cathegories" style="clear:both"></div>
-	<div class="form-content mainPage form-panel">
-		<div id="pag-controls">
+		<div style="margin:0px 5px;" class="fl-right">
+			<span><b>Results per page: </b></span>
+			<select  id="resultsPerPage" name="resultsPerPage" class="text-input margin-5" style="height: 34px;width: 50px;"  >
+				<option>10</option>
+				<option>20</option>
+				<option>30</option> 
+			</select>
+		</div>
+		<sec:authorize access="isAuthenticated()">
+			<div style="margin: 6px 5px 0px 5px;"class="fl-right">
+				<span><b>My presentations only : </b></span>
+		    	<input id="myPresentations" type="checkbox">
+			</div>
+		</sec:authorize>
+		<div style="clear:both"></div>
+	</div>
+	<div id="cath" class="separator-h2" style="clear:both"></div>
+	<div id="pag-controls" style="margin-top:15px;">
 			<div id="results" style="width: 100%; height: 100%;">
-				<h2 class="form-content">Latest presentations</h2>
-				<span id="errorMes" class="hidden-st"></span>
+				<span id="errorMes" class="hidden-st"></span> 
 			</div> 
 			<div class="clear-y"></div>
 			<div id="go-to-page" class="fl-left padd-top-10 page-nav text-a-left">
@@ -44,6 +46,4 @@
 				<button id="next-page" class="button-cs">Next Page</button>
 			</div>
 			<div class="clear-y"></div>
-		</div>
 	</div>
-</div>

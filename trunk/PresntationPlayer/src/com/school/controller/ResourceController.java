@@ -2,6 +2,8 @@ package com.school.controller;
 
 import java.io.IOException;
 
+import javax.servlet.http.HttpServletResponse;
+
 import net.sf.jmimemagic.Magic;
 import net.sf.jmimemagic.MagicException;
 import net.sf.jmimemagic.MagicMatch;
@@ -104,10 +106,14 @@ public class ResourceController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/repo/ext/{nameInRepo:.+}")
-	public ResponseEntity<Resource> getExternalPresentation(@PathVariable("nameInRepo") String nameInRepo) {
+	public ResponseEntity<Resource> getExternalPresentation(@PathVariable("nameInRepo") String nameInRepo,HttpServletResponse response) throws IOException {
 		String[] presentationName = nameInRepo.split("\\.");
 		Resource res = resService.getResource(RESOURCE_SOURCE_DISK + RESOURCE_REPO_FOLDER + "/" + presentationName[0]
 				+ "/" + nameInRepo);
+		response.setContentType("application/force-download");
+		response.setContentLength((int)res.contentLength());
+		response.setHeader("Content-Transfer-Encoding", "binary");
+		response.setHeader("Content-Disposition","attachment; filename="+nameInRepo);
 		return setImageResponseMediaType(res);
 	}
 

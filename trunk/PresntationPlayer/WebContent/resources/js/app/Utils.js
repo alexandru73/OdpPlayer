@@ -46,17 +46,11 @@ function hasWhiteSpace(se) {
 }
 
 function addDisabledClass(componentID) {
-	$(componentID).addClass("step-panel");
-	var h3 = componentID + " h3";
-	$(h3).css("font-weight", "normal");
-	$(h3).css("color", "red");
+	$(componentID).addClass("hidden-st");
 };
 
 function removeDisabledClass(componentID) {
-	$(componentID).removeClass("step-panel");
-	var h3 = componentID + " h3";
-	$(h3).css("font-weight", "bold");
-	$(h3).css("color", "black");
+	$(componentID).removeClass("hidden-st");
 };
 
 function addDialogToBody(dialogId, title, message) {

@@ -18,11 +18,6 @@ $(function() {
 });
 
 
-var dialogTitle="Error";
-$(document).ready(function() {
-	var upload = new Upload();
-	upload.init();
-});
 
 _uacct = "UA-850242-2";
 urchinTracker();
@@ -43,11 +38,16 @@ function ajaxUploadReady() {
 		complete : function(response) {
 			var resp=JSON.parse(response.responseText);
 			if (resp.success) {
-				$("#fileUploadForm :input").attr("disabled", true);
-				$("#completeUpload :input").attr("disabled", false);
-				addDisabledClass('#step2-div');
-				removeDisabledClass('#step3-div');
-				$('input:button , input:submit').removeClass('ui-state-hover');
+					var element=$('#step0-div');
+					$('body').animate({scrollTop: $('body').position().top}, 'fast');
+					element.show(500);
+					setTimeout(function() {
+						element.hide(700);
+					}, 5000);
+					upload.initUI();
+					$('#step1-div').clearForm();
+					$('#step2-div').clearForm();
+					appendSuccessMessageDivTo(element, resp, "result-complete");
 			}else{
 				addDialogToBody("dialog-message", dialogTitle, resp.errorMessage);
 				$('#dialog-message').dialog('open');
@@ -71,8 +71,6 @@ Upload.prototype = {
 		this.initMetaForm();
 		this.initUI();
 		this.initUploadForm();
-		this.initCompleteForm();
-		this.completeUploadInit();
 	},
 	
 	removeButtonFocus:function(){
@@ -158,8 +156,11 @@ Upload.prototype = {
 	},
 	
 	initUploadForm : function(){
-		new LiveValidation( "fileData", { validMessage: this.okMessage , wait: 500 } )
+		var x1=new LiveValidation( "fileData", { validMessage: this.okMessage , wait: 500 } )
 			.add( Validate.Presence, {failureMessage : this.mandatory } );	
+		var x2=new LiveValidation( "agreeToLicence", { validMessage: this.okMessage , wait: 500 } )
+		 .add( Validate.Acceptance );
+		this.agreeToLicenceValidator.push(x1);this.agreeToLicenceValidator.push(x2);
 		var that =this;
 		$("#previousStep1").click(function(){
 			$("#fileUploadForm :input").attr("disabled", true);
@@ -168,57 +169,21 @@ Upload.prototype = {
 			removeDisabledClass('#step1-div');
 			that.removeButtonFocus();
 		});
+		
 		$("#submitUpload").click(function(){
 			$("#submitUpload").attr("disabled", false);
-		});
-	},
-	
-	initCompleteForm:function(){
-		var agreeToLicence=new LiveValidation( "agreeToLicence", { validMessage: this.okMessage , wait: 500 } )
-			.add( Validate.Acceptance );
-		this.agreeToLicenceValidator.push(agreeToLicence);
-		var that =this;
-		$("#previousStep2").click(function(){
-			$("#fileUploadForm :input").attr("disabled", false);
-			$("#completeUpload :input").attr("disabled", true);
-			removeDisabledClass('#step2-div');
-			addDisabledClass('#step3-div');
-			that.removeButtonFocus();
-		});
-
-	},
-	createCallbackCompleteUpload:function(){
-		var that=this;
-		var callback=function(response){
-			var id="result-complete";
-			var element=$('#step0-div');
-			$('body').animate({scrollTop: $('body').position().top}, 'fast');
-			element.show(500);
-		    setTimeout(function() {
-		    	element.hide(700);
-		    }, 5000);
-			if(response.success){
-				that.initUI();
-				$('#step1-div').clearForm();
-				$('#step2-div').clearForm();
-				$('#step3-div').clearForm();
-				appendSuccessMessageDivTo(element, response, id);
-			}else{
-				appendFailureMessageDivTo(element, response, id);
-			}		
-		};
-		return callback;
-	},
-	completeUploadInit:function(){
-		var that=this;
-		$('#completeSubmit').click(function() {
-			var callback=that.createCallbackCompleteUpload();	
 			var okToSubmit = LiveValidation.massValidate(that.agreeToLicenceValidator);
-			if (okToSubmit) {
-				$("#completeUpload :input").attr("disabled", true);
-				ajaxJsonGet("upload/completeUpload", callback);
-				that.removeButtonFocus();
+			if (okToSubmit==true) {
+				return true;
 			}
+			return false;
+			
 		});
 	}
 };
+
+var upload = new Upload();
+var dialogTitle="Error";
+$(document).ready(function() {
+	upload.init();
+});

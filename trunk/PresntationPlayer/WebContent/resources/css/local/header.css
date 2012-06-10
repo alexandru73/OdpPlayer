@@ -1,3 +1,56 @@
+/* menu */
+
+#templatemo_menu { 
+	width: 350px; 
+	margin-top:15px;
+}
+
+#templatemo_menu ul {  
+	padding: 9px 0 0; 
+	margin: 0; 
+	list-style: none; 
+}
+
+#templatemo_menu ul li { 
+	margin: 0; 
+	padding: 0; 
+}
+
+#templatemo_menu ul li a {
+	float: left;
+	display: block;
+	height: 26px;
+	color: #000;	
+	min-width:60px;
+	text-align: center;
+	text-decoration: none;
+	font-weight: 400;
+	outline: none;
+	margin-right: 10px;
+}
+
+#templatemo_menu ul li a:hover, #templatemo_menu ul .current {
+	color: #fff;
+	padding-top: 3px;
+	height: 20px;
+	padding-top:6px;
+	background-color:black;
+    border:1px solid black;
+    
+	-webkit-box-shadow: 5px -5px 5px rgba(0, 0, 0, 0.5);
+	-moz-box-shadow: 5px -5px 5px rgba(0, 0, 0, 0.5);
+	box-shadow: 5px -5px 5px rgba(0, 0, 0, 0.5);
+	border-top-right-radius: 6px;
+	border-top-left-radius: 6px;
+	-webkit-top-left-radius: 6px;
+	-webkit-top-left-right: 6px;
+	-moz-top-left-radius: 6px;
+	-moz-top-right-radius: 6px;
+}
+
+/* end of menu */
+
+
 
 .menu-style-div {
 	position: absolute;
@@ -27,23 +80,23 @@
 #logo {
 	left: 0px;
 	top: 0px;
-	float: left;
 	width: 200px;
 	position: relative;
 }
 
 /* main user actions*/
 #menu-user-actions {
+	text-align:center;
 	width: 200px;
-	height: 45px;
+	height: 40px;
 	float: right;
 	position: relative;
-	background-color: #172322;
+	background-color: black;
 	border-top:none;
 }
 
 #menu-info {
-	width: 164px;
+	width: 50px;
 	left: 18px;
 	text-align: left;
 }
@@ -51,7 +104,7 @@
 #menu-begin-info {
 	position: relative;
 	float: left;
-	background-color: #172322;
+	background-color: black;
 }
 
 #menu-end-info {
@@ -66,6 +119,7 @@
 
 /* menu  style */
 
+
 .menu {
 	margin: 0px;
 	padding: 0px;
@@ -76,7 +130,7 @@
 	display: inline-block;
 	float: left;
 	z-index: 1000;
-	width: 164px;
+	width: 50px;
 }
 
 .menu a {
@@ -85,12 +139,13 @@
 }
 
 .menu>li {
-	background: #172322 none repeat scroll 0 0;
+	background: black none repeat scroll 0 0;
 	cursor: pointer;
 	float: left;
-	height: 45px;
+	height: 20px;
+	width:155px;
 	position: relative;
-	padding: 0px 10px;
+	padding: 10px 5px;
 }
 
 .menu>li a:hover {
@@ -107,13 +162,13 @@
 .menu li ul {
 	position: absolute;
 	z-index:10;
-	margin-top: 45px;
+	margin-top: 40px;
 	top: -17px;
 	width: 200px;
 	left: -19px;
 	padding-top: 16px;
 	text-align: left;
-	background-color: #172322;
+	background-color: black;
 	color: #0395CC; /* for IE */
 	display: none;
 }
