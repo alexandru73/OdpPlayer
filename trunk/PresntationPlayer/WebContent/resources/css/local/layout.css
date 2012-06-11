@@ -58,11 +58,11 @@ h3 {
 	position: relative;
 	z-index: 1;
 	background-color: #f0f0f0;
-	background: -webkit-gradient(radial, center center, 0, center center, 460, from(#dedede
+	background: -webkit-gradient(radial, center center, 0, center center, 460, from(#dddddd
 		), to(#f5f5f5) );
-	background: -webkit-radial-gradient(circle, #dedede, #f5f5f5);
-	background: -moz-radial-gradient(circle, #dedede, #f5f5f5);
-	background: -ms-radial-gradient(circle, #dedede, #f5f5f5);
+	background: -webkit-radial-gradient(circle, #dddddd, #f5f5f5);
+	background: -moz-radial-gradient(circle, #dddddd, #f5f5f5);
+	background: -ms-radial-gradient(circle, #dddddd, #f5f5f5);
 	min-width: 100%;
 	min-height: 500px;
 	margin-bottom: 12px;
@@ -70,7 +70,7 @@ h3 {
 }
 
 .mainPage {
-	border: 1px solid #B0B0B0;
+	border: 1px solid #B1B1B1;
 	-moz-box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.5);
 	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
 	-webkit-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
@@ -86,11 +86,8 @@ h3 {
 }
 
 #login {
-	position: relative;
-	width: 508px;
+	width: 500px;
 	height: 272px;
-	background-image: url(img/loginbox_bg.png);
-	background-color: transparent;
 	margin: auto;
 	margin-top: 70px
 }
@@ -100,16 +97,13 @@ h3 {
 }
 
 #login-error {
-	position: absolute;
-	left: 86px;
-	top: 25px;
 	height: 15px;
-	color: red;
+	position: absolute;
+	width: 475px;
 }
 
 #login-table {
-	position: relative;
-	top: 30px;
+	padding-top: 45px;
 	width: 340px;
 	margin: auto;
 }
@@ -123,7 +117,22 @@ h3 {
 	padding-left: 30px;
 	padding-right: 30px;
 	padding-bottom: 15px;
+	background: -webkit-gradient(radial, center center, 0, center center, 460, from(#D6D6D6
+		), to(#a8a8a8) );
+	background: -webkit-radial-gradient(circle, #D6D6D6, #a8a8a8);
+	background: -moz-radial-gradient(circle, #D6D6D6, #a8a8a8);
+	background: -ms-radial-gradient(circle, #D6D6D6, #a8a8a8);
 }
+
+.radial-gradient-grey {
+	background: -webkit-gradient(radial, center center, 0, center center, 460, from(#D6D6D6
+		), to(#a8a8a8) );
+	background: -webkit-radial-gradient(circle, #D6D6D6, #a8a8a8);
+	background: -moz-radial-gradient(circle, #D6D6D6, #a8a8a8);
+	background: -ms-radial-gradient(circle, #D6D6D6, #a8a8a8);
+}
+
+
 
 .ui-autocomplete-input,option.text-input,select.text-input,textarea.text-input,input.text-input
 	{
@@ -223,13 +232,18 @@ select.text-input:focus,textarea.text-input:focus,input.text-input:focus,input.u
 	padding: 8px;
 	float: left;
 	margin: 5px;
+	background-color: #D6D6D6;
 }
 
 .search-result:hover {
-	background-color: #EFEFEF;
 	-webkit-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
 	-moz-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
 	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+	background: -webkit-gradient(radial, center center, 0, center center, 460, from(#F8F8F8
+		), to(#D6D6D6) );
+	background: -webkit-radial-gradient(circle, #F8F8F8, #D6D6D6);
+	background: -moz-radial-gradient(circle, #F8F8F8, #D6D6D6);
+	background: -ms-radial-gradient(circle, #F8F8F8, #D6D6D6);
 }
 
 #imgS:hover,#result-detail:hover {

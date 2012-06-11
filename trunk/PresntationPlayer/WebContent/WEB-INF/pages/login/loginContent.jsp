@@ -2,11 +2,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <h2 class="center-align ">Log in</h2>
 <div class="separator-h2"></div> 
-<div id="login"> 
+<div id="login" class="form-content grey-border ui-corner-all  form-panel"> 
 	<br />
 	<form id="login-form" method="POST" action="j_spring_security_check" >
 			<c:if test="${ not (empty param.error) and param.error==1}">
-				<div id="login-error">
+				<div id="login-error" class=" LV_validation_message LV_invalid ">
         				<sp:message code="menu.authentication.failed" />
         		</div>
     		</c:if>

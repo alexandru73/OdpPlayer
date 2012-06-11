@@ -1,7 +1,5 @@
 <%@taglib prefix="sp" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-	<div  id="step0-div" class="form-content mainPage form-panel message-div-hidden">
-	</div>
 	<h2 style="text-align: center;">Latest presentations</h2> 
 	<div class="separator-h2"></div>
 	<div id="filters" style="margin:4px;">
@@ -28,6 +26,8 @@
 		<div style="clear:both"></div>
 	</div>
 	<div id="cath" class="separator-h2" style="clear:both"></div>
+	<div  id="step0-div" class=" mainPage form-panel message-div-hidden">
+	</div>
 	<div id="pag-controls" style="margin-top:15px;">
 			<div id="results" style="width: 100%; height: 100%;">
 				<span id="errorMes" class="hidden-st"></span> 

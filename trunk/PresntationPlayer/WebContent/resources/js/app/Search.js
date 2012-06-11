@@ -1,7 +1,7 @@
 function Search() {
-	this.searchTemplate = '<div id="#ppt_name" class="search-result ui-corner-all" >\
+	this.searchTemplate = '<div id="#ppt_name" class="ui-corner-all radial-gradient-grey search-result" >\
 				<img id="imgS" alt="Not Found" src="resources/repo/thumbnail/#ppt_name/1.png" style="width:200px;height:150px;float:left" onclick="goToPresentation(\'#ppt_name\')">\
-				<div id="result-detail" class="search-detail" onclick="goToPresentation(\'#ppt_name\')">\
+				<div id="result-detail" class="search-detail " onclick="goToPresentation(\'#ppt_name\')">\
 					<p id="title" style="height:20px;" class="show-fixed-content"><b>#title</b></p>\
 					<p class="show-fixed-content padding-s3"><i>Uploaded by: </i>&nbsp; #upBy </p>\
 					<p class="show-fixed-content padding-s3"><i>Date added : </i>&nbsp; #upDate</p>\
