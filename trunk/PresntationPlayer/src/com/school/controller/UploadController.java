@@ -186,6 +186,6 @@ public class UploadController extends AbstractController {
 	private static final String REPO_UPLOAD_LOCATION = ConfigurationLoader.getConfig().getString(
 			"local.repository.upload.path"), REPO_HOME = ConfigurationLoader.getConfig().getString(
 			"local.repository.home.path"), UPLOAD_QUEUE = ConfigurationLoader.getConfig().getString(
-			"active.mq.queue.convert.presentation"), UPLOAD_METADATA = "metadata", UPLOAD_COMPLETE = "complete";
+			"active.mq.queue.convert.presentation"), UPLOAD_METADATA = "metadata";
 	private static final String[] acceptedExtensions = { "ppt", "odp", "pptx" };
 }

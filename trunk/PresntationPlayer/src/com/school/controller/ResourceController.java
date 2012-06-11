@@ -10,7 +10,6 @@ import net.sf.jmimemagic.MagicMatch;
 import net.sf.jmimemagic.MagicMatchNotFoundException;
 import net.sf.jmimemagic.MagicParseException;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

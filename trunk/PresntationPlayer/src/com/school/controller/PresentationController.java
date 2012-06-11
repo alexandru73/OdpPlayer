@@ -25,7 +25,6 @@ import com.school.model.DetailedPresentation;
 import com.school.model.User;
 import com.school.util.ConfigurationLoader;
 import com.school.util.JsonUtils;
-import com.sun.star.ucb.SearchRecursion;
 
 @Controller
 @RequestMapping(value = "/presentation")

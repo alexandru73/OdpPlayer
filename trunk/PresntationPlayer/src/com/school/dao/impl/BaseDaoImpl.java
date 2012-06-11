@@ -8,7 +8,9 @@ import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -87,51 +89,65 @@ public class BaseDaoImpl extends HibernateDaoSupport implements BaseDao {
 		});
 	}
 
-	public List<DetailedPresentation> getPaginatedElements(Integer page,User currentUser, String searchq,
-			Long cathegory,int perPage) {
-	
+	@SuppressWarnings("unchecked")
+	public List<DetailedPresentation> getPaginatedElements(Integer page, User currentUser, String searchq,
+			Long cathegory, int perPage) {
+
 		List<DetailedPresentation> presentationList = null;
-		if(page!=null && page!=0){
+		if (page != null && page != 0) {
 			Criteria crit = createCriteriaForSearch(currentUser, searchq, cathegory);
-			int start=(page-1)*perPage;
+			int start = (page - 1) * perPage;
 			crit.setFirstResult(start);
 			crit.setMaxResults(perPage);
-			presentationList=crit.list();
+			presentationList = crit.list();
 		}
 		return presentationList;
 	}
 
+	@SuppressWarnings("unchecked")
+	public void deleteUser(Long userID) {
+		if (userID != null) {
+			Session session = getSession();
+			Transaction tr = session.beginTransaction();
+			tr.begin();
+			Query q=session.createQuery("delete from UserAuthority as a where a.user.id=:userId").setParameter("userId", userID);
+			q.executeUpdate();
+			q=session.createQuery("delete from User as u where u.id=:userId").setParameter("userId", userID);
+			q.executeUpdate();
+			tr.commit();
+		}
+	}
+
 	private Criteria createCriteriaForSearch(User currentUser, String searchq, Long cathegory) {
-		Session session=getSession();
-		Criteria crit=session.createCriteria(DetailedPresentation.class);
+		Session session = getSession();
+		Criteria crit = session.createCriteria(DetailedPresentation.class);
 		crit.add(Restrictions.eq("isToBeDeleted", false));
-		if(currentUser!=null){
+		if (currentUser != null) {
 			crit.add(Restrictions.eq("user", currentUser));
 			crit.setFetchMode("user", FetchMode.JOIN);
 		}
-		if(StringUtils.isNotBlank(searchq)){
-			Disjunction disjunction =Restrictions.disjunction();
-			String[] first=searchq.split("\\s+");
+		if (StringUtils.isNotBlank(searchq)) {
+			Disjunction disjunction = Restrictions.disjunction();
+			String[] first = searchq.split("\\s+");
 			for (int i = 0; i < first.length; i++) {
-				disjunction.add(Restrictions.like("title", "%"+first[i]+"%"));
-				disjunction.add(Restrictions.like("description", "%"+first[i]+"%"));
+				disjunction.add(Restrictions.like("title", "%" + first[i] + "%"));
+				disjunction.add(Restrictions.like("description", "%" + first[i] + "%"));
 			}
-			disjunction.add(Restrictions.like("title", "%"+searchq+"%"));
-			disjunction.add(Restrictions.like("description", "%"+searchq+"%"));
+			disjunction.add(Restrictions.like("title", "%" + searchq + "%"));
+			disjunction.add(Restrictions.like("description", "%" + searchq + "%"));
 			crit.add(disjunction);
 		}
-		if(cathegory!=null){
-			Criteria cath=crit.createCriteria("cathegory");
+		if (cathegory != null) {
+			Criteria cath = crit.createCriteria("cathegory");
 			cath.add(Restrictions.idEq(cathegory));
 		}
 		return crit;
 	}
-	
-	public Long countDetailedPresentations(User currentUser, String searchq,
-			Long cathegory){
+
+	public Long countDetailedPresentations(User currentUser, String searchq, Long cathegory) {
 		Criteria crit = createCriteriaForSearch(currentUser, searchq, cathegory);
 		crit.setProjection(Projections.rowCount());
-		Long noOfElements=(Long)crit.uniqueResult();
+		Long noOfElements = (Long) crit.uniqueResult();
 		return noOfElements;
 	}
 }

@@ -1,5 +1,6 @@
 package com.school.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -13,7 +14,7 @@ public class UserAuthority extends BaseEntity implements GrantedAuthority {
 
 	private static final long serialVersionUID = 1L;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY,cascade=CascadeType.REMOVE)
 	private User user;
 	private String authority;
 

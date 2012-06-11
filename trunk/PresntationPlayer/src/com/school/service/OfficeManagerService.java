@@ -15,13 +15,13 @@ public class OfficeManagerService implements ServletContextListener {
 	@Override
 	public void contextDestroyed(ServletContextEvent arg0) {
 		if (officeManager != null) {
-			officeManager.stop();
+		//	officeManager.stop();
 		}
 	}
 
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
-		officeManager = createAndStartOfficeManager(); 
+		//officeManager = createAndStartOfficeManager(); 
 	}
 
 	public OfficeManager createAndStartOfficeManager() {

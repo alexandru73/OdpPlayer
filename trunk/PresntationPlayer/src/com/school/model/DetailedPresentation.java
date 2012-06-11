@@ -8,6 +8,10 @@ import javax.persistence.Table;
 @Table(name = "presentation")
 public class DetailedPresentation extends Presentation {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5326544399874021946L;
 	@Column(name = "no_of_slides", nullable = false)
 	private Integer noOfSlides;
 	@Column(name = "no_of_views", nullable = false)

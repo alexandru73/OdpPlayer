@@ -57,3 +57,14 @@ function ajaxJsonDelete(url, callbackSuccess) {
 		success : callbackSuccess
 	});
 };
+
+function ajaxJsonPut(url, callbackSuccess) {
+	$.ajax({
+		url : url,
+		type:'PUT',
+		dataType : 'json',
+		contentType: "application/json; charset=utf-8",
+		success : callbackSuccess
+	});
+};
+

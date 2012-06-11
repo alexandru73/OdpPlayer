@@ -29,4 +29,6 @@ public interface BaseDao {
 			Long cathegory, int perPage);
 
 	public Long countDetailedPresentations(User currentUser, String searchq, Long cathegory);
+
+	public void deleteUser(Long userID);
 }

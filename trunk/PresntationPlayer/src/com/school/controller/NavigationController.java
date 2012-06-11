@@ -24,7 +24,12 @@ public class NavigationController {
 		return "index/indexPage";
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/changePassword")
+	@RequestMapping(method = RequestMethod.GET, value = "user/users")
+	public String getAllUsersPage() {
+		return "users/userPage";
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "user/changePassword")
 	public String changePasswordPage() {
 		return "changePassword/passwPage";
 	}

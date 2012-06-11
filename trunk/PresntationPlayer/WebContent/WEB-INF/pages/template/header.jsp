@@ -6,6 +6,9 @@
 			<li><a href="search">Latest presentations</a></li>
 			<li><a href="upload"><sp:message code="menu.upload" /></a></li>
 		</sec:authorize>
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
+			<li><a href="user/users">Users details</a></li>
+		</sec:authorize>
 		<sec:authorize access="! isAuthenticated()">
 			<li><a href="search">List presentations</a></li> 
 			<li><a href="login"><sp:message code="menu.login" /></a></li>
@@ -23,7 +26,7 @@
 			<ul id="menua" class="menu">
 				<li><div class="show-fixed-content fl-left" style="width: 100%; height: 32px">Welcome :&nbsp;<a style="color:#0395CC;">${sessionScope.name}</a></div>
 					<ul id="account" class="ui-round-bottom-corners fl-left" style="border-top: none">
-						<li><a href="changePassword"><sp:message code="menu.change.password" /></a></li>
+						<li><a href="user/changePassword"><sp:message code="menu.change.password" /></a></li>
 						<li><a href="j_spring_security_logout"><sp:message code="menu.logout"/></a></li>
 					</ul>
 				</li>
