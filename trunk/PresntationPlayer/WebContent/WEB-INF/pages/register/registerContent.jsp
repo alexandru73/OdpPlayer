@@ -4,10 +4,9 @@
 <div  id="step0-div" class="form-content mainPage form-panel message-div-hidden">
 </div>
 <div  id="register-div" class="form-content grey-border form-panel ui-corner-all ">
-	<h3 ><sp:message code="title.register.form"/></h3>
 	<form id="register" >
-		<table>
-			<tr> 
+		<table style="margin-top:15px"> 
+			<tr>  
 				<td><label for="username"><sp:message code="user.username" /></label></td>
 				<td><input id="username" name="username" class="text-input margin-5" type="text" /></td>
 			</tr>
