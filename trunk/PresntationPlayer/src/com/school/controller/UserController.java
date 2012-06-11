@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.school.controller.dto.ChangePasswordDTO;
 import com.school.dao.BaseDao;
 import com.school.model.User;
 import com.school.model.UserAuthority;
@@ -24,7 +26,7 @@ import com.school.util.OtherUtils;
 @Controller
 @RequestMapping(value = "/user")
 @Scope("")
-public class UserController {
+public class UserController extends AbstractController {
 	@Resource(name = "baseDaoImpl")
 	BaseDao baseDao;
 	@Resource(name = "messageSource")
@@ -44,13 +46,39 @@ public class UserController {
 	@RequestMapping(method = RequestMethod.GET, value = "/checkUsername", produces = "application/json")
 	@ResponseBody
 	public Map<String, Object> checkUsername(@RequestParam String username) {
-		Map<String, Object> result = JsonUtils.failureJson(messages.getMessage("register.username.exists", null,null));
+		Map<String, Object> result = JsonUtils.failureJson(messages.getMessage("register.username.exists", null, null));
 		if (username != null) {
 			Object[][] params = { { "username", username } };
 			List<User> userList = baseDao.getEntitiesWithConditions(User.class, params, null);
 			if (userList.isEmpty()) {
 				result = JsonUtils.successJson();
 			}
+		}
+		return result;
+	}
+
+	@RequestMapping(method = RequestMethod.POST, value = "/changePassword", consumes = "application/json", produces = "application/json")
+	@ResponseBody
+	public Map<String, Object> changePassword(@RequestBody ChangePasswordDTO pass) {
+		Map<String, Object> result = null;
+		User user = getCurrentUser();
+		if (user != null) {
+			if (StringUtils.isNotEmpty(pass.getOldPassword())
+					&& OtherUtils.hashPassword(pass.getOldPassword()).equals(user.getPassword())) {
+				if (StringUtils.isNotEmpty(pass.getNewPassword())
+						&& StringUtils.isNotEmpty(pass.getRetypedNewPassword())
+						&& pass.getNewPassword().equals(pass.getRetypedNewPassword())) {
+					user.setPassword(pass.getNewPassword());
+					baseDao.update(user);
+					result = JsonUtils.successWithParameter(JsonUtils.PARAM_MESSAGE,"The password was changed successfully !");
+				} else {
+					result = JsonUtils.failureJson("New passwords do not match !");
+				}
+			} else {
+				result = JsonUtils.failureJson("The old password is incorect !");
+			}
+		} else {
+			result = JsonUtils.failureJson("You must be logged in in order to perform this operation !");
 		}
 		return result;
 	}

@@ -17,7 +17,7 @@
 						class="text-input margin-5" style="height:60px"></textarea>&nbsp;</td>
 			</tr>
 			<tr>
-				<td><label for="slideDuration"><sp:message code="upload.form.slide.duration" /></label></td>
+				<td><label for="slideDuration"><sp:message code="upload.form.slide.duration" /></label><br> (in seconds)</td>
 				<td><input id="slideDuration" name="slideDuration" class="text-input margin-5" type="text" /></td>
 			</tr>
 			<tr>

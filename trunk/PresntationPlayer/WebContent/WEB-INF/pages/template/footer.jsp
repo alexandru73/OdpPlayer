@@ -1,1 +1,1 @@
-footer
+<span id="footerText">Copyright © 2012 Alexandru Mihai Ilea</span>

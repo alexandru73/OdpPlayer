@@ -18,7 +18,9 @@
 	</beans:bean>
 
 	<http entry-point-ref="loginUrlAuthenticationEntryPoint" use-expressions="true" auto-config="false">
-		<intercept-url pattern="/" access="permitAll" />
+		<intercept-url pattern="/search" access="permitAll" />
+		<intercept-url pattern="/login" access="permitAll" />
+		<intercept-url pattern="/register" access="permitAll" />
 		<intercept-url pattern="/upload/**" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/download/**" access="hasRole('ROLE_USER')" />
 		<logout invalidate-session="true" delete-cookies="JSESSIONID" logout-success-url="/login" />

@@ -28,7 +28,6 @@ function ajaxUploadReady() {
 		beforeSend : function() {
 			progressBar.progressbar("disabled", false);
 			progressBar.progressbar("value", 0);
-
 		},
 		
 		uploadProgress : function(event, position, total, percentComplete) {
@@ -102,7 +101,7 @@ Upload.prototype = {
 		this.metaValidators.push(description);
 		var duration=new LiveValidation( "slideDuration", { validMessage: this.okMessage , wait: 500 } )
 			.add( Validate.Presence, {failureMessage : this.mandatory } )
-			.add(Validate.Numericality, { maximum: 1000 , onlyInteger: true });
+			.add(Validate.Numericality, { maximum: 600, minimum :5 , onlyInteger: true });
 		this.metaValidators.push(duration);	
 		
 		var that=this;
