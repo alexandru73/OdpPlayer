@@ -20,7 +20,7 @@
 	</jsp-config>
 
 	<listener>
-		<listener-class>com.school.service.OfficeManagerService</listener-class>
+		<listener-class>com.school.presentation.office.OfficeManagerService</listener-class>
 	</listener>
 	<servlet>
 		<servlet-name>appServlet</servlet-name>

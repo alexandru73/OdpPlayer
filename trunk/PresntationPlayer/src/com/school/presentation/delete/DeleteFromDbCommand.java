@@ -4,9 +4,9 @@ import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
 
 import com.school.dao.BaseDao;
-import com.school.exceptions.CommandFailedToExecuteExeption;
 import com.school.model.DetailedPresentation;
-import com.school.presentation.converter.impl.ConverterContext;
+import com.school.presentation.convert.ConverterContext;
+import com.school.presentation.exceptions.CommandFailedToExecuteExeption;
 
 public class DeleteFromDbCommand implements Command {
 	BaseDao baseDao;

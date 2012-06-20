@@ -1,4 +1,6 @@
-package com.school.exceptions;
+package com.school.controller.exceptions;
+
+import com.school.presentation.exceptions.PresentationException;
 
 public class IncorectFileException extends PresentationException {
 	private static final long serialVersionUID = 1L;

@@ -20,7 +20,6 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import com.school.dao.BaseDao;
 import com.school.model.BaseEntity;
 import com.school.model.DetailedPresentation;
-import com.school.model.User;
 
 public class BaseDaoImpl extends HibernateDaoSupport implements BaseDao {
 
@@ -90,12 +89,12 @@ public class BaseDaoImpl extends HibernateDaoSupport implements BaseDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<DetailedPresentation> getPaginatedElements(Integer page, User currentUser, String searchq,
+	public List<DetailedPresentation> getPaginatedElements(Integer page, Long currentUserId, String searchq,
 			Long cathegory, int perPage) {
 
 		List<DetailedPresentation> presentationList = null;
 		if (page != null && page != 0) {
-			Criteria crit = createCriteriaForSearch(currentUser, searchq, cathegory);
+			Criteria crit = createCriteriaForSearch(currentUserId, searchq, cathegory);
 			int start = (page - 1) * perPage;
 			crit.setFirstResult(start);
 			crit.setMaxResults(perPage);
@@ -118,12 +117,13 @@ public class BaseDaoImpl extends HibernateDaoSupport implements BaseDao {
 		}
 	}
 
-	private Criteria createCriteriaForSearch(User currentUser, String searchq, Long cathegory) {
+	private Criteria createCriteriaForSearch(Long currentUserId, String searchq, Long cathegory) {
 		Session session = getSession();
 		Criteria crit = session.createCriteria(DetailedPresentation.class);
 		crit.add(Restrictions.eq("isToBeDeleted", false));
-		if (currentUser != null) {
-			crit.add(Restrictions.eq("user", currentUser));
+		if (currentUserId != null) {
+			Criteria cath = crit.createCriteria("user");
+			cath.add(Restrictions.idEq(currentUserId));
 			crit.setFetchMode("user", FetchMode.JOIN);
 		}
 		if (StringUtils.isNotBlank(searchq)) {
@@ -144,8 +144,8 @@ public class BaseDaoImpl extends HibernateDaoSupport implements BaseDao {
 		return crit;
 	}
 
-	public Long countDetailedPresentations(User currentUser, String searchq, Long cathegory) {
-		Criteria crit = createCriteriaForSearch(currentUser, searchq, cathegory);
+	public Long countDetailedPresentations(Long currentUserId, String searchq, Long cathegory) {
+		Criteria crit = createCriteriaForSearch(currentUserId, searchq, cathegory);
 		crit.setProjection(Projections.rowCount());
 		Long noOfElements = (Long) crit.uniqueResult();
 		return noOfElements;

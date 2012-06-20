@@ -5,17 +5,15 @@ import org.apache.commons.chain.Context;
 import org.springframework.context.support.ResourceBundleMessageSource;
 
 import com.school.dao.BaseDao;
-import com.school.exceptions.CommandFailedToExecuteExeption;
 import com.school.job.Job;
-import com.school.job.JobSenderImpl;
+import com.school.job.sender.IJobSender;
 import com.school.model.Email;
-import com.school.model.Presentation;
-import com.school.presentation.converter.impl.ConverterContext;
+import com.school.presentation.exceptions.CommandFailedToExecuteExeption;
 import com.school.util.ConfigurationLoader;
 
 public abstract class AbstractSendNotification implements Command {
 	protected ResourceBundleMessageSource messages;
-	protected JobSenderImpl queue;
+	protected IJobSender queue;
 	protected BaseDao baseDao;
 
 	@Override
@@ -28,7 +26,7 @@ public abstract class AbstractSendNotification implements Command {
 
 	protected abstract Email setupEmail(Context context) throws CommandFailedToExecuteExeption;
 
-	public void setQueue(JobSenderImpl queue) {
+	public void setQueue(IJobSender queue) {
 		this.queue = queue;
 	}
 

@@ -1,9 +1,11 @@
-package com.school.job;
+package com.school.job.consumers;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.ObjectMessage;
+
+import com.school.job.Job;
 
 public abstract class JobConsumer implements MessageListener {
 

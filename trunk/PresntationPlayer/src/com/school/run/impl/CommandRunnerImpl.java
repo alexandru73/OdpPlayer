@@ -6,9 +6,9 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
-import com.school.exceptions.CommandFailedToExecuteExeption;
-import com.school.exceptions.CommandNotFoundException;
-import com.school.exceptions.CommandRollbackFailedException;
+import com.school.presentation.exceptions.CommandFailedToExecuteExeption;
+import com.school.presentation.exceptions.CommandNotFoundException;
+import com.school.presentation.exceptions.CommandRollbackFailedException;
 import com.school.run.CommandRunner;
 
 public class CommandRunnerImpl extends CommandRunner implements ApplicationContextAware {

@@ -1,12 +1,11 @@
-package com.school.presentation.converter.commands;
+package com.school.presentation.convert;
 
 import org.apache.commons.chain.Context;
 
-import com.school.exceptions.CommandFailedToExecuteExeption;
 import com.school.model.Email;
 import com.school.model.Presentation;
 import com.school.presentation.AbstractSendNotification;
-import com.school.presentation.converter.impl.ConverterContext;
+import com.school.presentation.exceptions.CommandFailedToExecuteExeption;
 import com.school.util.ConfigurationLoader;
 
 public class SendNotificationSuccess extends AbstractSendNotification {

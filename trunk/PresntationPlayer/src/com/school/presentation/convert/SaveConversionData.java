@@ -1,18 +1,17 @@
-package com.school.presentation.converter.commands;
+package com.school.presentation.convert;
 
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
 
 import com.school.dao.BaseDao;
-import com.school.exceptions.CommandFailedToExecuteExeption;
-import com.school.job.JobSenderImpl;
+import com.school.job.sender.IJobSender;
 import com.school.model.DetailedPresentation;
 import com.school.model.Presentation;
-import com.school.presentation.converter.impl.ConverterContext;
+import com.school.presentation.exceptions.CommandFailedToExecuteExeption;
 
 public class SaveConversionData implements Command {
 	private BaseDao baseDao;
-	JobSenderImpl queue;
+	IJobSender queue;
 
 	@Override
 	public boolean execute(Context context) throws Exception {
@@ -40,7 +39,7 @@ public class SaveConversionData implements Command {
 		this.baseDao = baseDao;
 	}
 
-	public void setQueue(JobSenderImpl queue) {
+	public void setQueue(IJobSender queue) {
 		this.queue = queue;
 	}
 }

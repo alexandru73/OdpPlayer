@@ -1,4 +1,4 @@
-package com.school.presentation.converter.impl;
+package com.school.presentation.convert;
 
 public interface ConverterContext {
 	final String PRESENTATION = "uploadData", DETAILED_PRESENTATION = "presentation", PDF_CONVERSION_URL = "pdf_url",

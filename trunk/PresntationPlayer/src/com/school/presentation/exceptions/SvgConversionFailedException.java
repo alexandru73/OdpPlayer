@@ -1,4 +1,4 @@
-package com.school.exceptions;
+package com.school.presentation.exceptions;
 
 public class SvgConversionFailedException extends CommandFailedToExecuteExeption {
 	private static final long serialVersionUID = 1L;

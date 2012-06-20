@@ -10,7 +10,6 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 
 import com.school.dao.BaseDao;
 import com.school.job.Job;
-import com.school.job.JobConsumer;
 import com.school.model.Email;
 import com.school.util.ConfigurationLoader;
 

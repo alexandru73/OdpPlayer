@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.school.controller.dto.SearchResultDTO;
 import com.school.dao.BaseDao;
 import com.school.job.Job;
-import com.school.job.JobSenderImpl;
+import com.school.job.sender.IJobSender;
 import com.school.model.Cathegory;
 import com.school.model.DetailedPresentation;
 import com.school.model.User;
@@ -33,7 +33,7 @@ public class PresentationController extends AbstractController {
 	@Resource(name = "baseDaoImpl")
 	BaseDao baseDao;
 	@Resource(name = "jobSenderImpl")
-	JobSenderImpl queue;
+	IJobSender queue;
 	@Resource(name = "messageSource")
 	ResourceBundleMessageSource messages;
 
@@ -87,18 +87,19 @@ public class PresentationController extends AbstractController {
 			@RequestParam Long cathegory, @RequestParam Boolean mine, @RequestParam Integer slidesPerPage) {
 		Map<String, Object> result = JsonUtils.failureJson("Internal error");
 		slidesPerPage = (slidesPerPage != null && slidesPerPage > 0 && slidesPerPage <= 100) ? slidesPerPage : 10;
-		User user = null;
+		Long userId = null;
 		if (mine) {
-			user = getCurrentUser();
+			User user = getCurrentUser();
+			userId=(user!=null)?user.getId():null;
 		}
-		Long nr = baseDao.countDetailedPresentations(user, searchQuery, cathegory);
+		Long nr = baseDao.countDetailedPresentations(userId, searchQuery, cathegory);
 		if (nr != null && nr != 0) {
 			int noPages = (int) (nr / slidesPerPage);
 			int remaining = (int) (nr % slidesPerPage);
 			if ((page > noPages && remaining == 0) || (page > (noPages + 1) && remaining != 0)) {
 				page = (remaining != 0) ? (noPages + 1) : noPages;
 			}
-			List<DetailedPresentation> presentationList = baseDao.getPaginatedElements(page, user, searchQuery,
+			List<DetailedPresentation> presentationList = baseDao.getPaginatedElements(page, userId, searchQuery,
 					cathegory, slidesPerPage);
 			if (CollectionUtils.isNotEmpty(presentationList)) {
 				List<SearchResultDTO>searchResult=new ArrayList<>();
@@ -137,7 +138,7 @@ public class PresentationController extends AbstractController {
 		this.baseDao = baseDao;
 	}
 
-	public void setQueue(JobSenderImpl queue) {
+	public void setQueue(IJobSender queue) {
 		this.queue = queue;
 	}
 

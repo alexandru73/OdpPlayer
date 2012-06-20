@@ -1,6 +1,8 @@
-package com.school.job;
+package com.school.job.sender;
 
 import org.springframework.jms.core.JmsTemplate;
+
+import com.school.job.Job;
 
 public class JobSenderImpl implements IJobSender {
 	private final JmsTemplate jmsTemplate;

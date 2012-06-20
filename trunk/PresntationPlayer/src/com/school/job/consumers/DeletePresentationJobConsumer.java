@@ -4,12 +4,11 @@ import org.apache.commons.chain.Context;
 import org.apache.commons.chain.impl.ContextBase;
 
 import com.school.dao.BaseDao;
-import com.school.exceptions.CommandNotFoundException;
-import com.school.exceptions.CommandRollbackFailedException;
 import com.school.job.Job;
-import com.school.job.JobConsumer;
 import com.school.model.DetailedPresentation;
-import com.school.presentation.converter.impl.ConverterContext;
+import com.school.presentation.convert.ConverterContext;
+import com.school.presentation.exceptions.CommandNotFoundException;
+import com.school.presentation.exceptions.CommandRollbackFailedException;
 import com.school.run.CommandRunner;
 import com.school.util.ConfigurationLoader;
 
@@ -23,8 +22,7 @@ public class DeletePresentationJobConsumer extends JobConsumer {
 		try {
 			commandRunner.executeCommand(DELETE_COMMAND, DELETE_ROLLBACK, commandContext);
 		} catch (CommandNotFoundException | CommandRollbackFailedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// TODO log this
 		}
 	}
 

@@ -30,7 +30,7 @@ http://www.springframework.org/schema/jms http://www.springframework.org/schema/
 	<bean id="jobExceptionListener" class="com.school.job.JobExceptionListener" />
 
 	<bean id="convertPresentationJobConsumer" class="com.school.job.consumers.ConvertPresentationJobConsumer">
-		<property name="converter" ref="presentationConverter" />
+		<property name="commandRunner" ref="commandRunner" />
 		<property name="baseDao" ref="baseDaoImpl" />
 	</bean>
 
@@ -43,7 +43,7 @@ http://www.springframework.org/schema/jms http://www.springframework.org/schema/
 		<property name="commandRunner" ref="commandRunner" />
 	</bean>
 
-	<bean id="jobSenderImpl" class="com.school.job.JobSenderImpl">
+	<bean id="jobSenderImpl" class="com.school.job.sender.JobSenderImpl">
 		<constructor-arg type="org.springframework.jms.core.JmsTemplate" ref="jmsTemplate" />
 	</bean>
 

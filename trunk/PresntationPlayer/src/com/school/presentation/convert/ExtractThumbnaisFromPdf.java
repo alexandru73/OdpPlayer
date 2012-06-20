@@ -1,4 +1,4 @@
-package com.school.presentation.converter.commands;
+package com.school.presentation.convert;
 
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
@@ -15,10 +15,9 @@ import org.apache.pdfbox.pdfviewer.PageDrawer;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 
-import com.school.exceptions.CommandFailedToExecuteExeption;
-import com.school.exceptions.SvgConversionFailedException;
 import com.school.model.Presentation;
-import com.school.presentation.converter.impl.ConverterContext;
+import com.school.presentation.exceptions.CommandFailedToExecuteExeption;
+import com.school.presentation.exceptions.SvgConversionFailedException;
 import com.school.util.OtherUtils;
 
 public class ExtractThumbnaisFromPdf implements Command {

@@ -1,4 +1,4 @@
-package com.school.presentation.converter.commands;
+package com.school.presentation.convert;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,12 +10,11 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 
 import com.school.dao.BaseDao;
 import com.school.job.Job;
-import com.school.job.JobSenderImpl;
+import com.school.job.sender.JobSenderImpl;
 import com.school.model.Email;
 import com.school.model.DetailedPresentation;
 import com.school.model.Presentation;
 import com.school.presentation.AbstractSendNotification;
-import com.school.presentation.converter.impl.ConverterContext;
 import com.school.util.ConfigurationLoader;
 
 public class ConverterRollBackCommand extends AbstractSendNotification {

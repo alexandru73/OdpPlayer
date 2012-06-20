@@ -8,7 +8,6 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.support.ResourceBundleMessageSource;
@@ -23,13 +22,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.school.controller.dto.ChangePasswordDTO;
 import com.school.dao.BaseDao;
 import com.school.job.Job;
-import com.school.job.JobSenderImpl;
-import com.school.model.DetailedPresentation;
+import com.school.job.sender.IJobSender;
 import com.school.model.Email;
-import com.school.model.Presentation;
 import com.school.model.User;
 import com.school.model.UserAuthority;
-import com.school.presentation.converter.impl.ConverterContext;
 import com.school.util.ConfigurationLoader;
 import com.school.util.JsonUtils;
 import com.school.util.OtherUtils;
@@ -43,7 +39,7 @@ public class UserController extends AbstractController {
 	@Resource(name = "messageSource")
 	ResourceBundleMessageSource messages;
 	@Resource(name = "jobSenderImpl")
-	JobSenderImpl queue;
+	IJobSender queue;
 
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{uniqueId}", produces = "application/json")
 	@ResponseBody
@@ -63,7 +59,10 @@ public class UserController extends AbstractController {
 		if (userId != null) {
 			User user = baseDao.getEntity(userId, User.class);
 			String subject = "New Password";
-			String content = "Your new Password is:\"" + UUID.randomUUID().toString() + "\"";
+			String passw=UUID.randomUUID().toString();
+			user.setPassword(passw);
+			baseDao.update(user);
+			String content = "Your new Password is:\"" + passw + "\"";
 			Email email = new Email(subject, user.getEmail(), content);
 			Long id = baseDao.save(email);
 			String notifQueue = ConfigurationLoader.getConfig().getString("active.mq.queue.notification");
@@ -163,11 +162,7 @@ public class UserController extends AbstractController {
 		this.messages = messages;
 	}
 
-	public JobSenderImpl getQueue() {
-		return queue;
-	}
-
-	public void setQueue(JobSenderImpl queue) {
+	public void setQueue(IJobSender queue) {
 		this.queue = queue;
 	}
 

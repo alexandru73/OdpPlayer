@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.school.model.BaseEntity;
 import com.school.model.DetailedPresentation;
-import com.school.model.User;
 
 public interface BaseDao {
 	public Long save(BaseEntity entity);
@@ -25,10 +24,10 @@ public interface BaseDao {
 
 	public <T extends BaseEntity> List<T> getAllEntities(final Class<T> klass);
 
-	public List<DetailedPresentation> getPaginatedElements(Integer page, User currentUser, String searchq,
+	public List<DetailedPresentation> getPaginatedElements(Integer page, Long currentUserId, String searchq,
 			Long cathegory, int perPage);
 
-	public Long countDetailedPresentations(User currentUser, String searchq, Long cathegory);
+	public Long countDetailedPresentations(Long currentUserId, String searchq, Long cathegory);
 
 	public void deleteUser(Long userID);
 }

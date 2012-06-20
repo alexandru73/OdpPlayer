@@ -5,20 +5,25 @@ import org.apache.commons.chain.impl.ContextBase;
 
 import com.school.dao.BaseDao;
 import com.school.job.Job;
-import com.school.job.JobConsumer;
 import com.school.model.Presentation;
-import com.school.presentation.converter.Converter;
-import com.school.presentation.converter.impl.ConverterContext;
+import com.school.presentation.convert.ConverterContext;
+import com.school.presentation.exceptions.CommandNotFoundException;
+import com.school.presentation.exceptions.CommandRollbackFailedException;
+import com.school.run.CommandRunner;
 import com.school.util.ConfigurationLoader;
 
 public class ConvertPresentationJobConsumer extends JobConsumer {
-	Converter converter;
+	CommandRunner commandRunner;
 	BaseDao baseDao;
 
 	@Override
 	public void execute(Job job) {
 		Context converterContext = getContextForUploadedFile(job);
-		converter.convert(converterContext);
+		try {	
+			commandRunner.executeCommand(CONVERT_PRESENTATION_COMMAND, CONVERT_PRESENTATION_ROLLBACK, converterContext);
+		} catch (CommandNotFoundException | CommandRollbackFailedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -33,13 +38,16 @@ public class ConvertPresentationJobConsumer extends JobConsumer {
 		context.put(ConverterContext.REPO_CONVERTED, convertedRepo);
 		return context;
 	}
-
-	public void setConverter(Converter converter) {
-		this.converter = converter;
+	
+	public void setCommandRunner(CommandRunner commandRunner) {
+		this.commandRunner = commandRunner;
 	}
 
 	public void setBaseDao(BaseDao baseDao) {
 		this.baseDao = baseDao;
 	}
 
+
+	private static final String CONVERT_PRESENTATION_COMMAND = "presentationConverterChain",
+			CONVERT_PRESENTATION_ROLLBACK = "presentationConverterRollback";
 }

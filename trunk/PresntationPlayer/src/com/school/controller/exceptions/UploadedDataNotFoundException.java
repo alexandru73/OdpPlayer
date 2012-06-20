@@ -1,6 +1,7 @@
-package com.school.exceptions;
+package com.school.controller.exceptions;
 
-public class UploadedDataNotFoundException extends PresentationException {
+
+public class UploadedDataNotFoundException extends Exception {
 	private static final long serialVersionUID = 1L;
 
 	public UploadedDataNotFoundException() {

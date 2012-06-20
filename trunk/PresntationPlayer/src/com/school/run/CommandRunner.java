@@ -2,9 +2,9 @@ package com.school.run;
 
 import org.apache.commons.chain.Context;
 
-import com.school.exceptions.CommandFailedToExecuteExeption;
-import com.school.exceptions.CommandNotFoundException;
-import com.school.exceptions.CommandRollbackFailedException;
+import com.school.presentation.exceptions.CommandFailedToExecuteExeption;
+import com.school.presentation.exceptions.CommandNotFoundException;
+import com.school.presentation.exceptions.CommandRollbackFailedException;
 
 public abstract class CommandRunner {
 
@@ -19,7 +19,6 @@ public abstract class CommandRunner {
 		try {
 			runCommand(commandName, commandContext);
 		} catch (CommandFailedToExecuteExeption e) {
-			e.printStackTrace();
 			runRollback(rollbackCommandName, commandContext);
 		}
 	}

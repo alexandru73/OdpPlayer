@@ -1,4 +1,4 @@
-package com.school.exceptions;
+package com.school.presentation.exceptions;
 
 public class PresentationException extends Exception{
 

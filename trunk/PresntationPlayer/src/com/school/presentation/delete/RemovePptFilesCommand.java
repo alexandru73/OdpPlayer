@@ -7,10 +7,10 @@ import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
 import org.apache.commons.io.FileUtils;
 
-import com.school.exceptions.CommandFailedToExecuteExeption;
 import com.school.model.DetailedPresentation;
 import com.school.model.Presentation;
-import com.school.presentation.converter.impl.ConverterContext;
+import com.school.presentation.convert.ConverterContext;
+import com.school.presentation.exceptions.CommandFailedToExecuteExeption;
 
 public class RemovePptFilesCommand implements Command {
 

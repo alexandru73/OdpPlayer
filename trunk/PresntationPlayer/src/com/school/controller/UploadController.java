@@ -23,14 +23,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.school.controller.dto.PresentationMetaDTO;
+import com.school.controller.exceptions.IncorectFileException;
+import com.school.controller.exceptions.UploadedDataNotFoundException;
 import com.school.dao.BaseDao;
-import com.school.exceptions.IncorectFileException;
-import com.school.exceptions.PresentationException;
-import com.school.exceptions.UploadedDataNotFoundException;
 import com.school.job.Job;
-import com.school.job.JobSenderImpl;
+import com.school.job.sender.IJobSender;
 import com.school.model.Cathegory;
 import com.school.model.Presentation;
+import com.school.presentation.exceptions.PresentationException;
 import com.school.util.ConfigurationLoader;
 import com.school.util.JsonUtils;
 
@@ -41,7 +41,7 @@ public class UploadController extends AbstractController {
 	@Resource(name = "messageSource")
 	ResourceBundleMessageSource messages;
 	@Resource(name = "jobSenderImpl")
-	JobSenderImpl queue;
+	IJobSender queue;
 	@Resource(name = "baseDaoImpl")
 	BaseDao baseDao;
 
@@ -167,11 +167,7 @@ public class UploadController extends AbstractController {
 		this.messages = messages;
 	}
 
-	public JobSenderImpl getQueue() {
-		return queue;
-	}
-
-	public void setQueue(JobSenderImpl queue) {
+	public void setQueue(IJobSender queue) {
 		this.queue = queue;
 	}
 
