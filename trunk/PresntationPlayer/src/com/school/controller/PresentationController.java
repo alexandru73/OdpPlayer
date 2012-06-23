@@ -83,7 +83,7 @@ public class PresentationController extends AbstractController {
 
 	@RequestMapping(method = RequestMethod.GET, value = "/search", produces = "application/json")
 	@ResponseBody
-	public Map<String, Object> watchPresentation(@RequestParam Integer page, @RequestParam String searchQuery,
+	public Map<String, Object> searchPresentation(@RequestParam Integer page, @RequestParam String searchQuery,
 			@RequestParam Long cathegory, @RequestParam Boolean mine, @RequestParam Integer slidesPerPage) {
 		Map<String, Object> result = JsonUtils.failureJson("Internal error");
 		slidesPerPage = (slidesPerPage != null && slidesPerPage > 0 && slidesPerPage <= 100) ? slidesPerPage : 10;

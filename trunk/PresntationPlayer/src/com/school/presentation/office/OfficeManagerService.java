@@ -27,6 +27,7 @@ public class OfficeManagerService implements ServletContextListener {
 	public OfficeManager createAndStartOfficeManager() {
 		int[] ports = initPorts();
 		DefaultOfficeManagerConfiguration configuration = new DefaultOfficeManagerConfiguration();
+		//configuration.setOfficeHome(ConfigurationLoader.getConfig().getString(OFFICE_HOME));
 		configuration.setConnectionProtocol(OfficeConnectionProtocol.SOCKET);
 		configuration.setPortNumbers(ports[0], ports[1], ports[2], ports[3], ports[4]);
 		OfficeManager officeManager = configuration.buildOfficeManager();

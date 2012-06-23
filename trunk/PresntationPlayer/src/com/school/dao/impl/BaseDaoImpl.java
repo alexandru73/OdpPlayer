@@ -39,7 +39,7 @@ public class BaseDaoImpl extends HibernateDaoSupport implements BaseDao {
 		getHibernateTemplate().delete(entity);
 	}
 
-	public void deleteAll(List<? extends BaseDao> entities) {
+	public void deleteAll(List<? extends BaseEntity> entities) {
 		getHibernateTemplate().deleteAll(entities);
 	}
 
@@ -103,7 +103,6 @@ public class BaseDaoImpl extends HibernateDaoSupport implements BaseDao {
 		return presentationList;
 	}
 
-	@SuppressWarnings("unchecked")
 	public void deleteUser(Long userID) {
 		if (userID != null) {
 			Session session = getSession();
@@ -146,6 +145,14 @@ public class BaseDaoImpl extends HibernateDaoSupport implements BaseDao {
 
 	public Long countDetailedPresentations(Long currentUserId, String searchq, Long cathegory) {
 		Criteria crit = createCriteriaForSearch(currentUserId, searchq, cathegory);
+		crit.setProjection(Projections.rowCount());
+		Long noOfElements = (Long) crit.uniqueResult();
+		return noOfElements;
+	}
+	
+	public <T> Long count(Class<T> klass) {
+		Session session = getSession();
+		Criteria crit = session.createCriteria(klass);
 		crit.setProjection(Projections.rowCount());
 		Long noOfElements = (Long) crit.uniqueResult();
 		return noOfElements;

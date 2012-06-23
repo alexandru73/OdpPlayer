@@ -32,7 +32,7 @@ import com.school.util.OtherUtils;
 
 @Controller
 @RequestMapping(value = "/user")
-@Scope("")
+@Scope("request")
 public class UserController extends AbstractController {
 	@Resource(name = "baseDaoImpl")
 	BaseDao baseDao;

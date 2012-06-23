@@ -40,7 +40,7 @@ public class EmailJobConsumer extends JobConsumer {
 		
 		MimeMessage message = sender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message);
-		helper.setTo("alex.ilea73@yahoo.com");
+		helper.setTo(email.getEmailAddress());
 		helper.setSubject(email.getSubject());
 		helper.setText(email.getContent());
 		sender.send(message);
