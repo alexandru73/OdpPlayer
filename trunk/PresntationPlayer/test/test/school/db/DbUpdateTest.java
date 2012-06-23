@@ -1,4 +1,4 @@
-package test.school.test.db;
+package test.school.db;
 
 import javax.annotation.Resource;
 

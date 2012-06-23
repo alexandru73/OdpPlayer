@@ -11,9 +11,9 @@
 
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<mvc:annotation-driven />
-	<import resource="test/beans/beans-context.xml" />
-	<import resource="test/beans/command-bean-context.xml" />
-	<import resource="test/HibernateSessionFactory.xml" />
+	<import resource="beans/beans-context.xml" />
+	<import resource="beans/command-bean-context.xml" />
+	<import resource="HibernateSessionFactory.xml" />
 	
 	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
  		 <property name="sessionFactory" ref="sessionFactory" />

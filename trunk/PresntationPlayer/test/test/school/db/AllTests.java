@@ -1,4 +1,4 @@
-package test.school.test.db;
+package test.school.db;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
