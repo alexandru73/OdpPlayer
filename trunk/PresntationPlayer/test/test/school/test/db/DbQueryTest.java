@@ -16,7 +16,7 @@ import com.school.dao.BaseDao;
 import com.school.model.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "/spring/servlet-context.xml" })
+@ContextConfiguration(locations = { "/test/spring/servlet-context.xml" })
 public class DbQueryTest extends AbstractTransactionalJUnit4SpringContextTests {
 
 	@Resource(name = "baseDaoImpl")
