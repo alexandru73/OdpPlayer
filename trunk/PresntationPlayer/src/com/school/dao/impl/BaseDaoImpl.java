@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
+
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -103,6 +105,7 @@ public class BaseDaoImpl extends HibernateDaoSupport implements BaseDao {
 		return presentationList;
 	}
 
+	@RolesAllowed(value={"ROLE_ADMIN"})
 	public void deleteUser(Long userID) {
 		if (userID != null) {
 			Session session = getSession();

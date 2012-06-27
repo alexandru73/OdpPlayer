@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -45,6 +46,7 @@ public class UploadController extends AbstractController {
 	@Resource(name = "baseDaoImpl")
 	BaseDao baseDao;
 
+	@RolesAllowed(value={"ROLE_USER"})
 	@RequestMapping(method = RequestMethod.POST, value = "/uploadMeta", produces = "application/json")
 	@ResponseBody
 	public Map<String, Object> saveUploadMetadata(HttpServletRequest request,
@@ -76,7 +78,8 @@ public class UploadController extends AbstractController {
 		}
 		return cathegory;
 	}
-
+	
+	@RolesAllowed(value={"ROLE_USER"})
 	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
 	public Map<String, Object> uploadFile(HttpServletRequest req,

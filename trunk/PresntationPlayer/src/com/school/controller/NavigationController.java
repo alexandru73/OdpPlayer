@@ -1,5 +1,7 @@
 package com.school.controller;
 
+import javax.annotation.security.RolesAllowed;
+
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Scope(value = "request")
 public class NavigationController {
 	
+	@RolesAllowed(value={"ROLE_USER"})
 	@RequestMapping(method = RequestMethod.GET, value = "/upload")
 	public String getPresentationPage() {
 		return "upload/uploadPage";
@@ -23,12 +26,12 @@ public class NavigationController {
 	public String getIndexPage() {
 		return "index/indexPage";
 	}
-	
+	@RolesAllowed(value={"ROLE_ADMIN"})
 	@RequestMapping(method = RequestMethod.GET, value = "user/users")
 	public String getAllUsersPage() {
 		return "users/userPage";
 	}
-	
+	@RolesAllowed(value={"ROLE_USER"})
 	@RequestMapping(method = RequestMethod.GET, value = "user/changePassword")
 	public String changePasswordPage() {
 		return "changePassword/passwPage";

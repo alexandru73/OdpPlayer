@@ -2,15 +2,14 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <div id="templatemo_menu" class="fl-left">
 	<ul>
+		<li><a href="search">View presentations</a></li> 
 		<sec:authorize access="isAuthenticated()">
-			<li><a href="search">Latest presentations</a></li>
 			<li><a href="upload"><sp:message code="menu.upload" /></a></li>
 		</sec:authorize>
 		<sec:authorize access="hasRole('ROLE_ADMIN')">
 			<li><a href="user/users">Users details</a></li>
 		</sec:authorize>
-		<sec:authorize access="! isAuthenticated()">
-			<li><a href="search">List presentations</a></li> 
+		<sec:authorize access="! isAuthenticated()">	
 			<li><a href="login"><sp:message code="menu.login" /></a></li>
 			<li><a href="register"><sp:message code="menu.register" /></a></li>
 		</sec:authorize>

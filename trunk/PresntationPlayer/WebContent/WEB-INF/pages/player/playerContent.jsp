@@ -38,14 +38,11 @@
 	<div  id="tabs">
 		<ul>
 			<li><a href="#tabs-outline"><sp:message code="player.outline" /></a></li>
-			<li><a href="#tabs-2"><sp:message code="player.thumbnails" /></a></li>
 		</ul>
 		<div id="tabs-outline" class="inner-tabs" style="padding:8px;position: relative;">
 		</div>
-		<div id="tabs-2" class="inner-tabs">
-		</div>
 	</div>
-
+ 
 	<div class="player-details">
 		<div class="owner-views">
 			<div class="small-detail left-pointer ">

@@ -7,6 +7,7 @@ import java.util.TreeMap;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.annotation.security.RolesAllowed;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
@@ -41,6 +42,7 @@ public class UserController extends AbstractController {
 	@Resource(name = "jobSenderImpl")
 	IJobSender queue;
 
+	@RolesAllowed(value={"ROLE_ADMIN"})
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{uniqueId}", produces = "application/json")
 	@ResponseBody
 	public Map<String, Object> deletePresentation(@PathVariable("uniqueId") Long userId) {
@@ -51,7 +53,8 @@ public class UserController extends AbstractController {
 		}
 		return result;
 	}
-
+	
+	@RolesAllowed(value={"ROLE_ADMIN"})
 	@RequestMapping(method = RequestMethod.PUT, value = "/{uniqueId}", produces = "application/json")
 	@ResponseBody
 	public Map<String, Object> resetPasswod(@PathVariable("uniqueId") Long userId) {
@@ -86,7 +89,7 @@ public class UserController extends AbstractController {
 		}
 		return result;
 	}
-
+	@RolesAllowed(value={"ROLE_ADMIN"})
 	@RequestMapping(method = RequestMethod.GET, value = "/allUsers", produces = "application/json")
 	@ResponseBody
 	public Map<String, Object> getAllUsers() {
@@ -104,7 +107,8 @@ public class UserController extends AbstractController {
 		result.put(DATA, resultList);
 		return result;
 	}
-
+	
+	@RolesAllowed(value={"ROLE_USER"})
 	@RequestMapping(method = RequestMethod.POST, value = "/changePassword", consumes = "application/json", produces = "application/json")
 	@ResponseBody
 	public Map<String, Object> changePassword(@RequestBody ChangePasswordDTO pass) {
@@ -131,7 +135,7 @@ public class UserController extends AbstractController {
 		}
 		return result;
 	}
-
+	
 	@RequestMapping(method = RequestMethod.POST, value = "/register", consumes = "application/json", produces = "application/json")
 	@ResponseBody
 	public Map<String, Object> registerUser(@RequestBody User user) {

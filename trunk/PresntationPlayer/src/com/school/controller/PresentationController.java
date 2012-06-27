@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.annotation.security.RolesAllowed;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.context.annotation.Scope;
@@ -36,7 +37,8 @@ public class PresentationController extends AbstractController {
 	IJobSender queue;
 	@Resource(name = "messageSource")
 	ResourceBundleMessageSource messages;
-
+	
+	@RolesAllowed(value={"ROLE_USER","ROLE_ADMIN"})
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{uniqueName}", produces = "application/json")
 	@ResponseBody
 	public Map<String, Object> deletePresentation(@PathVariable("uniqueName") String name) {

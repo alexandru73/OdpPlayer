@@ -15,13 +15,13 @@ public class OfficeManagerService implements ServletContextListener {
 	@Override
 	public void contextDestroyed(ServletContextEvent arg0) {
 		if (officeManager != null) {
-			officeManager.stop();
+			//officeManager.stop();
 		}
 	}
 
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
-		officeManager = createAndStartOfficeManager(); 
+		//officeManager = createAndStartOfficeManager(); 
 	}
 
 	public OfficeManager createAndStartOfficeManager() {
@@ -50,11 +50,6 @@ public class OfficeManagerService implements ServletContextListener {
 		}
 	}
 
-	public void stopOfficeManager(OfficeManager officeManager) {
-		if (officeManager != null) {
-			officeManager.stop();
-		}
-	}
 
 	private static final String PORT_FIRST = "open.office.port.first", PORT_SECOND = "open.office.port.second",
 			PORT_THIRD = "open.office.port.third", PORT_FOURTH = "open.office.port.fourth",
